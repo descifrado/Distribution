@@ -11,7 +11,7 @@ public class Main {
     static String user= SystemProperties.getMySQLUserName();
     static String password=SystemProperties.getMySQLPassword();
     static String host=SystemProperties.getMySQLHostName();//"jdbc:mysql://localhost:3306/Distribution";
-    static Connection connection=MysqlConnection.connect();
+    public static Connection connection = MysqlConnection.connect();
     public static void main(String[] args) {
         ServerSocket serverSocket;
         Socket socket;
