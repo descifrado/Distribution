@@ -1,14 +1,16 @@
 package mainClasses;
 
+import tools.SystemProperties;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 
 public class Main {
-    static String user="root";
-    static String password="root";
-    static String host="jdbc:mysql://localhost:3306/Distribution";
+    static String user= SystemProperties.getMySQLUserName();
+    static String password=SystemProperties.getMySQLPassword();
+    static String host=SystemProperties.getMySQLHostName();//"jdbc:mysql://localhost:3306/Distribution";
     static Connection connection=MysqlConnection.connect();
     public static void main(String[] args) {
         ServerSocket serverSocket;

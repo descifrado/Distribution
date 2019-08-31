@@ -39,10 +39,10 @@ public class User implements Serializable
     }
 
     public String getUserUID() {
-        return uid;
+        return userUID;
     }
 
     public void setUserUID(String uid) {
-        this.uid = uid;
+        this.userUID = uid;
     }
 }
