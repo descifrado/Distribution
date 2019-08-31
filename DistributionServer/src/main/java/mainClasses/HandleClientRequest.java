@@ -6,7 +6,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class HandleClientRequest implements Runnable{
+public class
+HandleClientRequest implements Runnable{
     private Socket socket ;
     ObjectOutputStream oos;
     ObjectInputStream ois ;
