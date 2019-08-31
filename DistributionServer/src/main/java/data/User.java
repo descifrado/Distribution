@@ -2,7 +2,7 @@ package data;
 
 import java.io.Serializable;
 
-public class User implements Serializable
+public class User implements Serializable,Cloneable
 {
     private String firstName, lastName, email, phone, userUID;
 
@@ -42,7 +42,11 @@ public class User implements Serializable
         return userUID;
     }
 
-    public void setUserUID(String uid) {
-        this.userUID = uid;
+    public void setUserUID(String userUID) {
+        this.userUID = userUID;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
