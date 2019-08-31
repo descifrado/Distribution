@@ -1,4 +1,6 @@
-package mainClasses;
+package tools;
+
+import mainClasses.Main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

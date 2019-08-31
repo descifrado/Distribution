@@ -1,4 +1,4 @@
-package misc;
+package tools;
 
 import java.net.NetworkInterface;
 import java.net.SocketException;

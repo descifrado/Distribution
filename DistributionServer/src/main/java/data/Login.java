@@ -1,7 +1,7 @@
 package data;
 
 import mainClasses.Main;
-import misc.UIDGenerator;
+import tools.UIDGenerator;
 import request.LoginRequest;
 import request.Response;
 
