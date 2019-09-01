@@ -46,7 +46,7 @@ public class Controller_Dashboard
                 }catch(IOException e){
                     e.printStackTrace();
                 }
-                primaryStage.setScene(new Scene(root, 1303, 961));
+                primaryStage.setScene(new Scene(root, 1081, 826));
 
             }
         });
