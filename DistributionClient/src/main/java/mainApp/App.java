@@ -1,5 +1,6 @@
 package mainApp;
 
+import data.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +22,7 @@ public class App extends Application {
     public static Socket sockerTracker ;
     public static ObjectOutputStream oosTracker ;
     public static ObjectInputStream oisTracker;
-
+    public static User user;
 
     @Override
     public void start(Stage primaryStage) throws IOException {

@@ -2,109 +2,67 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_Dashboard">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainApp.Controller_Dashboard">
    <children>
-      <JFXButton layoutX="491.0" layoutY="599.0" prefHeight="33.0" prefWidth="106.0" text="Log In" />
-      <Label layoutX="399.0" layoutY="14.0" prefHeight="83.0" prefWidth="512.0" text="Sacred Bazaar" textAlignment="RIGHT" textFill="#da1313">
+      <Label layoutX="476.0" layoutY="23.0" prefHeight="49.0" prefWidth="397.0" text="DISTRIBUTION" textAlignment="RIGHT" textFill="#da1313">
          <font>
-            <Font name="Lucida Sans Demibold" size="70.0" />
+            <Font size="55.0" />
          </font>
       </Label>
-      <JFXButton fx:id="addtocart" layoutX="755.0" layoutY="818.0" onAction="#onaddtocartclicked" prefHeight="33.0" prefWidth="186.0" style="-fx-background-color: white;" text="Add to Cart" textFill="#33bfc6">
+      <Label layoutX="1214.0" layoutY="931.0" prefHeight="16.0" prefWidth="75.0" text="VisMynSoft" textFill="#58ccd0" />
+      <Label fx:id="labelprofile" alignment="CENTER" layoutX="172.0" layoutY="147.0" prefHeight="26.0" prefWidth="106.0" text="PROFILE" textFill="#bf2525">
          <font>
-            <Font size="17.0" />
-         </font>
-         <effect>
-            <Bloom />
-         </effect>
-      </JFXButton>
-      <Label layoutX="1145.0" layoutY="931.0" prefHeight="16.0" prefWidth="144.0" text="NobodyDoesItBetter" textFill="#58ccd0" />
-      <JFXListView fx:id="categories" layoutX="55.0" layoutY="206.0" onMouseClicked="#handleclickcategories" prefHeight="711.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
-      <Label alignment="CENTER" layoutX="58.0" layoutY="132.0" prefHeight="49.0" prefWidth="268.0" text="Categories" textFill="#bf2525">
-         <font>
-            <Font size="40.0" />
+            <Font name="System Bold Italic" size="21.0" />
          </font>
       </Label>
-      <JFXListView fx:id="products" layoutX="342.0" layoutY="206.0" onMouseClicked="#handleclickedproducts" prefHeight="711.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
-      <Label alignment="CENTER" layoutX="342.0" layoutY="132.0" prefHeight="49.0" prefWidth="268.0" text="Products" textFill="#bf2525">
+      <Label fx:id="labelfileshared" alignment="CENTER" layoutX="842.0" layoutY="529.0" prefHeight="26.0" prefWidth="177.0" text="FILES SHARED" textFill="#bf2525">
          <font>
-            <Font size="40.0" />
+            <Font name="System Bold Italic" size="21.0" />
          </font>
       </Label>
-      <ImageView fx:id="product_image" fitHeight="77.0" fitWidth="106.0" layoutX="781.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXTextArea fx:id="product_description" layoutX="639.0" layoutY="304.0" prefHeight="353.0" prefWidth="417.0" style="-fx-text-inner-color: WHITE; -fx-prompt-text-fill: WHITE;">
+      <Label fx:id="labelfiledownloaded" layoutX="102.0" layoutY="542.0" prefHeight="16.0" prefWidth="246.0" text="FILES DOWNLOADED" textFill="#da1313">
          <font>
-            <Font size="25.0" />
-         </font></JFXTextArea>
-      <Label fx:id="username" layoutX="58.0" layoutY="39.0" prefHeight="33.0" prefWidth="163.0" textFill="#da1313">
+            <Font name="System Bold Italic" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="613.0" layoutY="117.0" text="DASHBOARD" textFill="#068697">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-      <JFXButton fx:id="logout" layoutX="1104.0" layoutY="81.0" onAction="#onlogoutclicked" prefHeight="33.0" prefWidth="157.0" style="-fx-background-color: white;" text="Logout" textFill="#33bfc6">
+      <Label fx:id="labelfname" layoutX="49.0" layoutY="227.0" text="First Name" textFill="#eb0a0a">
          <font>
-            <Font size="17.0" />
-         </font>
-         <effect>
-            <Bloom />
-         </effect>
-      </JFXButton>
-      <JFXButton fx:id="cart" layoutX="1105.0" layoutY="167.0" onAction="#oncartclicked" prefHeight="33.0" prefWidth="157.0" style="-fx-background-color: white;" text="Cart" textFill="#33bfc6">
-         <font>
-            <Font size="17.0" />
-         </font>
-         <effect>
-            <Bloom />
-         </effect>
-      </JFXButton>
-      <JFXButton fx:id="history" layoutX="1105.0" layoutY="124.0" onAction="#onviewhistoryclicked" prefHeight="33.0" prefWidth="157.0" style="-fx-background-color: white;" text="View History" textFill="#33bfc6">
-         <font>
-            <Font size="17.0" />
-         </font>
-         <effect>
-            <Bloom />
-         </effect>
-      </JFXButton>
-      <Label fx:id="user_email" alignment="CENTER" layoutX="1072.0" layoutY="41.0" prefHeight="29.0" prefWidth="223.0" textFill="#33bfc6">
-         <font>
-            <Font size="23.0" />
+            <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <JFXButton fx:id="refresh" layoutX="716.0" layoutY="164.0" onAction="#onrefreshclicked" prefHeight="33.0" prefWidth="157.0" style="-fx-background-color: white;" text="Refresh" textFill="#33bfc6">
+      <Label fx:id="labellname" layoutX="49.0" layoutY="287.0" text="Last Name" textFill="#eb0a0a">
          <font>
-            <Font size="17.0" />
-         </font>
-         <effect>
-            <Bloom />
-         </effect>
-      </JFXButton>
-      <JFXButton fx:id="retailerbutton" layoutX="1105.0" layoutY="212.0" onAction="#onretailerclicked" prefHeight="33.0" prefWidth="157.0" style="-fx-background-color: white;" text="Retailer" textFill="#33bfc6">
-         <font>
-            <Font size="17.0" />
-         </font>
-         <effect>
-            <Bloom />
-         </effect>
-      </JFXButton>
-      <Label fx:id="productadded" alignment="CENTER" layoutX="739.0" layoutY="744.0" prefHeight="49.0" prefWidth="268.0" textFill="#bf2525">
-         <font>
-            <Font size="17.0" />
+            <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="quantity" alignment="CENTER" focusColor="#6880b2" labelFloat="true" layoutX="790.0" layoutY="692.0" prefHeight="33.0" prefWidth="116.0" promptText="Quantity" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
+      <Label fx:id="labelemail" layoutX="49.0" layoutY="357.0" text="Email ID" textFill="#eb0a0a">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="13.0" />
          </font>
-      </JFXTextField>
-      <JFXButton fx:id="name" layoutX="1105.0" layoutY="632.0" onAction="#onnameclicked" prefHeight="33.0" prefWidth="157.0" style="-fx-background-color: white;" text="Search" textFill="#33bfc6">
+      </Label>
+      <Label fx:id="labelphone" layoutX="49.0" layoutY="424.0" text="Phone Number" textFill="#eb0a0a">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="firstname" editable="false" focusColor="#6880b2" layoutX="260.0" layoutY="222.0" unFocusColor="#5e788a" />
+      <JFXTextField fx:id="lastname" editable="false" focusColor="#6880b2" layoutX="260.0" layoutY="282.0" unFocusColor="#5e788a" />
+      <JFXTextField fx:id="emailid" editable="false" focusColor="#6880b2" layoutX="260.0" layoutY="352.0" unFocusColor="#5e788a" />
+      <JFXTextField fx:id="phone" editable="false" focusColor="#6880b2" layoutX="260.0" layoutY="419.0" unFocusColor="#5e788a" />
+      <JFXListView layoutX="125.0" layoutY="607.0" prefHeight="324.0" prefWidth="189.0" />
+      <JFXListView layoutX="831.0" layoutY="612.0" prefHeight="317.0" prefWidth="200.0" />
+      <JFXButton fx:id="searchfile" layoutX="857.0" layoutY="271.0" onAction="#onsearchclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="SEARCH FILE" textFill="#33bfc6">
          <font>
             <Font size="17.0" />
          </font>
@@ -112,30 +70,7 @@
             <Bloom />
          </effect>
       </JFXButton>
-      <Label alignment="CENTER" layoutX="1111.0" layoutY="340.0" prefHeight="33.0" prefWidth="144.0" text="Sort By:" textFill="#58ccd0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <JFXButton fx:id="price" layoutX="1104.0" layoutY="391.0" onAction="#onpriceclicked" prefHeight="33.0" prefWidth="157.0" style="-fx-background-color: white;" text="Price" textFill="#33bfc6">
-         <font>
-            <Font size="17.0" />
-         </font>
-         <effect>
-            <Bloom />
-         </effect>
-      </JFXButton>
-      <Label alignment="CENTER" layoutX="1071.0" layoutY="522.0" prefHeight="33.0" prefWidth="223.0" text="Search:" textFill="#58ccd0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <JFXTextField fx:id="productname" alignment="CENTER" focusColor="#6880b2" labelFloat="true" layoutX="1126.0" layoutY="562.0" prefHeight="33.0" prefWidth="116.0" promptText="Name" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXTextField>
-      <JFXButton fx:id="extraoffer" layoutX="894.0" layoutY="167.0" onAction="#onextraofferclicked" prefHeight="33.0" prefWidth="157.0" style="-fx-background-color: white;" text="Extra Offers" textFill="#33bfc6">
+      <JFXButton fx:id="sharefile" layoutX="857.0" layoutY="373.0" onAction="#onshareclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="SHARE FIE" textFill="#33bfc6">
          <font>
             <Font size="17.0" />
          </font>
