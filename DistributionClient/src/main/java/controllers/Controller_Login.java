@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import constants.ResponseCode;
+import data.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,6 +53,7 @@ public class Controller_Login {
                         App.oosTracker.flush();
                         Response response;
                         response = (Response)App.oisTracker.readObject();
+                        App.user = (User)response.getResponseObject();
                         if(response.getResponseCode().equals(ResponseCode.SUCCESS)){
                             Platform.runLater(new Runnable() {
                                 @Override

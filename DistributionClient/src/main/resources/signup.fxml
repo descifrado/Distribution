@@ -39,7 +39,7 @@
             <Font size="18.0" />
          </font>
       </JFXPasswordField>
-      <JFXTextField fx:id="age" focusColor="#6880b2" labelFloat="true" layoutX="409.0" layoutY="411.0" prefHeight="33.0" prefWidth="317.0" promptText="Age" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
+      <JFXTextField fx:id="contact" focusColor="#6880b2" labelFloat="true" layoutX="409.0" layoutY="411.0" prefHeight="33.0" prefWidth="317.0" promptText="Contact" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
          <font>
             <Font size="18.0" />
          </font>
