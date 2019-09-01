@@ -97,4 +97,10 @@ public class File implements Serializable, Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        File temp= (File) obj;
+        return temp.getFileUID().equals(this.fileUID);
+    }
 }

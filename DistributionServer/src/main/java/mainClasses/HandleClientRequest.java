@@ -6,11 +6,9 @@ import constants.RequestCode;
 import data.PeerList;
 import request.*;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class
 HandleClientRequest implements Runnable{
@@ -18,7 +16,7 @@ HandleClientRequest implements Runnable{
     ObjectOutputStream oos;
     ObjectInputStream ois ;
     public HandleClientRequest(Socket socket){
-        socket = this.socket;
+        this.socket=socket;
         try{
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
@@ -33,14 +31,20 @@ HandleClientRequest implements Runnable{
     public void run() {
         Request request = null;
         while(true){
+
             try{
                 request = (Request)ois.readObject();
-            }catch (Exception e){
+            }
+            catch (IOException e){
                 e.printStackTrace();
-                System.out.println("Client Disconnected");
+                return;
+            }catch (ClassNotFoundException e){
+                e.printStackTrace();
             }
 
+
             if(request.getRequestCode().equals(RequestCode.SIGNUP_REQUEST)) {
+
                 try {
                     SignUp signUp = new SignUp((SignUpRequest) request);
                     Response response = signUp.insert();
@@ -48,7 +52,10 @@ HandleClientRequest implements Runnable{
                     oos.flush();
                 }catch (CloneNotSupportedException e){
                     e.printStackTrace();
-                }catch (IOException e){
+                } catch (SocketException e){
+                    System.out.println("Client Disconneccted !!");
+                    return;
+                } catch (IOException e){
                     e.printStackTrace();
                 }
             }else if(request.getRequestCode().equals(RequestCode.LOGIN_REQUEST)){
@@ -56,7 +63,13 @@ HandleClientRequest implements Runnable{
                 try{
                     oos.writeObject(login.getResponse());
                     oos.flush();
-                }catch (IOException e){
+
+                }
+                catch (EOFException e){
+                    System.out.println("Client Disconnected !!!");
+                    return;
+                }
+                catch (IOException e){
                     e.printStackTrace();
                 }
             }else if(request.getRequestCode().equals(RequestCode.PEERLIST_REQUEST)){

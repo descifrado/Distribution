@@ -1,11 +1,12 @@
 package constants;
 
-public enum FileType {
+public enum FileType{
 
-    Movie
-    ;
+    All,
+    MOVIE;
 
     FileType(){
         this.toString();
     }
+
 }
