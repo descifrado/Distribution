@@ -1,6 +1,5 @@
 package data;
 
-import com.sun.istack.internal.NotNull;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -24,7 +23,7 @@ public class File implements Serializable, Cloneable {
      * @param type
      * @param tags
      */
-    public File(@NotNull String fileUID, String fileName, String type, Set tags) {
+    public File(String fileUID, String fileName, String type, Set tags) {
         this.fileUID = fileUID;
         this.fileName = fileName;
         this.type = type;

@@ -1,11 +1,13 @@
 package request;
 
+import constants.ResponseCode;
+
 public class Response {
     String responseID;
     Object responseObject;
-    boolean responseCode;
+    ResponseCode responseCode;
 
-    public Response(String responseID, Object responseObject, boolean responseCode) {
+    public Response(String responseID, Object responseObject, ResponseCode responseCode) {
         this.responseID = responseID;
         this.responseObject = responseObject;
         this.responseCode = responseCode;
@@ -27,11 +29,11 @@ public class Response {
         this.responseObject = responseObject;
     }
 
-    public boolean getResponseCode() {
+    public ResponseCode getResponseCode() {
         return responseCode;
     }
 
-    public void setResponseCode(boolean responseCode) {
+    public void setResponseCode(ResponseCode responseCode) {
         this.responseCode = responseCode;
     }
 }

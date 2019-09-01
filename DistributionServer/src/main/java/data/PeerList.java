@@ -1,5 +1,6 @@
 package data;
 
+import constants.ResponseCode;
 import mainClasses.Main;
 import request.PeerListRequest;
 import request.Response;
