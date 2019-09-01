@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import mainApp.App;
 import request.Response;
 import request.SignUpRequest;
+import tools.UIDGenerator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -39,6 +40,7 @@ public class Controller_SignUp {
         user.setFirstName(firstname.getText());
         user.setLastName(lastname.getText());
         user.setPhone(contact.getText());
+        user.setUserUID(UIDGenerator.generateuid());
         try{
             if(App.sockerTracker == null){
                 App.sockerTracker = new Socket(App.serverIP, App.portNo);

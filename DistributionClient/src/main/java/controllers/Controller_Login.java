@@ -33,6 +33,21 @@ public class Controller_Login {
 
 
     public void onsignupclicked(ActionEvent actionEvent) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage primaryStage = (Stage) signup.getScene().getWindow();
+                Parent root = null;
+                try {
+
+                    root = FXMLLoader.load(getClass().getResource("/signup.fxml"));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                primaryStage.setScene(new Scene(root, 1081, 826));
+
+            }
+        });
     }
 
     public void onloginclicked(ActionEvent actionEvent) {
