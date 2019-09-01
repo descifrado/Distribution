@@ -1,12 +1,14 @@
 package data;
 
+import com.sun.istack.internal.NotNull;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
  *
  */
-public class File {
+public class File implements Serializable, Cloneable {
     /**
      *
      **/
@@ -22,7 +24,7 @@ public class File {
      * @param type
      * @param tags
      */
-    public File(String fileUID, String fileName, String type, Set tags) {
+    public File(@NotNull String fileUID, String fileName, String type, Set tags) {
         this.fileUID = fileUID;
         this.fileName = fileName;
         this.type = type;
@@ -91,5 +93,9 @@ public class File {
      */
     public void setTags(Set tags) {
         this.tags = tags;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
