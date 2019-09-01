@@ -1,4 +1,4 @@
-package AuthenticationHandler;
+package authenticationHandler;
 
 import data.User;
 import mainClasses.Main;
