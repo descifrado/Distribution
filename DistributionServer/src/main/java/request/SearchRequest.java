@@ -10,5 +10,5 @@ public class SearchRequest {
     String type;
     List<String> tags;
 
-    
+
 }

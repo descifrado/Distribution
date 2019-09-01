@@ -1,4 +1,4 @@
-package data;
+package AuthenticationHandler;
 
 import mainClasses.Main;
 import request.Response;

@@ -1,5 +1,6 @@
-package data;
+package AuthenticationHandler;
 
+import data.User;
 import mainClasses.Main;
 import tools.UIDGenerator;
 import request.LoginRequest;
