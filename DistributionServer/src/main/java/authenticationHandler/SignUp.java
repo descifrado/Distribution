@@ -1,5 +1,6 @@
 package authenticationHandler;
 
+import constants.ResponseCode;
 import mainClasses.Main;
 import request.Response;
 import request.SignUpRequest;
@@ -36,13 +37,13 @@ public class SignUp implements Serializable
             stmt.setString(4,this.email);
             stmt.setString(5,this.phone);
             stmt.executeUpdate();
-            return new Response((UIDGenerator.generateuid()),null,true);
+            return new Response((UIDGenerator.generateuid()),null, ResponseCode.SUCCESS);
         }
         catch (SQLException e)
         {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-        return new Response(UIDGenerator.generateuid(),null,false);
+        return new Response(UIDGenerator.generateuid(),null,ResponseCode.FAILED);
     }
 }
