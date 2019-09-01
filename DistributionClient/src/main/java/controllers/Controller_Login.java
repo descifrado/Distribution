@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import mainApp.App;
 import request.LoginRequest;
 import request.Response;
+import tools.HashGenerator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -56,7 +57,7 @@ public class Controller_Login {
         if(password==null){
             status.setText("Password : Null");
         }else{
-            LoginRequest loginRequest = new LoginRequest(emailid,password);
+            LoginRequest loginRequest = new LoginRequest(emailid, HashGenerator.hash(password));
             new Thread(new Runnable() {
                 @Override
                 public void run() {

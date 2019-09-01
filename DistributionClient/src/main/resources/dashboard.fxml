@@ -8,71 +8,55 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainApp.Controller_Dashboard">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainApp.Controller_Dashboard">
    <children>
-      <Label layoutX="476.0" layoutY="23.0" prefHeight="49.0" prefWidth="397.0" text="DISTRIBUTION" textAlignment="RIGHT" textFill="#da1313">
+      <Label layoutX="1147.0" layoutY="931.0" prefHeight="16.0" prefWidth="142.0" text="NobodyDoesItBetter" textFill="#58ccd0" />
+      <JFXButton fx:id="sharefile" layoutX="845.0" layoutY="486.0" onAction="#onshareclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Share File" textFill="#33bfc6">
          <font>
-            <Font size="55.0" />
-         </font>
-      </Label>
-      <Label layoutX="1214.0" layoutY="931.0" prefHeight="16.0" prefWidth="75.0" text="VisMynSoft" textFill="#58ccd0" />
-      <Label fx:id="labelprofile" alignment="CENTER" layoutX="172.0" layoutY="147.0" prefHeight="26.0" prefWidth="106.0" text="PROFILE" textFill="#bf2525">
-         <font>
-            <Font name="System Bold Italic" size="21.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelfileshared" alignment="CENTER" layoutX="842.0" layoutY="529.0" prefHeight="26.0" prefWidth="177.0" text="FILES SHARED" textFill="#bf2525">
-         <font>
-            <Font name="System Bold Italic" size="21.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelfiledownloaded" layoutX="102.0" layoutY="542.0" prefHeight="16.0" prefWidth="246.0" text="FILES DOWNLOADED" textFill="#da1313">
-         <font>
-            <Font name="System Bold Italic" size="21.0" />
-         </font>
-      </Label>
-      <Label layoutX="613.0" layoutY="117.0" text="DASHBOARD" textFill="#068697">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelfname" layoutX="49.0" layoutY="227.0" text="First Name" textFill="#eb0a0a">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label fx:id="labellname" layoutX="49.0" layoutY="287.0" text="Last Name" textFill="#eb0a0a">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelemail" layoutX="49.0" layoutY="357.0" text="Email ID" textFill="#eb0a0a">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelphone" layoutX="49.0" layoutY="424.0" text="Phone Number" textFill="#eb0a0a">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <JFXTextField fx:id="firstname" editable="false" focusColor="#6880b2" layoutX="260.0" layoutY="222.0" unFocusColor="#5e788a" />
-      <JFXTextField fx:id="lastname" editable="false" focusColor="#6880b2" layoutX="260.0" layoutY="282.0" unFocusColor="#5e788a" />
-      <JFXTextField fx:id="emailid" editable="false" focusColor="#6880b2" layoutX="260.0" layoutY="352.0" unFocusColor="#5e788a" />
-      <JFXTextField fx:id="phone" editable="false" focusColor="#6880b2" layoutX="260.0" layoutY="419.0" unFocusColor="#5e788a" />
-      <JFXListView layoutX="125.0" layoutY="607.0" prefHeight="324.0" prefWidth="189.0" />
-      <JFXListView layoutX="831.0" layoutY="612.0" prefHeight="317.0" prefWidth="200.0" />
-      <JFXButton fx:id="searchfile" layoutX="857.0" layoutY="271.0" onAction="#onsearchclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="SEARCH FILE" textFill="#33bfc6">
-         <font>
-            <Font size="17.0" />
+            <Font size="18.0" />
          </font>
          <effect>
             <Bloom />
          </effect>
       </JFXButton>
-      <JFXButton fx:id="sharefile" layoutX="857.0" layoutY="373.0" onAction="#onshareclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="SHARE FIE" textFill="#33bfc6">
+      <Label alignment="CENTER" layoutX="460.0" layoutY="161.0" prefHeight="49.0" prefWidth="336.0" text="DashBoard" textFill="#bf2525">
          <font>
-            <Font size="17.0" />
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="405.0" layoutY="39.0" prefHeight="128.0" prefWidth="502.0" text="Distribution" textAlignment="RIGHT" textFill="#da1313">
+         <font>
+            <Font name="System Bold" size="70.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="name" alignment="CENTER" editable="false" focusColor="#6880b2" labelFloat="true" layoutX="1083.0" layoutY="48.0" prefHeight="33.0" prefWidth="189.0" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <Label alignment="CENTER" layoutX="70.0" layoutY="276.0" prefHeight="49.0" prefWidth="295.0" text="Files Downloaded" textFill="#bf2525">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="401.0" layoutY="277.0" prefHeight="49.0" prefWidth="295.0" text="Files Shared" textFill="#bf2525">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <JFXListView fx:id="downloads" layoutX="94.0" layoutY="350.0" prefHeight="517.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
+      <JFXListView fx:id="shared" layoutX="412.0" layoutY="348.0" prefHeight="516.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
+      <JFXButton fx:id="download" layoutX="845.0" layoutY="557.0" onAction="#ondownloadclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Download File" textFill="#33bfc6">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </JFXButton>
+      <JFXButton fx:id="logout" layoutX="846.0" layoutY="830.0" onAction="#onlogoutclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Logout" textFill="#33bfc6">
+         <font>
+            <Font size="18.0" />
          </font>
          <effect>
             <Bloom />

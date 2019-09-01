@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import mainApp.App;
 import request.Response;
 import request.SignUpRequest;
+import tools.HashGenerator;
 import tools.UIDGenerator;
 
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class Controller_SignUp {
                 App.oosTracker = new ObjectOutputStream(App.sockerTracker.getOutputStream());
                 App.oisTracker = new ObjectInputStream(App.sockerTracker.getInputStream());
             }
-            SignUpRequest signUpRequest = new SignUpRequest(password.getText(),user);
+            SignUpRequest signUpRequest = new SignUpRequest(HashGenerator.hash(password.getText()),user);
             App.oosTracker.writeObject(signUpRequest);
             App.oosTracker.flush();
             Response response = (Response)App.oisTracker.readObject();
