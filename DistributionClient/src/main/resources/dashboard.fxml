@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@backgroundbig.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_products">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_Dashboard">
    <children>
       <JFXButton layoutX="491.0" layoutY="599.0" prefHeight="33.0" prefWidth="106.0" text="Log In" />
       <Label layoutX="399.0" layoutY="14.0" prefHeight="83.0" prefWidth="512.0" text="Sacred Bazaar" textAlignment="RIGHT" textFill="#da1313">
