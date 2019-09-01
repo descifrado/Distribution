@@ -2,6 +2,7 @@ package searchHandler;
 
 import request.SearchRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,12 +15,30 @@ public class Search {
 
     public List performSearch() {
 
-        Set filesByName;
-        Set filesByType;
-        Set filesByTag;
+        List filesByName = new NameSearch(searchRequest.getName()).performSearch();
+        List filesByType = new TypeSearch(searchRequest.getType()).performSearch();
+        List filesByTag = new TagSearch(searchRequest.getTags()).performSearch();
 
-  //      filesByName = new NameSearch();
+        List searchedList = new ArrayList<SearchFile>();
+        if(!filesByName.isEmpty()){
+            searchedList.addAll(filesByName);
+        }
+        if (searchedList.isEmpty() && !filesByType.isEmpty()){
+            searchedList.addAll(filesByType);
+        }
+        else if (!searchedList.isEmpty() && !filesByType.isEmpty()){
+            searchedList.retainAll(filesByType);
+        }
+        if (searchedList.isEmpty() && !filesByTag.isEmpty()){
+            searchedList.addAll(filesByTag);
+        }
+        else if (!searchedList.isEmpty() && !filesByTag.isEmpty()){
+            searchedList.retainAll(filesByTag);
+        }
+
 
         return null;
     }
+
+
 }

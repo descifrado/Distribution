@@ -39,30 +39,15 @@ public class NameSearch {
     }
 
     public static void main(String[] args) {
-        List l=new ArrayList<Integer>();
-        l.add(5);
-        l.add(6);
-        l.add(10);
-        l.add(15);
+        List l=new ArrayList<String>();
 
-        List m=new ArrayList<Integer>();
-        m.add(4);
-        m.add(6);
-        m.add(15);
-        m.add(20);
+        l.add("shrey");
+        l.add("anuj");
 
-        l.retainAll(m);
-        System.out.println(l);
-
-   //     l.add("shrey");
-   //     l.add("anuj");
-
-        NameSearch search=new NameSearch("s");
+        TagSearch search=new TagSearch(l);
         List files=search.performSearch();
-        for (Object str:
-             files) {
-            System.out.println(str);
-
-        }
+        for (SearchFile str:
+                (ArrayList<SearchFile>) files)
+            System.out.println(str.getFileUID());
     }
 }
