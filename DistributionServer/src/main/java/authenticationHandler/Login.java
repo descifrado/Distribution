@@ -1,5 +1,6 @@
 package authenticationHandler;
 
+import constants.ResponseCode;
 import data.User;
 import mainClasses.Main;
 import tools.UIDGenerator;
@@ -24,7 +25,7 @@ public class Login {
             PreparedStatement preparedStatement = Main.connection.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
             if(!rs.next()){
-                return new Response(UIDGenerator.generateuid(),null,false);
+                return new Response(UIDGenerator.generateuid(),null, ResponseCode.FAILED);
             }
             user = new User();
             user.setUserUID(rs.getString(1));
@@ -32,12 +33,12 @@ public class Login {
             user.setLastName(rs.getString(3));
             user.setEmail(rs.getString(4));
             user.setPhone(rs.getString(5));
-            return new Response((UIDGenerator.generateuid()),user,true);
+            return new Response((UIDGenerator.generateuid()),user,ResponseCode.SUCCESS);
 
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return new Response(UIDGenerator.generateuid(),null,false);
+        return new Response(UIDGenerator.generateuid(),null,ResponseCode.FAILED);
 
     }
 
