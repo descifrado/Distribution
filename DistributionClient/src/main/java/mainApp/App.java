@@ -17,8 +17,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        System.out.println("Shrey");
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+
+        Parent root = FXMLLoader.load(getClass().getResource("signup.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();

@@ -36,9 +36,7 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>11</release>
-                    <executable>
-                        /usr/lib/jvm/java-12-oracle/bin/java
-                    </executable>
+
                 </configuration>
             </plugin>
             <plugin>
@@ -47,9 +45,7 @@
                 <version>0.0.1</version>
                 <configuration>
                     <mainClass>mainApp.App</mainClass>
-                    <executable>
-                        /usr/lib/jvm/java-12-oracle/bin/java
-                    </executable>
+
                 </configuration>
             </plugin>
         </plugins>
