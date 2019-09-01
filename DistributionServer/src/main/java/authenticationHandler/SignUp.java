@@ -28,6 +28,7 @@ public class SignUp implements Serializable
     public Response insert()
     {
         String q="INSERT INTO User VALUES (?,?,?,?,?);";
+        String passwordQuery = "INSERT INTO Password VALUES (?,?)";
         try
         {
             PreparedStatement stmt= Main.connection.prepareStatement(q);
@@ -37,6 +38,12 @@ public class SignUp implements Serializable
             stmt.setString(4,this.email);
             stmt.setString(5,this.phone);
             stmt.executeUpdate();
+
+            stmt = Main.connection.prepareStatement(passwordQuery);
+            stmt.setString(1,this.userUID);
+            stmt.setString(2,this.password);
+            stmt.executeUpdate();
+
             return new Response((UIDGenerator.generateuid()),null, ResponseCode.SUCCESS);
         }
         catch (SQLException e)

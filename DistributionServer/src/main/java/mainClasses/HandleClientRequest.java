@@ -31,58 +31,37 @@ HandleClientRequest implements Runnable{
     public void run() {
         Request request = null;
         while(true){
+            
 
             try{
-                request = (Request)ois.readObject();
-            }
-            catch (IOException e){
-                e.printStackTrace();
-                return;
-            }catch (ClassNotFoundException e){
-                e.printStackTrace();
-            }
 
+                try{
+                    request = (Request)ois.readObject();
+                }catch (EOFException e){
+                    System.out.println("Client Disconnected..!!");
+                    return;
+                }
 
-            if(request.getRequestCode().equals(RequestCode.SIGNUP_REQUEST)) {
-
-                try {
+                if(request.getRequestCode().equals(RequestCode.SIGNUP_REQUEST)) {
                     SignUp signUp = new SignUp((SignUpRequest) request);
                     Response response = signUp.insert();
                     oos.writeObject(response);
                     oos.flush();
-                }catch (CloneNotSupportedException e){
-                    e.printStackTrace();
-                } catch (SocketException e){
-                    System.out.println("Client Disconneccted !!");
-                    return;
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
-            }else if(request.getRequestCode().equals(RequestCode.LOGIN_REQUEST)){
-                Login login = new Login((LoginRequest)request);
-                try{
+                }else if(request.getRequestCode().equals(RequestCode.LOGIN_REQUEST)){
+                    Login login = new Login((LoginRequest)request);
                     oos.writeObject(login.getResponse());
                     oos.flush();
-
-                }
-                catch (EOFException e){
-                    System.out.println("Client Disconnected !!!");
-                    return;
-                }
-                catch (IOException e){
-                    e.printStackTrace();
-                }
-            }else if(request.getRequestCode().equals(RequestCode.PEERLIST_REQUEST)){
-                try {
+                }else if(request.getRequestCode().equals(RequestCode.PEERLIST_REQUEST)){
                     PeerList peerList = new PeerList((PeerListRequest) request);
                     oos.writeObject(peerList.getPeerList());
                     oos.flush();
-                }catch (CloneNotSupportedException e){
-                    e.printStackTrace();
-                }catch (IOException e){
-                    e.printStackTrace();
+
                 }
+
+            }catch (Exception e){
+                e.printStackTrace();
             }
+
 
         }
     }
