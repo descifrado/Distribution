@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 01, 2019 at 12:08 AM
+-- Generation Time: Sep 01, 2019 at 01:54 PM
 -- Server version: 5.7.27-0ubuntu0.18.04.1
 -- PHP Version: 7.2.19-0ubuntu0.18.04.1
 
@@ -23,6 +23,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `File`
+--
+
+CREATE TABLE `File` (
+  `fileUID` varchar(256) NOT NULL,
+  `fileName` varchar(256) NOT NULL,
+  `location` varchar(256) NOT NULL,
+  `type` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `FileTags`
+--
+
+CREATE TABLE `FileTags` (
+  `fileUID` varchar(256) NOT NULL,
+  `tags` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Password`
 --
 
@@ -37,6 +61,18 @@ CREATE TABLE `Password` (
 
 INSERT INTO `Password` (`userUID`, `password`) VALUES
 ('123', 'suraj');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Peers`
+--
+
+CREATE TABLE `Peers` (
+  `fileUID` varchar(256) NOT NULL,
+  `userUID` varchar(256) NOT NULL,
+  `IP` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -62,6 +98,12 @@ INSERT INTO `User` (`userUID`, `firstName`, `lastName`, `emailID`, `contact`) VA
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `File`
+--
+ALTER TABLE `File`
+  ADD PRIMARY KEY (`fileUID`);
 
 --
 -- Indexes for table `User`
