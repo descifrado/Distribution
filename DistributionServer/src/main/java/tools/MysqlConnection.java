@@ -8,6 +8,8 @@ import java.sql.SQLException;
 
 public class MysqlConnection {
 
+
+
     public static Connection connect(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -19,6 +21,5 @@ public class MysqlConnection {
             e.printStackTrace();
         }
         return null;
-
     }
 }
