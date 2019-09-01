@@ -1,5 +1,6 @@
 package request;
 
+import constants.RequestCode;
 import data.User;
 
 import java.io.Serializable;
@@ -20,5 +21,9 @@ public class SignUpRequest implements Serializable
     public User getUser() throws CloneNotSupportedException
     {
         return (User) this.user.clone();
+    }
+
+    public RequestCode getRequestCode(){
+        return RequestCode.SIGNUP_REQUEST;
     }
 }
