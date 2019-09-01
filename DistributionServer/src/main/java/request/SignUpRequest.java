@@ -5,7 +5,7 @@ import data.User;
 
 import java.io.Serializable;
 
-public class SignUpRequest implements Serializable
+public class SignUpRequest extends Request implements Serializable
 {
     private String password;
     private User user;
@@ -23,6 +23,7 @@ public class SignUpRequest implements Serializable
         return (User) this.user.clone();
     }
 
+    @Override
     public RequestCode getRequestCode(){
         return RequestCode.SIGNUP_REQUEST;
     }

@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  *
  */
-public class LoginRequest implements Serializable {
+public class LoginRequest extends Request implements Serializable {
 
     /**
      *
@@ -60,6 +60,7 @@ public class LoginRequest implements Serializable {
      *
      * @return
      */
+    @Override
     public RequestCode getRequestCode(){
         return RequestCode.LOGIN_REQUEST;
     }
