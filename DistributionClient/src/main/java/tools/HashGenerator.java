@@ -13,10 +13,10 @@ public class HashGenerator {
         String sha1 = "";
         try
         {
-            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
-            crypt.reset();
-            crypt.update(str.getBytes("UTF-8"));
-            sha1 = byteToHex(crypt.digest());
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            md.reset();
+            md.update(str.getBytes("UTF-8"));
+            sha1 = byteToHex(md.digest());
         }
         catch(NoSuchAlgorithmException e)
         {
@@ -24,6 +24,18 @@ public class HashGenerator {
         }
         catch(UnsupportedEncodingException e)
         {
+            e.printStackTrace();
+        }
+        return sha1;
+    }
+
+    public static String hash(byte[] arr){
+        String sha1 = "";
+        try{
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            md.reset();
+            sha1 = byteToHex(md.digest(arr));
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return sha1;
