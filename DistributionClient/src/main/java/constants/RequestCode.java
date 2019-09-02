@@ -5,7 +5,8 @@ public enum RequestCode {
     LOGIN_REQUEST,
     SIGNUP_REQUEST,
     PEERLIST_REQUEST,
-    SEARCH_REQUEST;
+    SEARCH_REQUEST,
+    FILEUPLOAD_REQUEST;
 
     RequestCode(){
         this.toString();

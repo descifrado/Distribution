@@ -4,6 +4,7 @@ import authenticationHandler.Login;
 import authenticationHandler.SignUp;
 import constants.RequestCode;
 import data.PeerList;
+import fileHandler.FileUploadHandler;
 import request.*;
 
 import java.io.*;
@@ -55,6 +56,8 @@ HandleClientRequest implements Runnable{
                     PeerList peerList = new PeerList((PeerListRequest) request);
                     oos.writeObject(peerList.getPeerList());
                     oos.flush();
+                }else if(request.getRequestCode().equals(RequestCode.FILEUPLOAD_REQUEST)){
+                    FileUploadHandler fileUploadHandler = new FileUploadHandler((FileUploadRequest)request);
 
                 }
 
