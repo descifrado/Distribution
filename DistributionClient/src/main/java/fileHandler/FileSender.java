@@ -30,6 +30,7 @@ public class FileSender {
         try {
             RandomAccessFile aFile = null;
             File file = new File(path);
+            System.out.println(file.exists());
             aFile = new RandomAccessFile(file, "r");
             FileChannel inChannel = aFile.getChannel();
             ByteBuffer buffer = ByteBuffer.allocate(1024);

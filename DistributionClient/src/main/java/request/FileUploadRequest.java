@@ -3,9 +3,11 @@ package request;
 import constants.RequestCode;
 import data.File;
 
-public class FileUploadRequest extends Request {
-    File file;
+import java.io.Serializable;
 
+public class FileUploadRequest extends Request implements Serializable {
+    File file;
+    private static final long serialVersionUID = 1L;
     public FileUploadRequest(File file) {
         this.file = file;
     }
@@ -22,4 +24,5 @@ public class FileUploadRequest extends Request {
     public RequestCode getRequestCode() {
         return RequestCode.FILEUPLOAD_REQUEST;
     }
+
 }
