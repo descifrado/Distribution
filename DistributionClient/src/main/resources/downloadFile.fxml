@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="826.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_DownloadFile">
+   <children>
+      <Label layoutX="293.0" layoutY="26.0" prefHeight="128.0" prefWidth="478.0" text="Distribution" textAlignment="RIGHT" textFill="#da1313">
+         <font>
+            <Font name="System Bold" size="70.0" />
+         </font>
+      </Label>
+      <Label layoutX="923.0" layoutY="796.0" prefHeight="16.0" prefWidth="144.0" text="NobodyDoesItBetter" textFill="#58ccd0" />
+      <Label fx:id="status" alignment="CENTER" layoutX="437.0" layoutY="540.0" prefHeight="26.0" prefWidth="208.0" textFill="#c61111">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="416.0" layoutY="154.0" prefHeight="49.0" prefWidth="233.0" text="Search File" textFill="#bf2525">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <JFXListView fx:id="files" layoutX="84.0" layoutY="260.0" prefHeight="498.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
+      <JFXTextField fx:id="searchbyname" alignment="CENTER" editable="false" focusColor="#6880b2" labelFloat="true" layoutX="503.0" layoutY="348.0" prefHeight="33.0" prefWidth="189.0" promptText="Search By Name" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="searchbytype" alignment="CENTER" editable="false" focusColor="#6880b2" labelFloat="true" layoutX="503.0" layoutY="413.0" prefHeight="33.0" prefWidth="189.0" promptText="Search By Type" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="searchbytag" alignment="CENTER" editable="false" focusColor="#6880b2" labelFloat="true" layoutX="503.0" layoutY="476.0" prefHeight="33.0" prefWidth="189.0" promptText="Search By Tag" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="download" layoutX="520.0" layoutY="725.0" onAction="#ondownloadclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Download" textFill="#33bfc6">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </JFXButton>
+      <JFXButton fx:id="search" layoutX="520.0" layoutY="566.0" onAction="#onsearchclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Search" textFill="#33bfc6">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </JFXButton>
+   </children>
+   <stylesheets>
+      <URL value="@mainApp/backgroundsmall.css" />
+      <URL value="@mainApp/backgroundsmall.css" />
+   </stylesheets>
+</AnchorPane>
