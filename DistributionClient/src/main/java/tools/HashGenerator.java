@@ -8,7 +8,7 @@ import java.util.Formatter;
 
 public class HashGenerator {
 
-    private static String hash(String str)
+    public static String hash(String str)
     {
         String sha1 = "";
         try

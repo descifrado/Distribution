@@ -49,6 +49,7 @@ public class Controller_SignUp {
                 App.oisTracker = new ObjectInputStream(App.sockerTracker.getInputStream());
             }
             SignUpRequest signUpRequest = new SignUpRequest(HashGenerator.hash(password.getText()),user);
+            System.out.println(HashGenerator.hash(password.getText()));
             App.oosTracker.writeObject(signUpRequest);
             App.oosTracker.flush();
             Response response = (Response)App.oisTracker.readObject();
