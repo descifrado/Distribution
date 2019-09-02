@@ -2,7 +2,7 @@ package constants;
 
 public enum FileType {
 
-    Movie
+    MEDIA, ARCHIVE, TEXT, IMAGE, AUDIO, OTHER, UNCATEGORIZED
     ;
 
     FileType(){
