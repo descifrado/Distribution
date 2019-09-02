@@ -1,6 +1,7 @@
 package fileLoader;
 
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import tools.HashGenerator;
 
@@ -32,6 +33,8 @@ public class PieceGenerator {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         File jsonFile = new File(file.getParent(), fileName+".json");
@@ -49,5 +52,5 @@ public class PieceGenerator {
         return jsonFile;
     }
 
-    
+
 }
