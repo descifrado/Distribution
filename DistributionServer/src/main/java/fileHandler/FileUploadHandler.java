@@ -16,7 +16,7 @@ public class FileUploadHandler {
     String fileLocation;
     public FileUploadHandler(FileUploadRequest fileUploadRequest){
         this.fileUploadRequest = fileUploadRequest;
-        // fileLocation = //Set something here
+        this.fileLocation = System.getProperty("user.dir");
     }
 
     public Response getResponse(){

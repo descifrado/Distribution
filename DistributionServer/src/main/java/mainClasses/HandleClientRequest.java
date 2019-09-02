@@ -4,12 +4,14 @@ import authenticationHandler.Login;
 import authenticationHandler.SignUp;
 import constants.RequestCode;
 import data.PeerList;
+import fileHandler.FileReciever;
 import fileHandler.FileUploadHandler;
 import request.*;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.channels.SocketChannel;
 
 public class
 HandleClientRequest implements Runnable{
@@ -57,8 +59,11 @@ HandleClientRequest implements Runnable{
                     oos.writeObject(peerList.getPeerList());
                     oos.flush();
                 }else if(request.getRequestCode().equals(RequestCode.FILEUPLOAD_REQUEST)){
+                    FileReciever fileReciever = new FileReciever();
+                    fileReciever.readFile(fileReciever.createSocketChannel(),((FileUploadRequest)request).getFile().getFileUID());
                     FileUploadHandler fileUploadHandler = new FileUploadHandler((FileUploadRequest)request);
-
+                    oos.writeObject(fileUploadHandler.getResponse());
+                    oos.flush();
                 }
 
             }catch (Exception e){
