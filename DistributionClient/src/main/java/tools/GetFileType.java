@@ -7,9 +7,12 @@ import java.io.InputStreamReader;
 
 public class GetFileType
 {
-    private FileType ft;
+    private FileType ft=FileType.OTHER;
     public FileType getFileType(String path)
     {
+        String extra[]=path.split("/");
+        String fileName=extra[extra.length-1];
+        System.out.println(fileName);
         String s;
         Process p;
         String output="";
@@ -20,33 +23,33 @@ public class GetFileType
             while ((s = br.readLine()) != null)
                 output+=s;
             p.waitFor();
-            System.out.println ("exit: " + p.exitValue());
             p.destroy();
+            output=output.split("fileName")[0];
             output=output.split(",")[0];
             output=output.split(":")[1];
+            System.out.println(output);
             String out[]=output.split(" ");
             for(int i=0;i<out.length;i++) {
-                if (out[i].equalsIgnoreCase("media"))
-                    return FileType.MEDIA;
+                if (out[i].equalsIgnoreCase("media") || out[i].equalsIgnoreCase("matroska"))
+                    ft= FileType.MEDIA;
                 else if (out[i].equalsIgnoreCase("image"))
-                    return FileType.IMAGE;
+                    ft= FileType.IMAGE;
                 else if (out[i].equalsIgnoreCase("audio"))
-                    return FileType.AUDIO;
+                    ft= FileType.AUDIO;
                 else if (out[i].equalsIgnoreCase("text"))
-                    return FileType.TEXT;
+                    ft= FileType.TEXT;
                 else if (out[i].equalsIgnoreCase("archive"))
-                    return FileType.ARCHIVE;
-                else
-                    return FileType.OTHER;
+                    ft= FileType.ARCHIVE;
+                else if(out[i].equalsIgnoreCase("document"))
+                    ft= FileType.DOCUMENT;
             }
         }
         catch (Exception e)
         {
             e.printStackTrace();
             System.out.println(e.getMessage());
-            return FileType.UNCATEGORIZED;
+            ft= FileType.OTHER;
         }
-        System.out.println(output);
-        return FileType.UNCATEGORIZED;
+        return ft;
     }
 }
