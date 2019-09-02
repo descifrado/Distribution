@@ -1,10 +1,13 @@
 package searchHandler;
 
+import constants.ResponseCode;
+import data.File;
+import request.Response;
 import request.SearchRequest;
+import tools.UIDGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Search {
     private SearchRequest searchRequest;
@@ -13,7 +16,7 @@ public class Search {
         this.searchRequest = searchRequest;
     }
 
-    public List performSearch() {
+    public Response performSearch() {
 
         List filesByName = new NameSearch(searchRequest.getName()).performSearch();
         List filesByType = new TypeSearch(searchRequest.getType()).performSearch();
@@ -36,8 +39,15 @@ public class Search {
             searchedList.retainAll(filesByTag);
         }
 
-
-        return null;
+        List searchResult=new ArrayList<data.SearchFile>();
+        for (Object i: searchedList
+             ) {
+            SearchFile temp = (SearchFile) i;
+            File file=FileGetter.getFileByUID(temp.getFileUID());
+            searchResult.add(new data.SearchFile(file,temp.getPeers()));
+        }
+        Response response=new Response(UIDGenerator.generateuid(),searchResult, ResponseCode.SUCCESS);
+        return response;
     }
 
 
