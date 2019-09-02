@@ -39,8 +39,13 @@ HandleClientRequest implements Runnable{
             try{
 
                 try{
-                    request = (Request)ois.readObject();
+                    Object object=ois.readObject();
+                    System.out.println(object.getClass());
+                    request = (Request)object;
                 }catch (EOFException e){
+                    System.out.println("Client Disconnected..!!");
+                    return;
+                }catch (SocketException e){
                     System.out.println("Client Disconnected..!!");
                     return;
                 }
