@@ -47,7 +47,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="filePath1" alignment="CENTER" editable="false" focusColor="#6880b2" labelFloat="true" layoutX="207.0" layoutY="397.0" prefHeight="33.0" prefWidth="298.0" promptText="Enter Tag" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
+      <JFXTextField fx:id="tags" alignment="CENTER" editable="false" focusColor="#6880b2" labelFloat="true" layoutX="207.0" layoutY="397.0" prefHeight="33.0" prefWidth="298.0" promptText="Enter Tag" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
          <font>
             <Font size="18.0" />
          </font>
@@ -60,6 +60,19 @@
       <JFXButton fx:id="more" layoutX="561.0" layoutY="398.0" onAction="#onmoreclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="More" textFill="#33bfc6">
          <font>
             <Font size="18.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </JFXButton>
+      <Label fx:id="status" alignment="CENTER" layoutX="429.0" layoutY="657.0" prefHeight="26.0" prefWidth="208.0" textFill="#c61111">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="back" layoutX="472.0" layoutY="754.0" onAction="#onbackclicked" prefHeight="26.0" prefWidth="121.0" style="-fx-background-color: white;" text="Back" textFill="#33bfc6">
+         <font>
+            <Font size="17.0" />
          </font>
          <effect>
             <Bloom />

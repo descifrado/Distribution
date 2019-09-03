@@ -33,9 +33,9 @@ public class UIDGenerator {
         }
         return  uid;
     }
-    public static String generateuid(String productID){
-        String temp=UIDGenerator.generateuid();
-        temp=temp+productID;
+    public static String generateuid(String string){
+        String temp="";//UIDGenerator.generateuid();
+        temp=temp+string;
         return ""+UUID.nameUUIDFromBytes(temp.getBytes());
     }
 }
