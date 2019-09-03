@@ -28,7 +28,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("/login.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Distribution");
         primaryStage.setScene(new Scene(root, 1081, 826));
         primaryStage.show();
     }

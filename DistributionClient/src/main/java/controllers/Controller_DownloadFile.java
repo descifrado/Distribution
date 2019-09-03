@@ -40,5 +40,7 @@ public class Controller_DownloadFile {
         String currentTag=searchbytag.getText();
         currentTags.add(currentTag);
         tags.getItems().addAll(currentTags);
+        currentTags.clear();
+        searchbytag.setText("");
     }
 }

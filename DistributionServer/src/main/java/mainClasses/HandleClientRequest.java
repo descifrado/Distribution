@@ -22,6 +22,7 @@ HandleClientRequest implements Runnable{
     String userIP;
     public HandleClientRequest(Socket socket){
         this.socket=socket;
+        System.out.println(socket.getInetAddress().getCanonicalHostName());
         try{
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
