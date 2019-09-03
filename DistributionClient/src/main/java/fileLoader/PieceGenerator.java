@@ -4,12 +4,14 @@ package fileLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 import tools.HashGenerator;
+import tools.UIDGenerator;
 
 import java.io.*;
 import java.util.Iterator;
 
 public class PieceGenerator {
-    private static JSONObject getJSON(File file){
+
+    public static JSONObject getJSON(File file){
         JSONObject fileData = new JSONObject();
 
         int pieceCounter = 1;
@@ -39,7 +41,7 @@ public class PieceGenerator {
         return fileData;
     }
 
-    private static String generateHash(JSONObject json){
+    public static String generateHash(JSONObject json){
 
         String hash="";
         Iterator<String> keys = json.keys();
@@ -53,22 +55,16 @@ public class PieceGenerator {
                 e.printStackTrace();
             }
         }
-        return hash;
+        return UIDGenerator.generateuid(hash);
     }
 
-    public static String generateHash(File file){
+    public static String generateJSON(JSONObject jsonObject,File file){
 
-        JSONObject fileData=getJSON(file);
-        return generateHash(fileData);
-    }
-    public static String generateJSON(File file){
-
-        JSONObject fileData=getJSON(file);
 
         String fileName = file.getName();
 
         File jsonFile = new File(file.getParent(), fileName+".json");
-        String jsonString=fileData.toString();
+        String jsonString=jsonObject.toString();
         jsonString=jsonString.replace(",",",\n");
         System.out.println(jsonString);
         try (FileOutputStream out = new FileOutputStream(jsonFile)) {
@@ -79,8 +75,7 @@ public class PieceGenerator {
             e.printStackTrace();
         }
 
-        return generateHash(fileData);
+        return generateHash(jsonObject);
     }
-
 
 }

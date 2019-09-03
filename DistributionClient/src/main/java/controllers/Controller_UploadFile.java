@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mainApp.App;
+import org.json.JSONObject;
 import request.FileUploadRequest;
 import request.Response;
 import request.SignUpRequest;
@@ -76,7 +77,8 @@ public class Controller_UploadFile
             myfile.setFileName(fileName);
             myfile.setType(GetFileType.getFileType(path));
             myfile.setTags(tagSet);
-            myfile.setFileUID(UIDGenerator.generateuid(PieceGenerator.generateJSON(file)));
+            JSONObject fileJSON=PieceGenerator.getJSON(file);
+            myfile.setFileUID(UIDGenerator.generateuid(PieceGenerator.generateJSON(fileJSON,file)));
             try{
                 if(App.sockerTracker == null){
                     App.sockerTracker = new Socket(App.serverIP, App.portNo);
