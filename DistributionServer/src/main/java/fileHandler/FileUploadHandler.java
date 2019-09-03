@@ -16,11 +16,11 @@ public class FileUploadHandler {
     String fileLocation;
     private String userUID;
     private String userIP;
-    public FileUploadHandler(FileUploadRequest fileUploadRequest,String fileLocation){
+    public FileUploadHandler(FileUploadRequest fileUploadRequest,String fileLocation,String userIP){
         this.fileUploadRequest = fileUploadRequest;
         this.fileLocation = fileLocation;
         this.userUID = fileUploadRequest.getUserUID();
-        this.userIP = fileUploadRequest.getUserIP();
+        this.userIP = userIP;
     }
 
     public Response getResponse(){

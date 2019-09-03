@@ -14,11 +14,11 @@ public class FileCheckHandler {
     private String fileUID;
     private String userUID;
     private String userIP;
-    public FileCheckHandler(FileCheckRequest fileCheckRequest){
+    public FileCheckHandler(FileCheckRequest fileCheckRequest,String userIP){
         this.fileCheckRequest = fileCheckRequest;
         this.fileUID = fileCheckRequest.getFile().getFileUID();
         this.userUID = fileCheckRequest.getUserUID();
-        this.userIP = fileCheckRequest.getUserIP();
+        this.userIP = userIP;
     }
 
     public Response getResponse(){

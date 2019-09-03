@@ -19,11 +19,13 @@ HandleClientRequest implements Runnable{
     private Socket socket ;
     ObjectOutputStream oos;
     ObjectInputStream ois ;
+    String userIP;
     public HandleClientRequest(Socket socket){
         this.socket=socket;
         try{
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
+            userIP = socket.getInetAddress().getCanonicalHostName();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -66,11 +68,11 @@ HandleClientRequest implements Runnable{
                     FileReciever fileReciever = new FileReciever();
                     String cwd=System.getProperty("user.dir");
                     fileReciever.readFile(fileReciever.createSocketChannel(Main.getServerSocketChannel()),((FileUploadRequest)request).getFile().getFileUID(),cwd+"/jsonFiles");
-                    FileUploadHandler fileUploadHandler = new FileUploadHandler((FileUploadRequest)request,cwd+"/jsonFiles");
+                    FileUploadHandler fileUploadHandler = new FileUploadHandler((FileUploadRequest)request,cwd+"/jsonFiles",this.userIP);
                     oos.writeObject(fileUploadHandler.getResponse());
                     oos.flush();
                 }else  if(request.getRequestCode().equals(RequestCode.FILECHECK_REQUEST)){
-                    FileCheckHandler fileCheckHandler = new FileCheckHandler((FileCheckRequest)request);
+                    FileCheckHandler fileCheckHandler = new FileCheckHandler((FileCheckRequest)request,this.userIP);
                     oos.writeObject(fileCheckHandler.getResponse());
                     oos.flush();
                 }
