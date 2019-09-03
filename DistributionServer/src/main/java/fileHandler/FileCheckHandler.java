@@ -24,9 +24,9 @@ public class FileCheckHandler {
             ResultSet rs = preparedStatement.executeQuery();
             if(!rs.next()){
 //                Need to Enter new Tags in Tags Table before sending response.
-                return new Response(null,null, ResponseCode.FAILED);
+                return new Response(null,null, ResponseCode.SUCCESS);
             }
-            return new Response(null,null,ResponseCode.SUCCESS);
+            return new Response(null,null,ResponseCode.FAILED);
 
         }catch (SQLException e){
             e.printStackTrace();
