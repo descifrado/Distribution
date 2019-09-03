@@ -17,10 +17,13 @@ import java.io.IOException;
 public class Controller_Dashboard
 {
     @FXML
-    public JFXTextField name;
+    public JFXTextField firstname,lastname,email,phone;
     public JFXButton sharefile,download,logout;
     public void initialize(){
-        name.setText(App.user.getFirstName());
+        firstname.setText(App.user.getFirstName());
+        lastname.setText(App.user.getLastName());
+        email.setText(App.user.getEmail());
+        phone.setText(App.user.getPhone());
     }
 
 
@@ -70,7 +73,7 @@ public class Controller_Dashboard
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                Stage primaryStage = (Stage) name.getScene().getWindow();
+                Stage primaryStage = (Stage) firstname.getScene().getWindow();
                 Parent root = null;
                 try {
 
