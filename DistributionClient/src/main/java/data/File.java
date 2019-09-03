@@ -1,6 +1,8 @@
 package data;
 
 
+import constants.FileType;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -13,7 +15,7 @@ public class File implements Serializable, Cloneable {
      **/
     private String fileUID;
     private String fileName;
-    private String  type;
+    private FileType type;
     private Set tags;
 
     /**
@@ -23,7 +25,7 @@ public class File implements Serializable, Cloneable {
      * @param type
      * @param tags
      */
-    public File(String fileUID, String fileName, String type, Set tags) {
+    public File(String fileUID, String fileName, FileType type, Set tags) {
         this.fileUID = fileUID;
         this.fileName = fileName;
         this.type = type;
@@ -66,7 +68,7 @@ public class File implements Serializable, Cloneable {
      *
      * @return
      */
-    public String getType() {
+    public FileType getType() {
         return type;
     }
 
@@ -74,7 +76,7 @@ public class File implements Serializable, Cloneable {
      *
      * @param type
      */
-    public void setType(String type) {
+    public void setType(FileType type) {
         this.type = type;
     }
 

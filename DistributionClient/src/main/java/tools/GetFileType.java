@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 
 public class GetFileType
 {
-    private FileType ft=FileType.OTHER;
-    public FileType getFileType(String path)
+    private static FileType ft=FileType.OTHER;
+    public static FileType getFileType(String path)
     {
         String extra[]=path.split("/");
         String fileName=extra[extra.length-1];

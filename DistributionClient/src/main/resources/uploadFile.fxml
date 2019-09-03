@@ -16,7 +16,7 @@
             </font>
         </Label>
         <Label layoutX="923.0" layoutY="796.0" prefHeight="16.0" prefWidth="144.0" text="NobodyDoesItBetter" textFill="#58ccd0" />
-        <Label alignment="CENTER" layoutX="416.0" layoutY="154.0" prefHeight="49.0" prefWidth="233.0" text="Search File" textFill="#bf2525">
+        <Label alignment="CENTER" layoutX="416.0" layoutY="154.0" prefHeight="49.0" prefWidth="233.0" text="Upload File" textFill="#bf2525">
             <font>
                 <Font size="40.0" />
             </font>
@@ -26,7 +26,7 @@
                 <Font size="18.0" />
             </font>
         </JFXTextField>
-        <JFXButton fx:id="download" layoutX="463.0" layoutY="527.0" onAction="#onuploadclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Upload" textFill="#33bfc6">
+        <JFXButton fx:id="upload" layoutX="463.0" layoutY="527.0" onAction="#onuploadclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Upload" textFill="#33bfc6">
             <font>
                 <Font size="18.0" />
             </font>
@@ -47,6 +47,24 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <JFXTextField fx:id="filePath1" alignment="CENTER" editable="false" focusColor="#6880b2" labelFloat="true" layoutX="207.0" layoutY="397.0" prefHeight="33.0" prefWidth="298.0" promptText="Enter Tag" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <Label fx:id="labelPath1" layoutX="33.0" layoutY="397.0" prefHeight="34.0" prefWidth="76.0" text="TAGS" textFill="#58ccd0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="more" layoutX="561.0" layoutY="398.0" onAction="#onmoreclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="More" textFill="#33bfc6">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </JFXButton>
     </children>
     <stylesheets>
         <URL value="@mainApp/backgroundsmall.css" />
