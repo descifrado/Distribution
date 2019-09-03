@@ -3,6 +3,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import constants.ResponseCode;
+import fileHandler.FileSender;
 import fileLoader.PieceGenerator;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -78,6 +79,8 @@ public class Controller_UploadFile
                 FileUploadRequest fileUploadRequest = new FileUploadRequest(myfile);
                 App.oosTracker.writeObject(fileUploadRequest);
                 App.oosTracker.flush();
+                FileSender fileSender=new FileSender();
+                fileSender.sendFile(fileSender.createSocketChannel(),path);
                 Response response = (Response)App.oisTracker.readObject();
                 if(response.getResponseCode().equals(ResponseCode.SUCCESS)){
                     Platform.runLater(new Runnable() {
@@ -114,7 +117,7 @@ public class Controller_UploadFile
                 Parent root = null;
                 try {
 
-                    root = FXMLLoader.load(getClass().getResource("/login.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/dashboard.fxml"));
                 }catch(IOException e){
                     e.printStackTrace();
                 }
