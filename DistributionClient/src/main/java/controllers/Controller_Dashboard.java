@@ -1,4 +1,5 @@
 package controllers;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import data.User;
 import javafx.application.Platform;
@@ -17,12 +18,28 @@ public class Controller_Dashboard
 {
     @FXML
     public JFXTextField name;
+    public JFXButton sharefile,download,logout;
     public void initialize(){
         name.setText(App.user.getFirstName());
     }
 
 
     public void onshareclicked(ActionEvent actionEvent) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage primaryStage = (Stage) sharefile.getScene().getWindow();
+                Parent root = null;
+                try {
+
+                    root = FXMLLoader.load(getClass().getResource("/uploadFile.fxml"));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                primaryStage.setScene(new Scene(root, 1081, 826));
+
+            }
+        });
     }
 
     public void ondownloadclicked(ActionEvent actionEvent) {
