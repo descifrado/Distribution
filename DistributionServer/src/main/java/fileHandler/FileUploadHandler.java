@@ -32,7 +32,7 @@ public class FileUploadHandler {
             preparedStatement.setString(1,file.getFileUID());
             preparedStatement.setString(2,file.getFileName());
             preparedStatement.setString(3,fileLocation);
-            preparedStatement.setString(4,file.getType());
+            preparedStatement.setString(4,file.getType().toString());
             preparedStatement.executeUpdate();
 
             preparedStatement = Main.connection.prepareStatement(q2);

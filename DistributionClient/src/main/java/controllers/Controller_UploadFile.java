@@ -60,7 +60,7 @@ public class Controller_UploadFile
     {
         if(!tags.getText().isEmpty())
         {
-            System.out.println(tags.getText());
+            //System.out.println(tags.getText());
             tagSet.add(tags.getText());
         }
         tags.clear();
@@ -128,7 +128,7 @@ public class Controller_UploadFile
                 }catch(IOException e){
                     e.printStackTrace();
                 }
-                primaryStage.setScene(new Scene(root, 1081, 826));
+                primaryStage.setScene(new Scene(root, 1303, 961));
 
             }
         });
