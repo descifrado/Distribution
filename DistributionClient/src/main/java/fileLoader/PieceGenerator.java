@@ -6,9 +6,10 @@ import org.json.JSONObject;
 import tools.HashGenerator;
 
 import java.io.*;
+import java.util.Iterator;
 
 public class PieceGenerator {
-    public static File generateJSON(File file){
+    public static String generateJSON(File file){
         JSONObject fileData = new JSONObject();
 
         int pieceCounter = 1;
@@ -17,7 +18,6 @@ public class PieceGenerator {
 
         String fileName = file.getName();
 
-        //try-with-resources to ensure closing stream
         try (FileInputStream fis = new FileInputStream(file);
              BufferedInputStream bis = new BufferedInputStream(fis)) {
 
@@ -37,6 +37,19 @@ public class PieceGenerator {
             e.printStackTrace();
         }
 
+        String hash="";
+        Iterator<String> keys = fileData.keys();
+
+        while(keys.hasNext()) {
+            String key = keys.next();
+            try {
+                String thash=fileData.getString(key);
+                hash=HashGenerator.hash(hash+thash);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         File jsonFile = new File(file.getParent(), fileName+".json");
         String jsonString=fileData.toString();
         jsonString=jsonString.replace(",",",\n");
@@ -49,7 +62,7 @@ public class PieceGenerator {
             e.printStackTrace();
         }
 
-        return jsonFile;
+        return hash;
     }
 
 
