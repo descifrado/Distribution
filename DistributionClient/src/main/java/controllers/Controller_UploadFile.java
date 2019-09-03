@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mainApp.App;
 import org.json.JSONObject;
+import request.FileCheckRequest;
 import request.FileUploadRequest;
 import request.Response;
 import request.SignUpRequest;
@@ -79,12 +80,24 @@ public class Controller_UploadFile
             myfile.setTags(tagSet);
             JSONObject fileJSON=PieceGenerator.getJSON(file);
             myfile.setFileUID(UIDGenerator.generateuid(PieceGenerator.generateJSON(fileJSON,file)));
+
             try{
                 if(App.sockerTracker == null){
                     App.sockerTracker = new Socket(App.serverIP, App.portNo);
                     App.oosTracker = new ObjectOutputStream(App.sockerTracker.getOutputStream());
                     App.oisTracker = new ObjectInputStream(App.sockerTracker.getInputStream());
                 }
+                FileCheckRequest fileCheckRequest =  new FileCheckRequest(myfile);
+                App.oosTracker.writeObject(fileCheckRequest);
+                App.oosTracker.flush();
+                Response fileCheckResponse = (Response)App.oisTracker.readObject();
+                if(fileCheckResponse.getResponseCode().equals(ResponseCode.FAILED)){
+                    status.setText("File Exists");
+                    return;
+                }
+
+
+                
                 FileUploadRequest fileUploadRequest = new FileUploadRequest(myfile);
                 App.oosTracker.writeObject(fileUploadRequest);
                 App.oosTracker.flush();
