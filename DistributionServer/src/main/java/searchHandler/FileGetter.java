@@ -1,5 +1,6 @@
 package searchHandler;
 
+import constants.FileType;
 import data.File;
 import mainClasses.Main;
 
@@ -21,7 +22,7 @@ public class FileGetter {
             statement.setString(1,UID);
             ResultSet resultSet=statement.executeQuery();
             while (resultSet.next()) {
-                file = new File(UID, resultSet.getString("fileName"), resultSet.getString("type"), null);
+                file = new File(UID, resultSet.getString("fileName"), FileType.valueOf(resultSet.getString("type")), null);
             }
             statement = Main.connection.prepareStatement(tagQuery);
             statement.setString(1,UID);

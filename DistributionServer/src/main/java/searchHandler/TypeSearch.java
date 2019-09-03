@@ -17,7 +17,7 @@ public class TypeSearch {
     }
 
     public List performSearch() {
-        if (fileType.equals(FileType.All))return new ArrayList<SearchFile>();
+        if (fileType.equals(FileType.ALL))return new ArrayList<SearchFile>();
 
         List files = new ArrayList<SearchFile>();
 

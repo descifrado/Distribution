@@ -37,7 +37,7 @@ public class SearchRequest extends Request{
      * @param name
      */
     public SearchRequest(String name) {
-        this(name,FileType.All,null);
+        this(name,FileType.ALL,null);
     }
 
     /**
@@ -53,7 +53,7 @@ public class SearchRequest extends Request{
      * @param tags
      */
     public SearchRequest(List<String> tags) {
-        this("",FileType.All,tags);
+        this("",FileType.ALL,tags);
     }
 
     /**
@@ -80,7 +80,7 @@ public class SearchRequest extends Request{
      * @param tags
      */
     public SearchRequest(String name, List<String> tags) {
-        this(name,FileType.All,tags);
+        this(name,FileType.ALL,tags);
     }
 
     /**
