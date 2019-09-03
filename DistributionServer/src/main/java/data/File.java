@@ -14,7 +14,7 @@ public class File implements Serializable, Cloneable {
     private String fileUID;
     private String fileName;
     private String  type;
-    private Set<String> tags;
+    private Set tags;
 
     /**
      *
@@ -23,7 +23,7 @@ public class File implements Serializable, Cloneable {
      * @param type
      * @param tags
      */
-    public File(String fileUID, String fileName, String type, Set<String> tags) {
+    public File(String fileUID, String fileName, String type, Set tags) {
         this.fileUID = fileUID;
         this.fileName = fileName;
         this.type = type;
@@ -90,7 +90,7 @@ public class File implements Serializable, Cloneable {
      *
      * @param tags
      */
-    public void setTags(Set<String> tags) {
+    public void setTags(Set tags) {
         this.tags = tags;
     }
 

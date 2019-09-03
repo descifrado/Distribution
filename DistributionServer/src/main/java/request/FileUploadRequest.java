@@ -6,7 +6,7 @@ import data.File;
 import java.io.Serializable;
 
 public class FileUploadRequest extends Request implements Serializable {
-    private static final long serialVersionUID=1L;
+//    private static final long serialVersionUID=1L;
     File file;
 
     public FileUploadRequest(File file) {

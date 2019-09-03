@@ -34,8 +34,6 @@ HandleClientRequest implements Runnable{
     public void run() {
         Request request = null;
         while(true){
-
-
             try{
 
                 try{
@@ -65,8 +63,9 @@ HandleClientRequest implements Runnable{
                     oos.flush();
                 }else if(request.getRequestCode().equals(RequestCode.FILEUPLOAD_REQUEST)){
                     FileReciever fileReciever = new FileReciever();
-                    fileReciever.readFile(fileReciever.createSocketChannel(),((FileUploadRequest)request).getFile().getFileUID());
-                    FileUploadHandler fileUploadHandler = new FileUploadHandler((FileUploadRequest)request);
+                    String cwd=System.getProperty("user.dir");
+                    fileReciever.readFile(fileReciever.createSocketChannel(Main.getServerSocketChannel()),((FileUploadRequest)request).getFile().getFileUID(),cwd+"/jsonFiles");
+                    FileUploadHandler fileUploadHandler = new FileUploadHandler((FileUploadRequest)request,cwd+"/jsonFiles");
                     oos.writeObject(fileUploadHandler.getResponse());
                     oos.flush();
                 }

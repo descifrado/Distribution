@@ -12,12 +12,9 @@ import java.nio.channels.SocketChannel;
 public class FileReciever {
 
 
-    public SocketChannel createSocketChannel(){
+    public SocketChannel createSocketChannel(ServerSocketChannel serverSocketChannel){
         try {
-            ServerSocketChannel serverSocketChannel = null;
             SocketChannel socketChannel = null;
-            serverSocketChannel = ServerSocketChannel.open();
-            serverSocketChannel.socket().bind(new InetSocketAddress(9000));
             socketChannel = serverSocketChannel.accept();
             System.out.println("Connected With Client For File IO");
             return socketChannel;
@@ -28,13 +25,13 @@ public class FileReciever {
         return null;
     }
 
-    public void readFile(SocketChannel socketChannel,String fileName){
+    public void readFile(SocketChannel socketChannel,String fileName,String filePath){
         RandomAccessFile aFile = null;
         try {
             String cwd = System.getProperty("user.dir");
-            File file = new File(cwd + "/" + fileName);
+            File file = new File(filePath + System.getProperty("file.separator") + fileName);
             file.createNewFile();
-            aFile = new RandomAccessFile(cwd+"/"+fileName,"rw");
+            aFile = new RandomAccessFile(filePath+ System.getProperty("file.separator") +fileName,"rw");
             ByteBuffer buffer = ByteBuffer.allocate(1024);
             FileChannel fileChannel = aFile.getChannel();
             while (socketChannel.read(buffer)> 0) {

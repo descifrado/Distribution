@@ -14,18 +14,20 @@ import java.util.Set;
 public class FileUploadHandler {
     FileUploadRequest fileUploadRequest;
     String fileLocation;
-    public FileUploadHandler(FileUploadRequest fileUploadRequest){
+    public FileUploadHandler(FileUploadRequest fileUploadRequest,String fileLocation){
         this.fileUploadRequest = fileUploadRequest;
-        this.fileLocation = System.getProperty("user.dir");
+        this.fileLocation = fileLocation;
     }
 
     public Response getResponse(){
 
-        while(!new File(fileLocation).exists()){}
+        if(!new File(fileLocation).exists()){
+            return new Response(UIDGenerator.generateuid(),null,ResponseCode.FAILED);
+        }
+        data.File file = fileUploadRequest.getFile();
         String q1="INSERT INTO File VALUES (?,?,?,?);";
         String q2="INSERT INTO FileTags VALUES (?,?);";
         try{
-            data.File file = fileUploadRequest.getFile();
             PreparedStatement preparedStatement = Main.connection.prepareStatement(q1);
             preparedStatement.setString(1,file.getFileUID());
             preparedStatement.setString(2,file.getFileName());
@@ -38,13 +40,16 @@ public class FileUploadHandler {
             for(String tag : tags){
                 preparedStatement.setString(1,file.getFileUID());
                 preparedStatement.setString(2,tag);
+                preparedStatement.executeUpdate();
             }
-            preparedStatement.executeUpdate();
             return new Response(UIDGenerator.generateuid(),null,ResponseCode.SUCCESS);
 
         }catch (SQLException e){
+            File f=new File(fileLocation+"/"+file.getFileUID());
+            f.delete();
             e.printStackTrace();
         }
+
         return new Response(UIDGenerator.generateuid(),null,ResponseCode.FAILED);
     }
 }
