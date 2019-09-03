@@ -102,7 +102,7 @@ public class Controller_UploadFile
                 App.oosTracker.writeObject(fileUploadRequest);
                 App.oosTracker.flush();
                 FileSender fileSender=new FileSender();
-                fileSender.sendFile(fileSender.createSocketChannel(),path);
+                fileSender.sendFile(fileSender.createSocketChannel(),path+".json");
                 Response response = (Response)App.oisTracker.readObject();
                 if(response.getResponseCode().equals(ResponseCode.SUCCESS)){
                     Platform.runLater(new Runnable() {
