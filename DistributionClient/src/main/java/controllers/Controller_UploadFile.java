@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mainApp.App;
@@ -33,9 +34,11 @@ import java.util.Set;
 public class Controller_UploadFile
 {
     @FXML
-    public JFXTextField filePath,tags,status;
+    public JFXTextField filePath,tags;
     @FXML
     public JFXButton browse,upload,more,back;
+    @FXML
+    Label status;
     private data.File myfile=new data.File(null,null,null,null);
     private Set<String> tagSet=new HashSet<String>();
     private String path,fileName;
@@ -56,8 +59,12 @@ public class Controller_UploadFile
     public void onmoreclicked()
     {
         if(!tags.getText().isEmpty())
+        {
+            System.out.println(tags.getText());
             tagSet.add(tags.getText());
-        tags.setText("");
+        }
+        tags.clear();
+
     }
     public void onuploadclicked()
     {

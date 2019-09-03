@@ -65,11 +65,6 @@
             <Bloom />
          </effect>
       </JFXButton>
-      <Label fx:id="status" alignment="CENTER" layoutX="429.0" layoutY="657.0" prefHeight="26.0" prefWidth="208.0" textFill="#c61111">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
       <JFXButton fx:id="back" layoutX="472.0" layoutY="754.0" onAction="#onbackclicked" prefHeight="26.0" prefWidth="121.0" style="-fx-background-color: white;" text="Back" textFill="#33bfc6">
          <font>
             <Font size="17.0" />
@@ -78,6 +73,11 @@
             <Bloom />
          </effect>
       </JFXButton>
+      <Label fx:id="status" alignment="CENTER" layoutX="437.0" layoutY="654.0" prefHeight="26.0" prefWidth="208.0" textFill="#c61111">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
     </children>
     <stylesheets>
         <URL value="@mainApp/backgroundsmall.css" />
