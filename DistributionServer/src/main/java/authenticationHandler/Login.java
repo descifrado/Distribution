@@ -21,7 +21,6 @@ public class Login {
 
         String query = "SELECT * FROM User INNER JOIN Password ON User.userUID = Password.userUID WHERE User.emailID=\"" +
                 loginRequest.getEmailId() + "\" AND Password.password = \"" + loginRequest.getPassword()+"\"";
-        System.out.println(query);
         try {
             PreparedStatement preparedStatement = Main.connection.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();

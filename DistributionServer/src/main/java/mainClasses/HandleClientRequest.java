@@ -4,6 +4,7 @@ import authenticationHandler.Login;
 import authenticationHandler.SignUp;
 import constants.RequestCode;
 import data.PeerList;
+import fileHandler.FileCheckHandler;
 import fileHandler.FileReciever;
 import fileHandler.FileUploadHandler;
 import request.*;
@@ -67,6 +68,10 @@ HandleClientRequest implements Runnable{
                     fileReciever.readFile(fileReciever.createSocketChannel(Main.getServerSocketChannel()),((FileUploadRequest)request).getFile().getFileUID(),cwd+"/jsonFiles");
                     FileUploadHandler fileUploadHandler = new FileUploadHandler((FileUploadRequest)request,cwd+"/jsonFiles");
                     oos.writeObject(fileUploadHandler.getResponse());
+                    oos.flush();
+                }else  if(request.getRequestCode().equals(RequestCode.FILECHECK_REQUEST)){
+                    FileCheckHandler fileCheckHandler = new FileCheckHandler((FileCheckRequest)request);
+                    oos.writeObject(fileCheckHandler.getResponse());
                     oos.flush();
                 }
             }catch (Exception e){
