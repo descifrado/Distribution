@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.Iterator;
 
 public class PieceGenerator {
-    public static String generateJSON(File file){
+    private static JSONObject getJSON(File file){
         JSONObject fileData = new JSONObject();
 
         int pieceCounter = 1;
@@ -36,19 +36,36 @@ public class PieceGenerator {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return fileData;
+    }
+
+    private static String generateHash(JSONObject json){
 
         String hash="";
-        Iterator<String> keys = fileData.keys();
+        Iterator<String> keys = json.keys();
 
         while(keys.hasNext()) {
             String key = keys.next();
             try {
-                String thash=fileData.getString(key);
+                String thash=json.getString(key);
                 hash=HashGenerator.hash(hash+thash);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+        return hash;
+    }
+
+    public static String generateHash(File file){
+
+        JSONObject fileData=getJSON(file);
+        return generateHash(fileData);
+    }
+    public static String generateJSON(File file){
+
+        JSONObject fileData=getJSON(file);
+
+        String fileName = file.getName();
 
         File jsonFile = new File(file.getParent(), fileName+".json");
         String jsonString=fileData.toString();
@@ -62,7 +79,7 @@ public class PieceGenerator {
             e.printStackTrace();
         }
 
-        return hash;
+        return generateHash(fileData);
     }
 
 

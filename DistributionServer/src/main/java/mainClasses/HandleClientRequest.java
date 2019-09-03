@@ -69,7 +69,6 @@ HandleClientRequest implements Runnable{
                     oos.writeObject(fileUploadHandler.getResponse());
                     oos.flush();
                 }
-
             }catch (Exception e){
                 e.printStackTrace();
             }
