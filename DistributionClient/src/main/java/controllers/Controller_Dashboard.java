@@ -43,6 +43,21 @@ public class Controller_Dashboard
     }
 
     public void ondownloadclicked(ActionEvent actionEvent) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage primaryStage = (Stage) download.getScene().getWindow();
+                Parent root = null;
+                try {
+
+                    root = FXMLLoader.load(getClass().getResource("/downloadFile.fxml"));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                primaryStage.setScene(new Scene(root, 1081, 826));
+
+            }
+        });
     }
 
     public void onlogoutclicked(ActionEvent actionEvent) {
