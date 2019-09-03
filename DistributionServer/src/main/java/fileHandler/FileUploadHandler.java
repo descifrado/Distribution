@@ -14,9 +14,13 @@ import java.util.Set;
 public class FileUploadHandler {
     FileUploadRequest fileUploadRequest;
     String fileLocation;
+    private String userUID;
+    private String userIP;
     public FileUploadHandler(FileUploadRequest fileUploadRequest,String fileLocation){
         this.fileUploadRequest = fileUploadRequest;
         this.fileLocation = fileLocation;
+        this.userUID = fileUploadRequest.getUserUID();
+        this.userIP = fileUploadRequest.getUserIP();
     }
 
     public Response getResponse(){
@@ -42,6 +46,12 @@ public class FileUploadHandler {
                 preparedStatement.setString(2,tag);
                 preparedStatement.executeUpdate();
             }
+            String q="INSERT INTO Peers VALUES (?,?,?);";
+            PreparedStatement stmt= Main.connection.prepareStatement(q);
+            stmt.setString(1,this.fileUploadRequest.getFile().getFileUID());
+            stmt.setString(2,this.userUID);
+            stmt.setString(3,this.userIP);
+            stmt.executeUpdate();
             return new Response(UIDGenerator.generateuid(),null,ResponseCode.SUCCESS);
 
         }catch (SQLException e){

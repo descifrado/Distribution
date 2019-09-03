@@ -2,6 +2,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.tools.javac.Main;
 import constants.ResponseCode;
 import fileHandler.FileSender;
 import fileLoader.PieceGenerator;
@@ -29,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashSet;
 import java.util.Set;
@@ -87,18 +89,18 @@ public class Controller_UploadFile
                     App.oosTracker = new ObjectOutputStream(App.sockerTracker.getOutputStream());
                     App.oisTracker = new ObjectInputStream(App.sockerTracker.getInputStream());
                 }
-                FileCheckRequest fileCheckRequest =  new FileCheckRequest(myfile);
+                FileCheckRequest fileCheckRequest =  new FileCheckRequest(myfile, App.user.getUserUID(), InetAddress.getLocalHost().getHostAddress());
                 App.oosTracker.writeObject(fileCheckRequest);
                 App.oosTracker.flush();
                 Response fileCheckResponse = (Response)App.oisTracker.readObject();
                 if(fileCheckResponse.getResponseCode().equals(ResponseCode.FAILED)){
-                    status.setText("File Exists");
+                    status.setText("Upload Successful(Exists)");
                     return;
                 }
 
 
 
-                FileUploadRequest fileUploadRequest = new FileUploadRequest(myfile);
+                FileUploadRequest fileUploadRequest = new FileUploadRequest(myfile,App.user.getUserUID(),InetAddress.getLocalHost().getHostAddress());
                 App.oosTracker.writeObject(fileUploadRequest);
                 App.oosTracker.flush();
                 FileSender fileSender=new FileSender();
