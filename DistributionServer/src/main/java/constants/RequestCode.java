@@ -7,6 +7,7 @@ public enum RequestCode {
     PEERLIST_REQUEST,
     SEARCH_REQUEST,
     FILEUPLOAD_REQUEST,
+    FILEDOWNLOAD_REQUEST,
     FILECHECK_REQUEST;
 
     RequestCode(){
