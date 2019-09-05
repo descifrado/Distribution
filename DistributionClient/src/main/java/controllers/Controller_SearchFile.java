@@ -11,7 +11,7 @@ import request.SearchRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Controller_DownloadFile {
+public class Controller_SearchFile {
     public JFXTextField searchbyname;
     public JFXTextField searchbytype;
     public JFXTextField searchbytag;

@@ -1,14 +1,12 @@
 package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import data.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mainApp.App;
 
@@ -53,7 +51,7 @@ public class Controller_Dashboard
                 Parent root = null;
                 try {
 
-                    root = FXMLLoader.load(getClass().getResource("/downloadFile.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/searchFile.fxml"));
                 }catch(IOException e){
                     e.printStackTrace();
                 }

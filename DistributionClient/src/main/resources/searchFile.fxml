@@ -7,10 +7,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="826.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_DownloadFile">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="826.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_SearchFile">
    <children>
       <Label layoutX="293.0" layoutY="26.0" prefHeight="128.0" prefWidth="478.0" text="Distribution" textAlignment="RIGHT" textFill="#da1313">
          <font>
@@ -60,7 +59,7 @@
             <Bloom />
          </effect>
       </JFXButton>
-      <JFXButton fx:id="search1" layoutX="491.0" layoutY="483.0" onAction="#onaddtagclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Add Tag" textFill="#33bfc6">
+      <JFXButton fx:id="search1" layoutX="491.0" layoutY="522.0" onAction="#onaddtagclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Add Tag" textFill="#33bfc6">
          <font>
             <Font size="18.0" />
          </font>
@@ -68,7 +67,6 @@
             <Bloom />
          </effect>
       </JFXButton>
-      <Line endX="628.0" layoutX="453.0" layoutY="705.0" startX="-100.0" stroke="WHITE" />
       <JFXListView fx:id="tags" layoutX="755.0" layoutY="476.0" prefHeight="206.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
       <Label fx:id="status1" alignment="CENTER" layoutX="84.0" layoutY="227.0" prefHeight="33.0" prefWidth="268.0" text="Available Files" textFill="WHITE">
          <font>

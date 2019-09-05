@@ -7,7 +7,8 @@ public enum RequestCode {
     PEERLIST_REQUEST,
     SEARCH_REQUEST,
     FILEUPLOAD_REQUEST,
-    FILECHECK_REQUEST;
+    FILECHECK_REQUEST,
+    FILEDOWNLOAD_REQUEST;
 
     RequestCode(){
         this.toString();
