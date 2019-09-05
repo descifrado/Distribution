@@ -4,9 +4,7 @@ import authenticationHandler.Login;
 import authenticationHandler.SignUp;
 import constants.RequestCode;
 import data.PeerList;
-import fileHandler.FileCheckHandler;
-import fileHandler.FileReciever;
-import fileHandler.FileUploadHandler;
+import fileHandler.*;
 import request.*;
 
 import java.io.*;
@@ -75,6 +73,12 @@ HandleClientRequest implements Runnable{
                 }else  if(request.getRequestCode().equals(RequestCode.FILECHECK_REQUEST)){
                     FileCheckHandler fileCheckHandler = new FileCheckHandler((FileCheckRequest)request,this.userIP);
                     oos.writeObject(fileCheckHandler.getResponse());
+                    oos.flush();
+                }else if(request.getRequestCode().equals(RequestCode.FILEDOWNLOAD_REQUEST)){
+                    FileSender fileSender = new FileSender();
+                    fileSender.sendFile(fileSender.createSocketChannel(socket.getInetAddress().getCanonicalHostName()),System.getProperty("user.dir")+"/"+"jsonFiles");
+                    FileDownloadHandler fileDownloadHandler =  new FileDownloadHandler((FileDownloadRequest)request);
+                    oos.writeObject(fileDownloadHandler.getResponse());
                     oos.flush();
                 }
             }catch (Exception e){
