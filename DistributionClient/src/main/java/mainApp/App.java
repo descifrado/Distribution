@@ -10,7 +10,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.channels.ServerSocketChannel;
 
 /**
  * JavaFX App
@@ -31,10 +34,18 @@ public class App extends Application {
         primaryStage.setTitle("Distribution");
         primaryStage.setScene(new Scene(root, 1081, 826));
         primaryStage.show();
+
+        System.out.println("Hello I am Suraj");
+
+        new Thread(new Handler()).start();
+
+
     }
 
     public static void main(String[] args) {
+
         launch(args);
+
     }
 
 }

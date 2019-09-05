@@ -26,7 +26,7 @@ public class Controller_SearchFile {
         currentTags=new ArrayList<String>();
     }
     public void ondownloadclicked(ActionEvent actionEvent) {
-
+        
     }
 
     public void onsearchclicked(ActionEvent actionEvent) {
