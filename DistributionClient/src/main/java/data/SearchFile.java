@@ -10,6 +10,7 @@ public class SearchFile extends File implements Serializable,Comparable {
         this.peers = peers;
     }
 
+
     @Override
     public String toString() {
         return super.getFileName();

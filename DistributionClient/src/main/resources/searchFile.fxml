@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import java.lang.String?>
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="826.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_SearchFile">
    <children>
       <Label layoutX="293.0" layoutY="26.0" prefHeight="128.0" prefWidth="478.0" text="Distribution" textAlignment="RIGHT" textFill="#da1313">
@@ -29,11 +31,6 @@
       </Label>
       <JFXListView fx:id="files" editable="true" layoutX="84.0" layoutY="260.0" prefHeight="498.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
       <JFXTextField fx:id="searchbyname" alignment="CENTER" focusColor="#6880b2" labelFloat="true" layoutX="474.0" layoutY="309.0" prefHeight="33.0" prefWidth="189.0" promptText="Search By Name" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="searchbytype" alignment="CENTER" focusColor="#6880b2" labelFloat="true" layoutX="474.0" layoutY="380.0" prefHeight="33.0" prefWidth="189.0" promptText="Search By Type" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
          <font>
             <Font size="18.0" />
          </font>
@@ -59,7 +56,7 @@
             <Bloom />
          </effect>
       </JFXButton>
-      <JFXButton fx:id="search1" layoutX="491.0" layoutY="522.0" onAction="#onaddtagclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Add Tag" textFill="#33bfc6">
+      <JFXButton fx:id="search1" layoutX="491.0" layoutY="483.0" onAction="#onaddtagclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Add Tag" textFill="#33bfc6">
          <font>
             <Font size="18.0" />
          </font>
@@ -67,12 +64,18 @@
             <Bloom />
          </effect>
       </JFXButton>
-      <JFXListView fx:id="tags" layoutX="755.0" layoutY="476.0" prefHeight="206.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
+      <JFXListView fx:id="tags" layoutX="755.0" layoutY="476.0" onMouseClicked="#onTagsListClicked" prefHeight="206.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
       <Label fx:id="status1" alignment="CENTER" layoutX="84.0" layoutY="227.0" prefHeight="33.0" prefWidth="268.0" text="Available Files" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
+      <JFXComboBox fx:id="searchbytype" focusColor="#6880b2" labelFloat="true" layoutX="471.0" layoutY="387.0" prefHeight="33.0" prefWidth="189.0" promptText="Search By Type" style="-fx-font-size: 18; -fx-text-fill: WHITE; -fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a" >
+         <styleClass>
+            <String fx:value=".jfx-combo-box {-fx-background-color:  WHITE;}" />
+            <String fx:value=".jfx-combo-box .label {-fx-background-color:  WHITE;-fx-text-fill: WHITE;}" />
+         </styleClass>
+      </JFXComboBox>
    </children>
    <stylesheets>
       <URL value="@mainApp/backgroundsmall.css" />

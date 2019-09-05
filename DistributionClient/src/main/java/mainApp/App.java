@@ -37,7 +37,7 @@ public class App extends Application {
 
         System.out.println("Hello I am Suraj");
 
-        new Thread(new Handler()).start();
+ //       new Thread(new Handler()).start();
 
 
     }

@@ -4,8 +4,11 @@ import authenticationHandler.Login;
 import authenticationHandler.SignUp;
 import constants.RequestCode;
 import data.PeerList;
-import fileHandler.*;
+import fileHandler.FileCheckHandler;
+import fileHandler.FileReciever;
+import fileHandler.FileUploadHandler;
 import request.*;
+import searchHandler.Search;
 
 import java.io.*;
 import java.net.Socket;
@@ -74,11 +77,14 @@ HandleClientRequest implements Runnable{
                     FileCheckHandler fileCheckHandler = new FileCheckHandler((FileCheckRequest)request,this.userIP);
                     oos.writeObject(fileCheckHandler.getResponse());
                     oos.flush();
-                }else if(request.getRequestCode().equals(RequestCode.FILEDOWNLOAD_REQUEST)){
-                    FileSender fileSender = new FileSender();
-                    fileSender.sendFile(fileSender.createSocketChannel(socket.getInetAddress().getCanonicalHostName()),System.getProperty("user.dir")+"/"+"jsonFiles");
-                    FileDownloadHandler fileDownloadHandler =  new FileDownloadHandler((FileDownloadRequest)request);
-                    oos.writeObject(fileDownloadHandler.getResponse());
+                }
+                else if (request.getRequestCode().equals(RequestCode.SEARCH_REQUEST)){
+                    SearchRequest searchRequest= (SearchRequest) request;
+                    System.out.print(searchRequest.getTags()+" ");
+                    System.out.print(searchRequest.getName()+" ");
+                    System.out.println(searchRequest.getType());
+                    Search search=new Search((SearchRequest) request);
+                    oos.writeObject(search.performSearch());
                     oos.flush();
                 }
             }catch (Exception e){
