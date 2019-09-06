@@ -17,7 +17,8 @@ public class AvailablePieceRequest extends Request implements Serializable
     private String fileUID;
 
     @Override
-    public RequestCode getRequestCode() {
+    public RequestCode getRequestCode()
+    {
         return RequestCode.AVAILABLEPIECE_REQUEST;
     }
 }

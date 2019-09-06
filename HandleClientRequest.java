@@ -1,16 +1,14 @@
 package mainApp;
 
 import constants.RequestCode;
-import fileHandler.AvailablePieceHandler;
-import fileHandler.FileSender;
-import netscape.javascript.JSObject;
-import request.AvailablePieceRequest;
 import request.Request;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
-import java.nio.channels.SocketChannel;
 
 public class HandleClientRequest implements Runnable {
     private Socket socket;
@@ -30,36 +28,25 @@ public class HandleClientRequest implements Runnable {
     @Override
     public void run() {
         Request request = null;
-        while(true)
-        {
-            try
-            {
-                try
-                {
+
+        while(true){
+            try{
+                try{
                     Object object=ois.readObject();
                     System.out.println(object.getClass());
                     request = (Request)object;
-                }
-                catch (EOFException e)
-                {
+                }catch (EOFException e){
+                    System.out.println("Client Disconnected..!!");
+                    return;
+                }catch (SocketException e){
                     System.out.println("Client Disconnected..!!");
                     return;
                 }
-                catch (SocketException e)
-                {
-                    System.out.println("Client Disconnected..!!");
-                    return;
+
+                if(request.getRequestCode().equals(RequestCode.AVAILABLEPIECE_REQUEST)){
+                    // Send The Json file of Available pieces.
                 }
-                if(request.getRequestCode().equals(RequestCode.AVAILABLEPIECE_REQUEST))
-                {
-                    request = (AvailablePieceRequest)request;
-                    AvailablePieceHandler availablePieceHandler=new AvailablePieceHandler((AvailablePieceRequest) request);
-                    oos.writeObject(availablePieceHandler.getResponse());
-                    oos.flush();
-                }
-            }
-            catch (Exception e)
-            {
+            }catch (Exception e){
                 e.printStackTrace();;
             }
         }
