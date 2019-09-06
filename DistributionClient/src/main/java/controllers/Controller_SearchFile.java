@@ -1,5 +1,6 @@
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
@@ -31,6 +32,7 @@ public class Controller_SearchFile {
     public JFXListView files;
     public JFXListView tags;
     public JFXComboBox<String> searchbytype;
+    public JFXButton back;
 
 
 
@@ -56,14 +58,18 @@ public class Controller_SearchFile {
         FileType fileType;
         if (typeString==null)fileType=FileType.ALL;
         else fileType=FileType.valueOf(typeString);
-
-        SearchRequest searchRequest = new SearchRequest(nameString,fileType,currentTags);
+        SearchRequest searchRequest;
+        if(currentTags.isEmpty())
+            searchRequest = new SearchRequest(nameString,fileType,null);
+        else
+            searchRequest = new SearchRequest(nameString,fileType,currentTags);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    App.oosTracker.writeObject(new SearchRequest(nameString,fileType,currentTags));
+
+                    App.oosTracker.writeObject(searchRequest);
                     App.oosTracker.flush();
                     System.out.print(searchRequest.getTags()+" ");
                     System.out.print(searchRequest.getName()+" ");
@@ -118,6 +124,24 @@ public class Controller_SearchFile {
         tags.getItems().addAll(currentTags);
         searchbytag.setText("");
 
+    }
+
+    public void onbackclicked(ActionEvent actionEvent) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage primaryStage = (Stage) back.getScene().getWindow();
+                Parent root = null;
+                try {
+
+                    root = FXMLLoader.load(getClass().getResource("/login.fxml"));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                primaryStage.setScene(new Scene(root, 1081, 826));
+
+            }
+        });
     }
 }
 
