@@ -134,11 +134,11 @@ public class Controller_SearchFile {
                 Parent root = null;
                 try {
 
-                    root = FXMLLoader.load(getClass().getResource("/login.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/dashboard.fxml"));
                 }catch(IOException e){
                     e.printStackTrace();
                 }
-                primaryStage.setScene(new Scene(root, 1081, 826));
+                primaryStage.setScene(new Scene(root, 1303, 961));
 
             }
         });

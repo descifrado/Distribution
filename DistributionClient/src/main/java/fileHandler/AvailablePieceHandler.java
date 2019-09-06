@@ -15,6 +15,6 @@ public class AvailablePieceHandler
     }
     public Response getResponse()
     {
-
+        return null;
     }
 }
