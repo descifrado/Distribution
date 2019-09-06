@@ -20,11 +20,11 @@ public class NameSearch {
 
         List files=new ArrayList<SearchFile>();
 
-        String query="SELECT Peers.fileUID,count(*) from Peers,(Select fileUID from File where fileName like ?) as temp WHERE temp.fileUID=Peers.fileUID group by Peers.fileUID order by 2 desc";
+        String query="SELECT Peers.fileUID,count(*) from Peers,(Select fileUID from File where LOWER (fileName) like ?) as temp WHERE temp.fileUID=Peers.fileUID group by Peers.fileUID order by 2 desc";
 
         try {
             PreparedStatement statement= Main.connection.prepareStatement(query);
-            statement.setString(1,"%"+searchString+"%");
+            statement.setString(1,"%"+searchString+"%".toLowerCase());
             System.out.println(statement);
             ResultSet resultSet=statement.executeQuery();
             while (resultSet.next()){
