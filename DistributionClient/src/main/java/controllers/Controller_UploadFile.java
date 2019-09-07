@@ -132,8 +132,8 @@ public class Controller_UploadFile
                     });
                 }
 
-                Files.copy(new File(path).toPath(),tmpfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//
+                Files.copy(new File(path+".json").toPath(),tmpfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
             }
             catch (Exception e)
             {

@@ -54,7 +54,7 @@ public class HandleClientRequest implements Runnable {
                 }
                 if(request.getRequestCode().equals(RequestCode.AVAILABLEPIECE_REQUEST))
                 {
-                    request = (AvailablePieceRequest)request;
+
                     AvailablePieceHandler availablePieceHandler=new AvailablePieceHandler((AvailablePieceRequest) request);
                     oos.writeObject(availablePieceHandler.getResponse());
                     oos.flush();
