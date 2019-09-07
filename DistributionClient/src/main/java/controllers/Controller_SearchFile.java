@@ -84,9 +84,10 @@ public class Controller_SearchFile {
 //                create file if file does not exit when writing data to json file.
                 downloadedPieceJSON = new JSONObject();
             }else{
-                if(tmpfile.getTotalSpace()!=0)
-                    downloadedPieceJSON = new JSONObject( new JSONTokener(new FileReader(path)));
-                else{
+                if(tmpfile.getTotalSpace()!=0) {
+                    downloadedPieceJSON = new JSONObject(new JSONTokener(new FileReader(path)));
+                    System.out.println("Reading existing json file");
+                }else{
                     downloadedPieceJSON = new JSONObject();
 
                 }
@@ -111,6 +112,7 @@ public class Controller_SearchFile {
 
 
             for(Peer peer : peersList){
+                System.out.println(peer);
                 new Thread(new FileDownloadHandler(peer,file)).start();
             }
 

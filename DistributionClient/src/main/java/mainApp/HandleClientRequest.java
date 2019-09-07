@@ -56,6 +56,7 @@ public class HandleClientRequest implements Runnable {
                 {
 
                     AvailablePieceHandler availablePieceHandler=new AvailablePieceHandler((AvailablePieceRequest) request);
+                    System.out.println("Available Piece Request");
                     oos.writeObject(availablePieceHandler.getResponse());
                     oos.flush();
                 }else if(request.getRequestCode().equals(RequestCode.PIECEDOWNLOAD_REQUEST)){
@@ -64,6 +65,7 @@ public class HandleClientRequest implements Runnable {
                     File file = pieceDownloadRequest.getFile();
                     String pathFolder = home+"/Downloads/" + file.getFileUID();
                     String path = pathFolder+"/"+ pieceDownloadRequest.getPieceID();
+                    System.out.println("Downloading Piece : " + pieceDownloadRequest.getPieceID());
                     java.io.File piecefile = new java.io.File(path);
                     FileSender fileSender = new FileSender();
                     if(piecefile.exists())

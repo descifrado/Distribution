@@ -57,6 +57,7 @@ public class FileDownloadHandler implements Runnable {
                     String  key = keys.next();
                     if(!Controller_SearchFile.downloadedPieceJSON.has(key)){
 //                        send piece download request
+                        System.out.println("Key : " + key);
                         PieceDownloadRequest pieceDownloadRequest = new PieceDownloadRequest(file,key);
                         oos.writeObject(pieceDownloadRequest);
                         oos.flush();
