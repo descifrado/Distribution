@@ -5,7 +5,9 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import constants.FileType;
+import data.File;
 import data.SearchFile;
+import fileHandler.FileDownloadHandler;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,9 +19,14 @@ import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mainApp.App;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import request.PeerListRequest;
 import request.Response;
 import request.SearchRequest;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +45,8 @@ public class Controller_SearchFile {
     private SearchFile currentSelectedFile;
     private List<String> currentTags;
 
+    static volatile JSONObject downloadedPieceJSON ;
+
     public static String[] getNames(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
@@ -50,7 +59,39 @@ public class Controller_SearchFile {
 
     }
     public void ondownloadclicked(ActionEvent actionEvent) {
+        File file = currentSelectedFile;
+        PeerListRequest peerListRequest = new PeerListRequest(file);
+        try{
+            App.oosTracker.writeObject(peerListRequest);
+            App.oosTracker.flush();
+            Response response = (Response)App.oisTracker.readObject();
+            List<String> peerList = (List<String>) response.getResponseObject();
 
+            String fileUID = currentSelectedFile.getFileUID();
+            String home=System.getProperty("user.home");
+            String path=fileUID+"downloaded.json";
+            path=home+"/Downloads/"+path;
+
+            java.io.File tmpfile = new java.io.File(path);
+            if(!tmpfile.exists()){
+                tmpfile.createNewFile();
+                downloadedPieceJSON = new JSONObject();
+            }else{
+                downloadedPieceJSON = new JSONObject( new JSONTokener(new FileReader(path)));
+            }
+
+
+
+            for(String peerIP : peerList){
+                new Thread(new FileDownloadHandler(peerIP)).start();
+            }
+
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
