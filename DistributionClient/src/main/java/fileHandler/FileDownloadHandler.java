@@ -37,6 +37,8 @@ public class FileDownloadHandler implements Runnable {
         try{
             System.out.println(peerIP);
             peerSocket = new Socket(this.peerIP,6963);
+            oos = new ObjectOutputStream(peerSocket.getOutputStream());
+            ois = new ObjectInputStream(peerSocket.getInputStream());
             AvailablePieceRequest availablePieceRequest = new AvailablePieceRequest(file.getFileUID());
             oos.writeObject(availablePieceRequest);
             oos.flush();
@@ -51,7 +53,8 @@ public class FileDownloadHandler implements Runnable {
                 System.out.println("Some Error From Peer : "+peerIP);
 
             }else{
-                availablePieces = (JSONObject)response.getResponseObject();
+                String jsonString = (String)response.getResponseObject();
+                availablePieces = new JSONObject(jsonString);
                 Iterator<String> keys = availablePieces.keys();
 
                 while(keys.hasNext()){

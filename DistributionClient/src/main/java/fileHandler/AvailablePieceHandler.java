@@ -35,7 +35,7 @@ public class AvailablePieceHandler
         {
             jsonParser=new JSONTokener(reader);
             jsonObject=new JSONObject(jsonParser);
-            return new Response(UIDGenerator.generateuid(), jsonObject, ResponseCode.SUCCESS);
+            return new Response(UIDGenerator.generateuid(), jsonObject.toString(), ResponseCode.SUCCESS);
         }
         catch(Exception e)
         {

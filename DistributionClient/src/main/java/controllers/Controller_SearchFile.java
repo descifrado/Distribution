@@ -84,13 +84,13 @@ public class Controller_SearchFile {
 //                create file if file does not exit when writing data to json file.
                 downloadedPieceJSON = new JSONObject();
             }else{
-                if(tmpfile.getTotalSpace()!=0) {
+
                     downloadedPieceJSON = new JSONObject(new JSONTokener(new FileReader(path)));
                     System.out.println("Reading existing json file");
-                }else{
+
                     downloadedPieceJSON = new JSONObject();
 
-                }
+
             }
             jsonwriter = new FileOutputStream(tmpfile,true);
 
@@ -103,10 +103,10 @@ public class Controller_SearchFile {
             if(!jsonFolder.exists()){
                 jsonFolder.mkdir();
             }
-
-            FileReciever fileReciever = new FileReciever();
-            fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
-
+            System.out.println("Debug1");
+//            FileReciever fileReciever = new FileReciever();
+//            fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
+            System.out.println("Debug2");
 
 
 
@@ -115,7 +115,7 @@ public class Controller_SearchFile {
                 System.out.println(peer);
                 new Thread(new FileDownloadHandler(peer,file)).start();
             }
-
+            System.out.println("Debug3");
 
 
 
