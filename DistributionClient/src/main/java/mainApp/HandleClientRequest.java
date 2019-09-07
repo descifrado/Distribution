@@ -68,11 +68,9 @@ public class HandleClientRequest implements Runnable {
                     System.out.println("Downloading Piece : " + pieceDownloadRequest.getPieceID());
                     java.io.File piecefile = new java.io.File(path);
                     FileSender fileSender = new FileSender();
-                    if(piecefile.exists())
-                        fileSender.sendFile(fileSender.createSocketChannel(socket.getInetAddress().getCanonicalHostName()),path);
-                    else{
-//                        extract the piece from complete file.
-                    }
+
+                    fileSender.sendFile(fileSender.createSocketChannel(socket.getInetAddress().getCanonicalHostName()),path);
+
                 }
             }
             catch (Exception e)

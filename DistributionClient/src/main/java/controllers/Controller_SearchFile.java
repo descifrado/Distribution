@@ -104,8 +104,8 @@ public class Controller_SearchFile {
                 jsonFolder.mkdir();
             }
             System.out.println("Debug1");
-//            FileReciever fileReciever = new FileReciever();
-//            fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
+            FileReciever fileReciever = new FileReciever();
+            fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
             System.out.println("Debug2");
 
 
