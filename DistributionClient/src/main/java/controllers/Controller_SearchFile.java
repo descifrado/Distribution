@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import constants.FileType;
 import data.File;
+import data.Peer;
 import data.SearchFile;
 import fileHandler.FileDownloadHandler;
 import javafx.application.Platform;
@@ -65,7 +66,7 @@ public class Controller_SearchFile {
             App.oosTracker.writeObject(peerListRequest);
             App.oosTracker.flush();
             Response response = (Response)App.oisTracker.readObject();
-            List<String> peerList = (List<String>) response.getResponseObject();
+            List<Peer> peersList = (ArrayList<Peer>) response.getResponseObject();
 
             String fileUID = currentSelectedFile.getFileUID();
             String home=System.getProperty("user.home");
@@ -82,8 +83,8 @@ public class Controller_SearchFile {
 
 
 
-            for(String peerIP : peerList){
-                new Thread(new FileDownloadHandler(peerIP)).start();
+            for(Peer peer : peersList){
+                new Thread(new FileDownloadHandler(peer.getIp())).start();
             }
 
 

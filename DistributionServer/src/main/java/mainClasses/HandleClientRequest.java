@@ -3,7 +3,7 @@ package mainClasses;
 import authenticationHandler.Login;
 import authenticationHandler.SignUp;
 import constants.RequestCode;
-import data.PeerList;
+import peerListHandler.PeerList;
 import fileHandler.FileCheckHandler;
 import fileHandler.FileReciever;
 import fileHandler.FileUploadHandler;
@@ -13,7 +13,6 @@ import searchHandler.Search;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.nio.channels.SocketChannel;
 
 public class
 HandleClientRequest implements Runnable{
