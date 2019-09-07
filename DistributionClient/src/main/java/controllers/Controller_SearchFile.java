@@ -35,7 +35,7 @@ public class Controller_SearchFile {
     public JFXButton back;
 
 
-
+    private SearchFile currentSelectedFile;
     private List<String> currentTags;
 
     public static String[] getNames(Class<? extends Enum<?>> e) {
@@ -46,13 +46,16 @@ public class Controller_SearchFile {
         currentTags=new ArrayList<String>();
         String[] fileTypes = getNames(FileType.class);
         searchbytype.getItems().addAll(fileTypes);
+        currentSelectedFile=null;
 
     }
     public void ondownloadclicked(ActionEvent actionEvent) {
 
+
     }
 
     public void onsearchclicked(ActionEvent actionEvent) {
+        currentSelectedFile=null;
         String nameString=searchbyname.getText();
         String typeString=searchbytype.getSelectionModel().getSelectedItem();
         FileType fileType;
@@ -86,21 +89,20 @@ public class Controller_SearchFile {
                     e.printStackTrace();
                 }
                 List<SearchFile> availableFiles= (List<SearchFile>) response.getResponseObject();
-                //               System.out.println(availableFiles);
+                               System.out.println(availableFiles);
+
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-
                         files.getItems().clear();
-                        files.getItems().addAll(availableFiles);
-                        searchbyname.setText("");
-                        searchbytag.setText("");
-                        searchbytype.valueProperty().set(null);
-                        tags.getItems().clear();
-                        currentTags.clear();
-
+                        files.getItems().setAll(availableFiles);
                     }
                 });
+                searchbyname.setText("");
+                searchbytag.setText("");
+                searchbytype.valueProperty().set(null);
+                tags.getItems().clear();
+                currentTags.clear();
             }
         }).start();
 
@@ -126,6 +128,7 @@ public class Controller_SearchFile {
 
     }
 
+
     public void onbackclicked(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
             @Override
@@ -140,8 +143,16 @@ public class Controller_SearchFile {
                 }
                 primaryStage.setScene(new Scene(root, 1303, 961));
 
+
             }
         });
+    }
+
+    public void onFilesListClicked(MouseEvent mouseEvent) {
+
+        currentSelectedFile= (SearchFile) files.getSelectionModel().getSelectedItem();
+        System.out.println(currentSelectedFile);
+        //SearchFile searchFile= (SearchFile) files.getSelectionModel().getSelectedItems().get(0);
     }
 }
 
