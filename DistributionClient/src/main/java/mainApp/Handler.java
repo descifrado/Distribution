@@ -13,17 +13,21 @@ public class Handler implements Runnable {
 
     @Override
     public void run() {
+        try {
 
+            while (true) {
+                try {
 
-        while(true){
-            try{
-                ServerSocket serverSocket = new ServerSocket(6963);
-                Socket socketp2p = serverSocket.accept();
-                Thread t = new Thread(new HandleClientRequest(socketp2p));
-                t.start();
-            }catch (IOException e){
-                e.printStackTrace();
+                    Socket socketp2p = App.serverSocket.accept();
+                    Thread t = new Thread(new HandleClientRequest(socketp2p));
+                    t.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
 }
