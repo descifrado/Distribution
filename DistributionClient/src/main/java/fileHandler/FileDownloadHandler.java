@@ -4,6 +4,7 @@ import constants.ResponseCode;
 import controllers.Controller_SearchFile;
 import data.File;
 import data.Peer;
+import mainApp.App;
 import mainApp.Handler;
 import org.json.JSONObject;
 import request.AvailablePieceRequest;
@@ -63,7 +64,7 @@ public class FileDownloadHandler implements Runnable {
                         oos.flush();
 
                         FileReciever fileReciever =  new FileReciever();
-                        fileReciever.readFile(fileReciever.createSocketChannel(Handler.getServerSocketChannel()),key,pathFolder);
+                        fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),key,pathFolder);
 
                         Controller_SearchFile.downloadedPieceJSON.put(key,availablePieces.get(key));
                         JSONObject tmp  = new JSONObject();

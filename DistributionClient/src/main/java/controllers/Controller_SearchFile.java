@@ -105,7 +105,7 @@ public class Controller_SearchFile {
             }
 
             FileReciever fileReciever = new FileReciever();
-            fileReciever.readFile(fileReciever.createSocketChannel(Handler.getServerSocketChannel()),fileUID,pathJsonFiles);
+            fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
 
 
 

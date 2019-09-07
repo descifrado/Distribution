@@ -26,7 +26,8 @@ public class App extends Application {
     public static ObjectOutputStream oosTracker ;
     public static ObjectInputStream oisTracker;
     public static User user;
-    public static ServerSocketChannel serverSocketChannel;
+    public static ServerSocketChannel serverClientSocketChannel;
+    public static Socket socketp2p;
     @Override
     public void start(Stage primaryStage) throws IOException {
 
@@ -36,11 +37,30 @@ public class App extends Application {
         primaryStage.show();
 
         System.out.println("Hello I am Suraj");
+        try {
+            serverClientSocketChannel = ServerSocketChannel.open();
+            serverClientSocketChannel.socket().bind(new InetSocketAddress(9000));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        ServerSocket serverSocket;
+        Socket socket;
+        try{
+            serverSocket = new ServerSocket(6963);
+            System.out.println("Client Started..!!");
+        }catch (IOException e){
+            e.printStackTrace();
+            return;
+        }
         new Thread(new Handler()).start();
 
 
     }
+    public static ServerSocketChannel getServerSocketChannel(){
+        return serverClientSocketChannel;
+    }
+
 
     public static void main(String[] args) {
 
