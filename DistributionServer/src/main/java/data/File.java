@@ -102,6 +102,7 @@ public class File implements Serializable, Cloneable {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj==null)return false;
         File temp= (File) obj;
         return temp.getFileUID().equals(this.fileUID);
     }
