@@ -170,6 +170,7 @@ public class Controller_SearchFile {
                         searchbytype.valueProperty().set(null);
                         tags.getItems().clear();
                         currentTags.clear();
+
                     }
                 });
 
