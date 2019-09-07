@@ -9,6 +9,7 @@ import data.File;
 import data.Peer;
 import data.SearchFile;
 import fileHandler.FileDownloadHandler;
+import fileHandler.FileReciever;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,9 +21,11 @@ import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mainApp.App;
+import mainApp.Handler;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import request.FileDownloadRequest;
 import request.PeerListRequest;
 import request.Response;
 import request.SearchRequest;
@@ -48,7 +51,7 @@ public class Controller_SearchFile {
 
     public static volatile JSONObject downloadedPieceJSON ;
     public static volatile FileOutputStream jsonwriter;
-
+    public static boolean isDownloadComplete;
     public static String[] getNames(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
@@ -89,6 +92,19 @@ public class Controller_SearchFile {
                 }
             }
             jsonwriter = new FileOutputStream(tmpfile,true);
+
+            FileDownloadRequest fileDownloadRequest = new FileDownloadRequest(file,App.user.getUserUID());
+            App.oosTracker.writeObject(fileDownloadRequest);
+            App.oosTracker.flush();
+
+            String pathJsonFiles = "./jsonFiles";
+            java.io.File jsonFolder = new java.io.File(pathJsonFiles);
+            if(!jsonFolder.exists()){
+                jsonFolder.mkdir();
+            }
+
+            FileReciever fileReciever = new FileReciever();
+            fileReciever.readFile(fileReciever.createSocketChannel(Handler.getServerSocketChannel()),fileUID,pathJsonFiles);
 
 
 
@@ -149,13 +165,14 @@ public class Controller_SearchFile {
                     public void run() {
                         files.getItems().clear();
                         files.getItems().setAll(availableFiles);
+                        searchbyname.setText("");
+                        searchbytag.setText("");
+                        searchbytype.valueProperty().set(null);
+                        tags.getItems().clear();
+                        currentTags.clear();
                     }
                 });
-                searchbyname.setText("");
-                searchbytag.setText("");
-                searchbytype.valueProperty().set(null);
-                tags.getItems().clear();
-                currentTags.clear();
+
             }
         }).start();
 

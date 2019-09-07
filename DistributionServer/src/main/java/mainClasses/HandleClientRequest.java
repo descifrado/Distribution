@@ -3,6 +3,7 @@ package mainClasses;
 import authenticationHandler.Login;
 import authenticationHandler.SignUp;
 import constants.RequestCode;
+import fileHandler.FileSender;
 import peerListHandler.PeerList;
 import fileHandler.FileCheckHandler;
 import fileHandler.FileReciever;
@@ -79,12 +80,17 @@ HandleClientRequest implements Runnable{
                 }
                 else if (request.getRequestCode().equals(RequestCode.SEARCH_REQUEST)){
                     SearchRequest searchRequest= (SearchRequest) request;
-                    System.out.print(searchRequest.getTags()+" ");
-                    System.out.print(searchRequest.getName()+" ");
-                    System.out.println(searchRequest.getType());
                     Search search=new Search((SearchRequest) request);
                     oos.writeObject(search.performSearch());
                     oos.flush();
+                }else if(request.getRequestCode().equals(RequestCode.FILEDOWNLOAD_REQUEST)){
+                    String cwd = System.getProperty("user.dir");
+                    String loc = cwd + "/jsonFiles/" ;
+                    FileDownloadRequest fileDownloadRequest = (FileDownloadRequest)request;
+                    loc+=fileDownloadRequest.getFile().getFileUID();
+                    FileSender fileSender = new FileSender();
+                    fileSender.sendFile(fileSender.createSocketChannel(socket.getInetAddress().getCanonicalHostName()),loc);
+
                 }
             }catch (Exception e){
                 e.printStackTrace();

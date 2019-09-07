@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.sun.tools.javac.Main;
 import constants.ResponseCode;
 import fileHandler.FileSender;
+import fileHandler.FileSplit;
 import fileLoader.PieceGenerator;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -114,7 +115,7 @@ public class Controller_UploadFile
                 App.oosTracker.writeObject(fileUploadRequest);
                 App.oosTracker.flush();
                 FileSender fileSender=new FileSender();
-                fileSender.sendFile(fileSender.createSocketChannel(),path+".json");
+                fileSender.sendFile(fileSender.createSocketChannel(App.serverIP),path+".json");
                 Response response = (Response)App.oisTracker.readObject();
                 if(response.getResponseCode().equals(ResponseCode.SUCCESS)){
                     Platform.runLater(new Runnable() {
@@ -130,10 +131,11 @@ public class Controller_UploadFile
                             status.setText("Error");
                         }
                     });
+                    return;
                 }
 
                 Files.copy(new File(path+".json").toPath(),tmpfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
+                new Thread(new FileSplit(new File(path),32*1024,home+"/Downloads/" + myfile.getFileUID())).start();
             }
             catch (Exception e)
             {

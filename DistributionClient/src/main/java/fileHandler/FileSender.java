@@ -11,10 +11,10 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 
 public class FileSender {
-    public SocketChannel createSocketChannel(){
+    public SocketChannel createSocketChannel(String serverIP){
         try{
             SocketChannel socketChannel = SocketChannel.open();
-            SocketAddress socketAddress = new InetSocketAddress(App.serverIP,9000);
+            SocketAddress socketAddress = new InetSocketAddress(serverIP,9000);
             socketChannel.connect(socketAddress);
             System.out.println("Connected with server for File I/O");
             return socketChannel;
