@@ -3,7 +3,8 @@ package fileHandler;
 import constants.ResponseCode;
 import netscape.javascript.JSObject;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
+//import org.json.simple.parser.JSONParser;
+import org.json.JSONTokener;
 import request.AvailablePieceRequest;
 import request.Request;
 import request.Response;
@@ -27,10 +28,13 @@ public class AvailablePieceHandler
         String path=fileUID+"downloaded.json";
         path=home+"/Downloads/"+path;
         JSONObject jsonObject;
-        JSONParser jsonParser=new JSONParser();
+
+        JSONTokener jsonParser;
+
         try(FileReader reader=new FileReader(path))
         {
-            jsonObject=(JSONObject) jsonParser.parse(reader);
+            jsonParser=new JSONTokener(reader);
+            jsonObject=new JSONObject(jsonParser);
             return new Response(UIDGenerator.generateuid(), jsonObject, ResponseCode.SUCCESS);
         }
         catch(Exception e)

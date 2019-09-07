@@ -29,7 +29,7 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <JFXListView fx:id="files" editable="true" layoutX="84.0" layoutY="260.0" prefHeight="498.0" prefWidth="268.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
+      <JFXListView fx:id="files" editable="true" layoutX="84.0" layoutY="260.0" onMouseClicked="#onFilesListClicked" prefHeight="498.0" prefWidth="268.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
       <JFXTextField fx:id="searchbyname" alignment="CENTER" focusColor="#6880b2" labelFloat="true" layoutX="474.0" layoutY="317.0" prefHeight="33.0" prefWidth="189.0" promptText="Search By Name" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
          <font>
             <Font size="18.0" />
