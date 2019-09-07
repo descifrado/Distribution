@@ -35,7 +35,7 @@ public class FileDownloadHandler implements Runnable {
     @Override
     public void run() {
         try{
-            System.out.println(peerIP);
+
             peerSocket = new Socket(this.peerIP,6963);
             oos = new ObjectOutputStream(peerSocket.getOutputStream());
             ois = new ObjectInputStream(peerSocket.getInputStream());
@@ -56,12 +56,12 @@ public class FileDownloadHandler implements Runnable {
                 String jsonString = (String)response.getResponseObject();
                 availablePieces = new JSONObject(jsonString);
                 Iterator<String> keys = availablePieces.keys();
-
+                JSONObject tmp  = new JSONObject();
                 while(keys.hasNext()){
                     String  key = keys.next();
                     if(!Controller_SearchFile.downloadedPieceJSON.has(key)){
 //                        send piece download request
-                        System.out.println("Key : " + key);
+
                         PieceDownloadRequest pieceDownloadRequest = new PieceDownloadRequest(file,key);
                         oos.writeObject(pieceDownloadRequest);
                         oos.flush();
@@ -70,11 +70,14 @@ public class FileDownloadHandler implements Runnable {
                         fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),key,pathFolder);
 
                         Controller_SearchFile.downloadedPieceJSON.put(key,availablePieces.get(key));
-                        JSONObject tmp  = new JSONObject();
+
                         tmp.put(key,availablePieces.get(key));
-                        Controller_SearchFile.jsonwriter.write(tmp.toString().getBytes());
+
+
                     }
                 }
+                Controller_SearchFile.jsonwriter.write(tmp.toString().getBytes());
+
             }
 
 

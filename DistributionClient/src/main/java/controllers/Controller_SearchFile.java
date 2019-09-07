@@ -103,10 +103,10 @@ public class Controller_SearchFile {
             if(!jsonFolder.exists()){
                 jsonFolder.mkdir();
             }
-            System.out.println("Debug1");
+
             FileReciever fileReciever = new FileReciever();
             fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
-            System.out.println("Debug2");
+
 
 
 
@@ -115,7 +115,7 @@ public class Controller_SearchFile {
                 System.out.println(peer);
                 new Thread(new FileDownloadHandler(peer,file)).start();
             }
-            System.out.println("Debug3");
+
 
 
 
@@ -145,9 +145,7 @@ public class Controller_SearchFile {
 
                     App.oosTracker.writeObject(searchRequest);
                     App.oosTracker.flush();
-                    System.out.print(searchRequest.getTags()+" ");
-                    System.out.print(searchRequest.getName()+" ");
-                    System.out.println(searchRequest.getType());
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -224,8 +222,7 @@ public class Controller_SearchFile {
     public void onFilesListClicked(MouseEvent mouseEvent) {
 
         currentSelectedFile= (SearchFile) files.getSelectionModel().getSelectedItem();
-        System.out.println(currentSelectedFile);
-        //SearchFile searchFile= (SearchFile) files.getSelectionModel().getSelectedItems().get(0);
+
     }
 }
 
