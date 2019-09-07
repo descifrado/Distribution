@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 public class Controller_UploadFile
@@ -81,7 +83,17 @@ public class Controller_UploadFile
             JSONObject fileJSON=PieceGenerator.getJSON(file);
             myfile.setFileUID(UIDGenerator.generateuid(PieceGenerator.generateJSON(fileJSON,file)));
 
+            String home=System.getProperty("user.home");
+            String pathdownloaded=myfile.getFileUID()+"downloaded.json";
+            pathdownloaded=home+"/Downloads/"+pathdownloaded;
+            java.io.File mkFolder = new java.io.File(home+"/Downloads/" + myfile.getFileUID());
+            mkFolder.mkdir();
+            java.io.File tmpfile = new java.io.File(pathdownloaded);
+
+
             try{
+                if(!tmpfile.exists())
+                    tmpfile.createNewFile();
                 if(App.sockerTracker == null){
                     App.sockerTracker = new Socket(App.serverIP, App.portNo);
                     App.oosTracker = new ObjectOutputStream(App.sockerTracker.getOutputStream());
@@ -120,6 +132,8 @@ public class Controller_UploadFile
                     });
                 }
 
+                Files.copy(new File(path).toPath(),tmpfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//
             }
             catch (Exception e)
             {

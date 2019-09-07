@@ -27,8 +27,7 @@ import request.PeerListRequest;
 import request.Response;
 import request.SearchRequest;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +45,9 @@ public class Controller_SearchFile {
     private SearchFile currentSelectedFile;
     private List<String> currentTags;
 
-    static volatile JSONObject downloadedPieceJSON ;
+
+    public static volatile JSONObject downloadedPieceJSON ;
+    public static volatile FileOutputStream jsonwriter;
 
     public static String[] getNames(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
@@ -72,19 +73,29 @@ public class Controller_SearchFile {
             String home=System.getProperty("user.home");
             String path=fileUID+"downloaded.json";
             path=home+"/Downloads/"+path;
-
+            java.io.File mkFolder = new java.io.File(home+"/Downloads/" + currentSelectedFile.getFileUID());
+            mkFolder.mkdir();
             java.io.File tmpfile = new java.io.File(path);
             if(!tmpfile.exists()){
                 tmpfile.createNewFile();
+//                create file if file does not exit when writing data to json file.
                 downloadedPieceJSON = new JSONObject();
             }else{
-                downloadedPieceJSON = new JSONObject( new JSONTokener(new FileReader(path)));
+                if(tmpfile.getTotalSpace()!=0)
+                    downloadedPieceJSON = new JSONObject( new JSONTokener(new FileReader(path)));
+                else{
+                    downloadedPieceJSON = new JSONObject();
+
+                }
             }
+            jsonwriter = new FileOutputStream(tmpfile,true);
+
+
 
 
 
             for(Peer peer : peersList){
-                new Thread(new FileDownloadHandler(peer.getIp())).start();
+                new Thread(new FileDownloadHandler(peer,file)).start();
             }
 
 

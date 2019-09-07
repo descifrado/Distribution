@@ -6,6 +6,10 @@ import java.io.Serializable;
 
 public class AvailablePieceRequest extends Request implements Serializable
 {
+    public AvailablePieceRequest(String fileUID) {
+        this.fileUID = fileUID;
+    }
+
     public String getFileUID() {
         return fileUID;
     }

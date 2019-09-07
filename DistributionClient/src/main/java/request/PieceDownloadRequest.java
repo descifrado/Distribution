@@ -11,6 +11,14 @@ public class PieceDownloadRequest extends Request {
         this.pieceID = pieceID;
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public String getPieceID() {
+        return pieceID;
+    }
+
     @Override
     public RequestCode getRequestCode() {
         return RequestCode.PIECEDOWNLOAD_REQUEST;

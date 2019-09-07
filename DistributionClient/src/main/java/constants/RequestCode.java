@@ -9,7 +9,8 @@ public enum RequestCode {
     FILEUPLOAD_REQUEST,
     FILECHECK_REQUEST,
     AVAILABLEPIECE_REQUEST,
-    FILEDOWNLOAD_REQUEST;
+    FILEDOWNLOAD_REQUEST,
+    PIECEDOWNLOAD_REQUEST;
 
     RequestCode(){
         this.toString();

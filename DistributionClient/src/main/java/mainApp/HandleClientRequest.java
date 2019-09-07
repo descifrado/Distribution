@@ -1,10 +1,12 @@
 package mainApp;
 
 import constants.RequestCode;
+import data.File;
 import fileHandler.AvailablePieceHandler;
 import fileHandler.FileSender;
 import netscape.javascript.JSObject;
 import request.AvailablePieceRequest;
+import request.PieceDownloadRequest;
 import request.Request;
 
 import java.io.*;
@@ -56,6 +58,19 @@ public class HandleClientRequest implements Runnable {
                     AvailablePieceHandler availablePieceHandler=new AvailablePieceHandler((AvailablePieceRequest) request);
                     oos.writeObject(availablePieceHandler.getResponse());
                     oos.flush();
+                }else if(request.getRequestCode().equals(RequestCode.PIECEDOWNLOAD_REQUEST)){
+                    String home=System.getProperty("user.home");
+                    PieceDownloadRequest pieceDownloadRequest = (PieceDownloadRequest)request;
+                    File file = pieceDownloadRequest.getFile();
+                    String pathFolder = home+"/Downloads/" + file.getFileUID();
+                    String path = pathFolder+"/"+ pieceDownloadRequest.getPieceID();
+                    java.io.File piecefile = new java.io.File(path);
+                    FileSender fileSender = new FileSender();
+                    if(piecefile.exists())
+                        fileSender.sendFile(fileSender.createSocketChannel(),path);
+                    else{
+//                        extract the piece from complete file.
+                    }
                 }
             }
             catch (Exception e)

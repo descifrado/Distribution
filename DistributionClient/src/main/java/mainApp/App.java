@@ -26,7 +26,7 @@ public class App extends Application {
     public static ObjectOutputStream oosTracker ;
     public static ObjectInputStream oisTracker;
     public static User user;
-
+    public static ServerSocketChannel serverSocketChannel;
     @Override
     public void start(Stage primaryStage) throws IOException {
 
@@ -37,7 +37,7 @@ public class App extends Application {
 
         System.out.println("Hello I am Suraj");
 
- //       new Thread(new Handler()).start();
+        new Thread(new Handler()).start();
 
 
     }
