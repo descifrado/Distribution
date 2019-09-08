@@ -9,6 +9,7 @@ import data.File;
 import data.Peer;
 import data.SearchFile;
 import fileHandler.FileDownloadHandler;
+import fileHandler.FileMerger;
 import fileHandler.FileReciever;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -43,7 +44,6 @@ public class Controller_SearchFile {
     public JFXListView tags;
     public JFXComboBox<String> searchbytype;
     public JFXButton back;
-    public JFXButton stream;
 
 
     private SearchFile currentSelectedFile;
@@ -51,8 +51,10 @@ public class Controller_SearchFile {
 
 
     public static volatile JSONObject downloadedPieceJSON ;
+    public static volatile JSONObject completePieceJSON;
     public static volatile FileOutputStream jsonwriter;
-    public static boolean isDownloadComplete;
+    public static volatile int totalPieces,downloadedPieces;
+    public static volatile boolean isDownloadComplete;
     public static String[] getNames(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
@@ -62,8 +64,6 @@ public class Controller_SearchFile {
         String[] fileTypes = getNames(FileType.class);
         searchbytype.getItems().addAll(fileTypes);
         currentSelectedFile=null;
-        stream.setDisable(true);
-        stream.setOpacity(0.0);
 
     }
     public void ondownloadclicked(ActionEvent actionEvent) {
@@ -88,10 +88,10 @@ public class Controller_SearchFile {
                 downloadedPieceJSON = new JSONObject();
             }else{
 
-                    downloadedPieceJSON = new JSONObject(new JSONTokener(new FileReader(path)));
-                    System.out.println("Reading existing json file");
+                downloadedPieceJSON = new JSONObject(new JSONTokener(new FileReader(path)));
+                System.out.println("Reading existing json file");
 
-                    downloadedPieceJSON = new JSONObject();
+                downloadedPieceJSON = new JSONObject();
 
 
             }
@@ -106,19 +106,44 @@ public class Controller_SearchFile {
             if(!jsonFolder.exists()){
                 jsonFolder.mkdir();
             }
-            System.out.println("Debug1");
+
             FileReciever fileReciever = new FileReciever();
             fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
-            System.out.println("Debug2");
-
-
-
+            completePieceJSON = new JSONObject(new JSONTokener(pathJsonFiles+"/"+fileUID));
+            totalPieces = completePieceJSON.length();
 
             for(Peer peer : peersList){
                 System.out.println(peer);
                 new Thread(new FileDownloadHandler(peer,file)).start();
             }
-            System.out.println("Debug3");
+            new Thread(() -> {
+                while(downloadedPieces<totalPieces){
+                    downloadedPieces = downloadedPieceJSON.length();
+                    System.out.println("Pieces Downloaded : "+downloadedPieces );
+                    System.out.println("Total Pieces : "+totalPieces);
+                    System.out.println();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                isDownloadComplete = true;
+                System.out.println("Download Complete");
+                System.out.println("Now Merging Files .. !!");
+                FileMerger fileMerger = new FileMerger();
+                java.io.File mergedfile = new java.io.File(home+"/Downloads/"+currentSelectedFile.getFileName());
+                try {
+                    if (!mergedfile.exists()) {
+                        mergedfile.createNewFile();
+                    }
+                    fileMerger.mergeFiles(home + "/Downloads/" + currentSelectedFile.getFileUID(), mergedfile);
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }).start();
+
 
 
 
@@ -148,9 +173,7 @@ public class Controller_SearchFile {
 
                     App.oosTracker.writeObject(searchRequest);
                     App.oosTracker.flush();
-                    System.out.print(searchRequest.getTags()+" ");
-                    System.out.print(searchRequest.getName()+" ");
-                    System.out.println(searchRequest.getType());
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -163,7 +186,7 @@ public class Controller_SearchFile {
                     e.printStackTrace();
                 }
                 List<SearchFile> availableFiles= (List<SearchFile>) response.getResponseObject();
-                               System.out.println(availableFiles);
+                System.out.println(availableFiles);
 
                 Platform.runLater(new Runnable() {
                     @Override
@@ -181,8 +204,10 @@ public class Controller_SearchFile {
 
             }
         }).start();
-        stream.setDisable(true);
-        stream.setOpacity(0.0);
+
+
+
+
     }
 
     public void onaddtagclicked(ActionEvent actionEvent) {
@@ -225,35 +250,6 @@ public class Controller_SearchFile {
     public void onFilesListClicked(MouseEvent mouseEvent) {
 
         currentSelectedFile= (SearchFile) files.getSelectionModel().getSelectedItem();
-        System.out.println(currentSelectedFile);
-        //SearchFile searchFile= (SearchFile) files.getSelectionModel().getSelectedItems().get(0);
-        if (currentSelectedFile.getType().equals(FileType.MEDIA) || currentSelectedFile.getType().equals(FileType.AUDIO)){
-            stream.setDisable(false);
-            stream.setOpacity(1.0);
-        }
-        else {
-            stream.setDisable(true);
-            stream.setOpacity(0.0);
-        }
-    }
-
-    public void onstreamclicked(ActionEvent actionEvent) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Stage primaryStage = (Stage) stream.getScene().getWindow();
-                Parent root = null;
-                try {
-
-                    root = FXMLLoader.load(getClass().getResource("/streamingMedia.fxml"));
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
-                primaryStage.setScene(new Scene(root, 1081, 826));
-
-            }
-        });
 
     }
 }
-
