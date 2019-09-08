@@ -47,7 +47,7 @@ public class App extends Application {
 
 
         try{
-            App.serverSocket = new ServerSocket(6964);
+            App.serverSocket = new ServerSocket(6963);
             System.out.println("Client Started..!!");
         }catch (IOException e){
             e.printStackTrace();
