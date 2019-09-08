@@ -40,14 +40,14 @@ public class App extends Application {
         System.out.println("Hello I am Suraj");
         try {
             serverClientSocketChannel = ServerSocketChannel.open();
-            serverClientSocketChannel.socket().bind(new InetSocketAddress(9000));
+            serverClientSocketChannel.socket().bind(new InetSocketAddress(9003));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
         try{
-            App.serverSocket = new ServerSocket(6963);
+            App.serverSocket = new ServerSocket(6964);
             System.out.println("Client Started..!!");
         }catch (IOException e){
             e.printStackTrace();

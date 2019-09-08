@@ -42,7 +42,7 @@ public class Controller_SearchFile {
     public JFXListView tags;
     public JFXComboBox<String> searchbytype;
     public JFXButton back;
-
+    public JFXButton stream;
 
     private SearchFile currentSelectedFile;
     private List<String> currentTags;
@@ -66,7 +66,8 @@ public class Controller_SearchFile {
         String[] fileTypes = getNames(FileType.class);
         searchbytype.getItems().addAll(fileTypes);
         currentSelectedFile=null;
-
+        stream.setOpacity(0.0);
+        stream.setDisable(true);
     }
 
 
@@ -244,7 +245,8 @@ public class Controller_SearchFile {
             }
         }).start();
 
-
+        stream.setOpacity(0.0);
+        stream.setDisable(true);
 
 
     }
@@ -289,9 +291,31 @@ public class Controller_SearchFile {
     public void onFilesListClicked(MouseEvent mouseEvent) {
 
         currentSelectedFile= (SearchFile) files.getSelectionModel().getSelectedItem();
+        if (currentSelectedFile.getType().equals(FileType.MEDIA) || currentSelectedFile.getType().equals(FileType.AUDIO)){
+            stream.setOpacity(1.0);
+            stream.setDisable(false);
+        }
+        else {
+            stream.setOpacity(0.0);
+            stream.setDisable(true);
+        }
 
     }
 
     public void onstreamclicked(ActionEvent actionEvent) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage primaryStage = (Stage) back.getScene().getWindow();
+                Parent root = null;
+                try {
+
+                    root = FXMLLoader.load(getClass().getResource("/streamingMedia.fxml"));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                primaryStage.setScene(new Scene(root, 1303, 961));
+            }
+        });
     }
 }

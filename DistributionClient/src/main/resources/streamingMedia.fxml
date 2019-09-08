@@ -9,7 +9,7 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_StreamingMedia">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_StreamingMedia">
     <children>
         <Label layoutX="1147.0" layoutY="931.0" prefHeight="16.0" prefWidth="142.0" text="NobodyDoesItBetter" textFill="#58ccd0" />
         <JFXButton fx:id="back" layoutX="999.0" layoutY="834.0" onAction="#onbackclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Back" textFill="#33bfc6">
@@ -35,7 +35,7 @@
             <MediaView fx:id="mediaView" fitHeight="550.0" fitWidth="760.0" layoutX="5.0" preserveRatio="false" />
             <Pane fx:id="controls" layoutX="6.0" layoutY="450.0" prefHeight="100.0" prefWidth="758.0">
                <children>
-                  <JFXSlider fx:id="timeSlider" layoutX="17.0" prefHeight="46.0" prefWidth="732.0" />
+                  <JFXSlider fx:id="timeSlider" layoutX="17.0" onDragDetected="#onSeekVideo" onMouseClicked="#onSeekVideo" prefHeight="46.0" prefWidth="732.0" />
                   <JFXSlider fx:id="volumeSlider" layoutX="346.0" layoutY="63.0" />
                   <Label fx:id="labelPath111" layoutX="225.0" layoutY="53.0" prefHeight="34.0" prefWidth="109.0" text="Volume" textFill="#58ccd0">
                      <font>
@@ -50,6 +50,11 @@
                   <JFXButton fx:id="stop" layoutX="76.0" layoutY="47.0" onAction="#STOP" prefHeight="45.0" prefWidth="45.0" text="■">
                      <font>
                         <Font size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="pause" layoutX="135.0" layoutY="48.0" onAction="#PAUSE" prefHeight="45.0" prefWidth="45.0" text="||">
+                     <font>
+                        <Font size="21.0" />
                      </font>
                   </JFXButton>
                </children>
