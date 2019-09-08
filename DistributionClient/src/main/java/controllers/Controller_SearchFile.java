@@ -109,7 +109,7 @@ public class Controller_SearchFile {
 
             FileReciever fileReciever = new FileReciever();
             fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
-            completePieceJSON = new JSONObject(new JSONTokener(pathJsonFiles+"/"+fileUID));
+            completePieceJSON = new JSONObject(new JSONTokener(new FileReader(pathJsonFiles+"/"+fileUID)));
             totalPieces = completePieceJSON.length();
 
             for(Peer peer : peersList){

@@ -16,7 +16,7 @@ public class FileSender {
             SocketChannel socketChannel = SocketChannel.open();
             SocketAddress socketAddress = new InetSocketAddress(serverIP,9000);
             socketChannel.connect(socketAddress);
-            System.out.println("Connected with server for File I/O");
+//            System.out.println("Connected with server for File I/O");
             return socketChannel;
 
 
@@ -39,7 +39,7 @@ public class FileSender {
                 socketChannel.write(buffer);
                 buffer.clear();
             }
-            System.out.println("End of file reached..");
+//            System.out.println("End of file reached..");
             socketChannel.close();
             aFile.close();
 

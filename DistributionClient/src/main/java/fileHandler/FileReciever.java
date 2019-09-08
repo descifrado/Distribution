@@ -16,7 +16,7 @@ public class FileReciever {
         try {
             SocketChannel socketChannel = null;
             socketChannel = serverSocketChannel.accept();
-            System.out.println("Connected With Client For File IO");
+
             return socketChannel;
 
         }catch (Exception e){
@@ -41,7 +41,7 @@ public class FileReciever {
             }
             Thread.sleep(1000);
             fileChannel.close();
-            System.out.println("End of file reached..Closing channel");
+
             socketChannel.close();
             
         }catch (Exception e){
