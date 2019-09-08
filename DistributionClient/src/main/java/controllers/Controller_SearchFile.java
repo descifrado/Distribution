@@ -52,6 +52,7 @@ public class Controller_SearchFile {
     public static volatile JSONObject completePieceJSON;
     public static volatile FileOutputStream jsonwriter;
     public static volatile int totalPieces,downloadedPieces;
+    public static int totalPeers;
     public static volatile boolean isDownloadComplete;
     public static String[] getNames(Class<? extends Enum<?>> e)
     {
@@ -112,6 +113,7 @@ public class Controller_SearchFile {
             fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
             completePieceJSON = new JSONObject(new JSONTokener(new FileReader(pathJsonFiles+"/"+fileUID)));
             totalPieces = completePieceJSON.length();
+            totalPeers=peersList.size();
             for(Peer peer : peersList){
                 System.out.println(peer);
                 new Thread(new FileDownloadHandler(peer,file)).start();

@@ -40,7 +40,7 @@ public class App extends Application {
         System.out.println("Hello I am Suraj");
         try {
             serverClientSocketChannel = ServerSocketChannel.open();
-            serverClientSocketChannel.socket().bind(new InetSocketAddress(9003));
+            serverClientSocketChannel.socket().bind(new InetSocketAddress(9000));
         } catch (IOException e) {
             e.printStackTrace();
         }
