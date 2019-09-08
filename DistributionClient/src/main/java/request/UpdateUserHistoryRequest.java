@@ -8,7 +8,7 @@ public class UpdateUserHistoryRequest extends Request implements Serializable
 {
     private String fileUID,userUID,downloaded,shared;
 
-    public UpdateUserHistoryRequest(String fileUID, String userUID, String downloaded, String shared)
+    public UpdateUserHistoryRequest(String userUID, String fileUID, String downloaded, String shared)
     {
         this.fileUID=fileUID;
         this.userUID=userUID;
