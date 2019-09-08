@@ -144,7 +144,21 @@ public class Controller_SearchFile {
                 }
             }).start();
 
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Stage primaryStage = (Stage) searchbyname.getScene().getWindow();
+                    Parent root = null;
+                    try {
 
+                        root = FXMLLoader.load(getClass().getResource("/downloadTracker.fxml"));
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                    primaryStage.setScene(new Scene(root, 1081, 826));
+
+                }
+            });
 
 
         }catch (Exception e){
