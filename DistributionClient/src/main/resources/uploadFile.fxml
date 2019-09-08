@@ -57,7 +57,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <JFXButton fx:id="more" layoutX="561.0" layoutY="398.0" onAction="#onmoreclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="More" textFill="#33bfc6">
+      <JFXButton fx:id="more" layoutX="561.0" layoutY="398.0" onAction="#onmoreclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Add " textFill="#33bfc6">
          <font>
             <Font size="18.0" />
          </font>
