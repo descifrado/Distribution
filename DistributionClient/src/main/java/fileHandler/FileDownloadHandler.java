@@ -73,7 +73,6 @@ public class FileDownloadHandler implements Runnable {
 
                         tmp.put(key,availablePieces.get(key));
 
-
                     }
                 }
                 Controller_SearchFile.jsonwriter.write(tmp.toString().getBytes());
