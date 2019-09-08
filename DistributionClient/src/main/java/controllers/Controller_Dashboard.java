@@ -1,6 +1,10 @@
 package controllers;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+import constants.ResponseCode;
+import data.File;
+import data.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,12 +13,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import mainApp.App;
+import request.DownloadedFileRequest;
+import request.Response;
+import request.SharedFileRequest;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.Iterator;
+import java.util.List;
 
 public class Controller_Dashboard
 {
+
+    private String userUID;
     @FXML
+    public JFXListView downloadedfiles,sharedfiles;
     public JFXTextField firstname,lastname,email,phone;
     public JFXButton sharefile,download,logout;
     public void initialize(){
@@ -22,6 +37,75 @@ public class Controller_Dashboard
         lastname.setText(App.user.getLastName());
         email.setText(App.user.getEmail());
         phone.setText(App.user.getPhone());
+        userUID=App.user.getUserUID();
+        DownloadedFileRequest downloadedFileRequest=new DownloadedFileRequest(userUID);
+        try
+        {
+            App.sockerTracker = new Socket(App.serverIP,App.portNo);
+            App.oosTracker = new ObjectOutputStream(App.sockerTracker.getOutputStream());
+            App.oisTracker = new ObjectInputStream(App.sockerTracker.getInputStream());
+            App.oosTracker.writeObject(downloadedFileRequest);
+            App.oosTracker.flush();Response response;
+            response = (Response)App.oisTracker.readObject();
+
+            List<File> files=(List<File>) response.getResponseObject();
+            if(response.getResponseCode().equals(ResponseCode.SUCCESS))
+            {
+                Iterator i=files.iterator();
+                while ((i.hasNext()))
+                {
+                    File file=(File)i;
+                    downloadedfiles.getItems().add(file.getFileName());
+                }
+            }
+            else
+            {
+                downloadedfiles.getItems().add("Empty");
+                System.out.println("Failed Fetching of Files");
+            }
+
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            downloadedfiles.getItems().add("Empty");
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println("Failed Fetching of Files");
+        }
+        SharedFileRequest sharedFileRequest=new SharedFileRequest(userUID);
+        try
+        {
+            App.sockerTracker = new Socket(App.serverIP,App.portNo);
+            App.oosTracker = new ObjectOutputStream(App.sockerTracker.getOutputStream());
+            App.oisTracker = new ObjectInputStream(App.sockerTracker.getInputStream());
+            App.oosTracker.writeObject(sharedFileRequest);
+            App.oosTracker.flush();Response response;
+            response = (Response)App.oisTracker.readObject();
+
+            List<File> files=(List<File>) response.getResponseObject();
+            if(response.getResponseCode().equals(ResponseCode.SUCCESS))
+            {
+                Iterator i=files.iterator();
+                while ((i.hasNext()))
+                {
+                    File file=(File)i;
+                    sharedfiles.getItems().add(file.getFileName());
+                }
+            }
+            else
+            {
+                sharedfiles.getItems().add("Empty");
+                System.out.println("Failed Fetching of Files");
+            }
+
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            downloadedfiles.getItems().add("Empty");
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println("Failed Fetching of Files");
+        }
     }
 
 

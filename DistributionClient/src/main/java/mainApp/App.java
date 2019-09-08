@@ -21,14 +21,14 @@ import java.nio.channels.ServerSocketChannel;
 public class App extends Application {
 
     public static String serverIP = "192.168.0.110";
-    public static  int portNo = 6963;
+    public static int portNo = 6963;
     public static Socket sockerTracker ;
     public static ObjectOutputStream oosTracker ;
     public static ObjectInputStream oisTracker;
     public static User user;
     public static ServerSocketChannel serverClientSocketChannel;
     public static Socket socketp2p;
-    public static  ServerSocket serverSocket;
+    public static ServerSocket serverSocket;
     @Override
     public void start(Stage primaryStage) throws IOException {
 

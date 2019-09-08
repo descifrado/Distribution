@@ -3,11 +3,8 @@ package mainClasses;
 import authenticationHandler.Login;
 import authenticationHandler.SignUp;
 import constants.RequestCode;
-import fileHandler.FileSender;
+import fileHandler.*;
 import peerListHandler.PeerList;
-import fileHandler.FileCheckHandler;
-import fileHandler.FileReciever;
-import fileHandler.FileUploadHandler;
 import request.*;
 import searchHandler.Search;
 
@@ -91,6 +88,18 @@ HandleClientRequest implements Runnable{
                     FileSender fileSender = new FileSender();
                     fileSender.sendFile(fileSender.createSocketChannel(socket.getInetAddress().getCanonicalHostName()),loc);
 
+                }
+                else if(request.getRequestCode().equals(RequestCode.DOWNLOADEDFILES_REQUEST))
+                {
+                    DownloadedFile downloadedFile=new DownloadedFile((DownloadedFileRequest) request);
+                    oos.writeObject(downloadedFile.getResponse());
+                    oos.flush();
+                }
+                else if(request.getRequestCode().equals(RequestCode.SHAREDFILES_REQUEST))
+                {
+                    SharedFile sharedFile=new SharedFile((SharedFileRequest)request);
+                    oos.writeObject(sharedFile.getResponse());
+                    oos.flush();
                 }
             }catch (Exception e){
                 e.printStackTrace();

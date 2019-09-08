@@ -11,7 +11,7 @@
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_Dashboard">
    <children>
       <Label layoutX="1147.0" layoutY="931.0" prefHeight="16.0" prefWidth="142.0" text="NobodyDoesItBetter" textFill="#58ccd0" />
-      <JFXButton fx:id="sharefile" layoutX="999.0" layoutY="834.0" onAction="#onshareclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Share File" textFill="#33bfc6">
+      <JFXButton fx:id="sharefile" layoutX="972.0" layoutY="834.0" onAction="#onshareclicked" prefHeight="33.0" prefWidth="208.0" style="-fx-background-color: white;" text="Share A New File" textFill="#33bfc6">
          <font>
             <Font size="18.0" />
          </font>
@@ -44,9 +44,9 @@
             <Font size="29.0" />
          </font>
       </Label>
-      <JFXListView fx:id="downloads" layoutX="602.0" layoutY="276.0" prefHeight="517.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
-      <JFXListView fx:id="shared" layoutX="942.0" layoutY="277.0" prefHeight="516.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
-      <JFXButton fx:id="download" layoutX="659.0" layoutY="834.0" onAction="#ondownloadclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Download File" textFill="#33bfc6">
+      <JFXListView fx:id="downloadedfiles" layoutX="602.0" layoutY="276.0" prefHeight="517.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
+      <JFXListView fx:id="sharedfiles" layoutX="942.0" layoutY="277.0" prefHeight="516.0" prefWidth="268.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-font-color: #da1313; -fx-text-inner-color: #da1313; -fx-prompt-text-fill: #da1313;" />
+      <JFXButton fx:id="download" layoutX="613.0" layoutY="834.0" onAction="#ondownloadclicked" prefHeight="33.0" prefWidth="246.0" style="-fx-background-color: white;" text="Download A New File" textFill="#33bfc6">
          <font>
             <Font size="18.0" />
          </font>
