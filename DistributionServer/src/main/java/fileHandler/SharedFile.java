@@ -25,7 +25,7 @@ public class SharedFile
     public Response getResponse()
     {
         userUID=sharedFileRequest.getUserUID();
-        String query="SELECT fileUID from UserHistory WHERE userUID="+userUID+" and shared=1;";
+        String query="SELECT fileUID from UserHistory WHERE userUID=\""+userUID+"\" and shared=1;";
         try
         {
             PreparedStatement preparedStatement= Main.connection.prepareStatement(query);
