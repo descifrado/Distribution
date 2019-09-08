@@ -252,4 +252,7 @@ public class Controller_SearchFile {
         currentSelectedFile= (SearchFile) files.getSelectionModel().getSelectedItem();
 
     }
+
+    public void onstreamclicked(ActionEvent actionEvent) {
+    }
 }

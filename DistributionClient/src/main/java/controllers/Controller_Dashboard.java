@@ -51,10 +51,8 @@ public class Controller_Dashboard
             List<File> files=(List<File>) response.getResponseObject();
             if(response.getResponseCode().equals(ResponseCode.SUCCESS))
             {
-                Iterator i=files.iterator();
-                while ((i.hasNext()))
+                for(File file: files)
                 {
-                    File file=(File)i;
                     downloadedfiles.getItems().add(file.getFileName());
                 }
             }
@@ -85,10 +83,8 @@ public class Controller_Dashboard
             List<File> files=(List<File>) response.getResponseObject();
             if(response.getResponseCode().equals(ResponseCode.SUCCESS))
             {
-                Iterator i=files.iterator();
-                while ((i.hasNext()))
+                for(File file: files)
                 {
-                    File file=(File)i;
                     sharedfiles.getItems().add(file.getFileName());
                 }
             }

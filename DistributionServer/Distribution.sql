@@ -37,7 +37,7 @@ CREATE TABLE `File` (
 -- Dumping data for table `File`
 --
 
-INSERT INTO `File` (`fileUID`, `fileName`, `location`, `type`) VALUES
+
 ('0a6ee498-a450-3b6d-92e5-6d7d5042797d', 'memory_lane.jpg', '/home/moonknight/Avishkar/This3Bhushan/DistributionServer/jsonFiles', 'IMAGE'),
 ('0f972b6f-0911-3f75-a278-96915be2dd8e', 'Screenshot from 2018-12-13 17-52-46.png', '/home/moonknight/Avishkar/This3Bhushan/DistributionServer/jsonFiles', 'OTHER'),
 ('1058aaad-b5c7-35d4-b84d-ed21f6fe7292', '20174005.sql', '/home/moonknight/Avishkar/This3Bhushan/DistributionServer/jsonFiles', 'TEXT'),
