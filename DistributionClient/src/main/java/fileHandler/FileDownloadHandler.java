@@ -65,10 +65,9 @@ public class FileDownloadHandler implements Runnable {
                         PieceDownloadRequest pieceDownloadRequest = new PieceDownloadRequest(file,key);
                         oos.writeObject(pieceDownloadRequest);
                         oos.flush();
-
                         FileReciever fileReciever =  new FileReciever();
                         fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),key,pathFolder);
-
+                        System.out.println("Peer: " + peerIP);
                         Controller_SearchFile.downloadedPieceJSON.put(key,availablePieces.get(key));
 
                         tmp.put(key,availablePieces.get(key));
@@ -76,6 +75,7 @@ public class FileDownloadHandler implements Runnable {
                     }
                 }
                 Controller_SearchFile.jsonwriter.write(tmp.toString().getBytes());
+//                send a request to add entry in peers table.
 
             }
 

@@ -44,7 +44,7 @@ public class Controller_SearchFile {
     public JFXButton back;
     public JFXButton stream;
 
-    private SearchFile currentSelectedFile;
+    public static SearchFile currentSelectedFile;
     private List<String> currentTags;
 
 

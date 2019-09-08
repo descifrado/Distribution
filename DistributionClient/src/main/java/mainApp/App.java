@@ -31,7 +31,6 @@ public class App extends Application {
     public static ServerSocket serverSocket;
     @Override
     public void start(Stage primaryStage) throws IOException {
-
         Parent root = FXMLLoader.load(getClass().getResource("/login.fxml"));
         primaryStage.setTitle("Distribution");
         primaryStage.setScene(new Scene(root, 1081, 826));
