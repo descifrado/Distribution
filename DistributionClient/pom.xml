@@ -32,6 +32,13 @@
             <artifactId>json</artifactId>
             <version>20090211</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>11-ea+25</version>
+        </dependency>
+
 
 
     </dependencies>

@@ -40,7 +40,7 @@
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="download" layoutX="491.0" layoutY="725.0" onAction="#ondownloadclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Download" textFill="#33bfc6">
+      <JFXButton fx:id="download" layoutX="488.0" layoutY="644.0" onAction="#ondownloadclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Download" textFill="#33bfc6">
          <font>
             <Font size="18.0" />
          </font>
@@ -48,7 +48,7 @@
             <Bloom />
          </effect>
       </JFXButton>
-      <JFXButton fx:id="search" layoutX="488.0" layoutY="665.0" onAction="#onsearchclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Search" textFill="#33bfc6">
+      <JFXButton fx:id="search" layoutX="488.0" layoutY="574.0" onAction="#onsearchclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Search" textFill="#33bfc6">
          <font>
             <Font size="18.0" />
          </font>
@@ -77,6 +77,14 @@
          </styleClass>
       </JFXComboBox>
       <JFXButton fx:id="back" layoutX="812.0" layoutY="733.0" onAction="#onbackclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Back" textFill="#33bfc6">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </JFXButton>
+      <JFXButton fx:id="stream" layoutX="488.0" layoutY="725.0" onAction="#onstreamclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Stream" textFill="#33bfc6">
          <font>
             <Font size="18.0" />
          </font>

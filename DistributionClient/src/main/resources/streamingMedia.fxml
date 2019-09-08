@@ -9,10 +9,10 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_Dashboard">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1303.0" stylesheets="@mainApp/backgroundbig.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_StreamingMedia">
     <children>
         <Label layoutX="1147.0" layoutY="931.0" prefHeight="16.0" prefWidth="142.0" text="NobodyDoesItBetter" textFill="#58ccd0" />
-        <JFXButton fx:id="back" layoutX="999.0" layoutY="834.0" onAction="#onshareclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Back" textFill="#33bfc6">
+        <JFXButton fx:id="back" layoutX="999.0" layoutY="834.0" onAction="#onbackclicked" prefHeight="33.0" prefWidth="155.0" style="-fx-background-color: white;" text="Back" textFill="#33bfc6">
             <font>
                 <Font size="18.0" />
             </font>
