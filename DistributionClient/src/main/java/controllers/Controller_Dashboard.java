@@ -7,10 +7,13 @@ import data.File;
 import data.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mainApp.App;
 import request.DownloadedFileRequest;
@@ -32,6 +35,7 @@ public class Controller_Dashboard
     public JFXListView downloadedfiles,sharedfiles;
     public JFXTextField firstname,lastname,email,phone;
     public JFXButton sharefile,download,logout;
+    private List<File> files;
     public void initialize(){
         firstname.setText(App.user.getFirstName());
         lastname.setText(App.user.getLastName());
@@ -80,7 +84,7 @@ public class Controller_Dashboard
             App.oosTracker.flush();Response response;
             response = (Response)App.oisTracker.readObject();
 
-            List<File> files=(List<File>) response.getResponseObject();
+            files=(List<File>) response.getResponseObject();
             if(response.getResponseCode().equals(ResponseCode.SUCCESS))
             {
                 for(File file: files)
@@ -164,5 +168,21 @@ public class Controller_Dashboard
             }
         });
 
+    }
+
+    public void onfiledclicked(MouseEvent mouseEvent)
+    {
+        int idx=downloadedfiles.getSelectionModel().getSelectedIndex();
+        File f=(File)files.get(idx);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"File Name: "+f.getFileName()+"\nFile Type: "+f.getTags()+"\nTags: "+f.getType());
+        alert.showAndWait();
+    }
+
+    public void onfilesclicked(MouseEvent mouseEvent)
+    {
+        int idx=sharedfiles.getSelectionModel().getSelectedIndex();
+        File f=(File)files.get(idx);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"File Name: "+f.getFileName()+"\nFile Type: "+f.getTags()+"\nTags: "+f.getType());
+        alert.showAndWait();
     }
 }
