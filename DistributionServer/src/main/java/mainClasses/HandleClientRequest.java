@@ -101,6 +101,12 @@ HandleClientRequest implements Runnable{
                     oos.writeObject(sharedFile.getResponse());
                     oos.flush();
                 }
+                else if(request.getRequestCode().equals(RequestCode.UPDATEUSERHISTORY_REQUEST))
+                {
+                    UpdateUserHistory updateUserHistory=new UpdateUserHistory((UpdateUserHistoryRequest) request);
+                    oos.writeObject(updateUserHistory.getResponse());
+                    oos.flush();
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
