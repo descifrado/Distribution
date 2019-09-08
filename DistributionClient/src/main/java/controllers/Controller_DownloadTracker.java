@@ -38,6 +38,7 @@ public class Controller_DownloadTracker {
 
             });
         }).start();
+        
     }
     public void onbackclicked(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
