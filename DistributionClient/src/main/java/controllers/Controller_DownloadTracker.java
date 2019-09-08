@@ -24,21 +24,23 @@ public class Controller_DownloadTracker {
     public void initialize(){
 //        progressbar.setProgress(0);
         file.setText(Controller_SearchFile.currentFile);
-        peers.setText(String.valueOf(Controller_SearchFile.totalPieces));
+        peers.setText(String.valueOf(Controller_SearchFile.totalPeers));
         new Thread(() -> {
-            double progress = (double)Controller_SearchFile.downloadedPieces/Controller_SearchFile.totalPieces;
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Platform.runLater(() -> {
-                pieces.setText(String.valueOf(Controller_SearchFile.downloadedPieces));
-                progressbar.setProgress(progress);
+            while (Controller_SearchFile.downloadedPieces<Controller_SearchFile.totalPieces) {
+                double progress = (double) Controller_SearchFile.downloadedPieces / Controller_SearchFile.totalPieces;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(() -> {
+                    pieces.setText(String.valueOf(Controller_SearchFile.downloadedPieces));
+                    progressbar.setProgress(progress);
 
-            });
+                });
+            }
         }).start();
-        
+
     }
     public void onbackclicked(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
