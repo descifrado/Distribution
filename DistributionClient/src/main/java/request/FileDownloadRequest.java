@@ -6,6 +6,7 @@ import data.File;
 public class FileDownloadRequest extends Request
 {
     private File file;
+    private String userUID;
 
     public String getUserUID() {
         return userUID;
@@ -15,7 +16,6 @@ public class FileDownloadRequest extends Request
         this.userUID = userUID;
     }
 
-    private String userUID;
     public FileDownloadRequest(File file, String userUID)
     {
         this.file=file;

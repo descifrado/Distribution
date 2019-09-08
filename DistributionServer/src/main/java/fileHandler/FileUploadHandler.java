@@ -52,6 +52,16 @@ public class FileUploadHandler {
             stmt.setString(2,this.userUID);
             stmt.setString(3,this.userIP);
             stmt.executeUpdate();
+
+            //Inserting in User History
+            String query="INSERT INTO UserHistory VALUES(?,?,?,?);";
+            PreparedStatement statement=Main.connection.prepareStatement(query);
+            statement.setString(1,userUID);
+            statement.setString(2,file.getFileUID());
+            statement.setString(3,"0");
+            statement.setString(4,"1");
+            statement.executeUpdate();
+
             return new Response(UIDGenerator.generateuid(),null,ResponseCode.SUCCESS);
 
         }catch (SQLException e){
