@@ -174,7 +174,7 @@ public class Controller_Dashboard
     {
         int idx=downloadedfiles.getSelectionModel().getSelectedIndex();
         File f=(File)files.get(idx);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"File Name: "+f.getFileName()+"\nFile Type: "+f.getTags()+"\nTags: "+f.getType());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"File Name: "+f.getFileName()+"\nFile Type: "+f.getType()+"\nTags: "+f.getTags());
         alert.showAndWait();
     }
 
@@ -182,7 +182,7 @@ public class Controller_Dashboard
     {
         int idx=sharedfiles.getSelectionModel().getSelectedIndex();
         File f=(File)files.get(idx);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"File Name: "+f.getFileName()+"\nFile Type: "+f.getTags()+"\nTags: "+f.getType());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"File Name: "+f.getFileName()+"\nFile Type: "+f.getType()+"\nTags: "+f.getTags());
         alert.showAndWait();
     }
 }
