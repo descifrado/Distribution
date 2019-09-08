@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXProgressBar?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -36,7 +36,6 @@
             <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <JFXProgressBar fx:id="progressbar" layoutX="221.0" layoutY="631.0" prefHeight="16.0" prefWidth="640.0" />
       <Label fx:id="labelPath" layoutX="261.0" layoutY="294.0" prefHeight="3.0" prefWidth="109.0" text="File" textFill="#58ccd0">
          <font>
             <Font size="27.0" />
@@ -67,6 +66,7 @@
             <Font size="18.0" />
          </font>
       </JFXTextField>
+      <ProgressBar fx:id="progressbar" layoutX="221.0" layoutY="583.0" prefHeight="20.0" prefWidth="640.0" progress="0.0" />
    </children>
    <stylesheets>
       <URL value="@mainApp/backgroundsmall.css" />

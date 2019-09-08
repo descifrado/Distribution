@@ -54,6 +54,7 @@ public class Controller_SearchFile {
     public static volatile int totalPieces,downloadedPieces;
     public static int totalPeers;
     public static volatile boolean isDownloadComplete;
+    public static String currentFile;
     public static String[] getNames(Class<? extends Enum<?>> e)
     {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
@@ -145,7 +146,7 @@ public class Controller_SearchFile {
                     e.printStackTrace();
                 }
             }).start();
-
+            currentFile = currentSelectedFile.getFileName();
             UpdateUserHistoryRequest updateUserHistoryRequest=new UpdateUserHistoryRequest(App.user.getUserUID(),fileUID,"1","0");
             try
             {
@@ -172,6 +173,7 @@ public class Controller_SearchFile {
                 System.out.println("Failed Fetching of Files");
             }
 
+            System.out.println("Hello");
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {

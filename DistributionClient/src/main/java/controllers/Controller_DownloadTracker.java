@@ -17,8 +17,11 @@ public class Controller_DownloadTracker {
     public JFXTextField pieces;
     public JFXTextField peers;
     public JFXButton back;
+    public JFXTextField file;
+
     public void initialize(){
-        progressbar.setProgress(0);
+//        progressbar.setProgress(0);
+        file.setText(Controller_SearchFile.currentFile);
         peers.setText(String.valueOf(Controller_SearchFile.totalPieces));
         new Thread(() -> {
             double progress = (double)Controller_SearchFile.downloadedPieces/Controller_SearchFile.totalPieces;
