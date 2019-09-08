@@ -172,17 +172,21 @@ public class Controller_Dashboard
 
     public void onfiledclicked(MouseEvent mouseEvent)
     {
-        int idx=downloadedfiles.getSelectionModel().getSelectedIndex();
-        File f=(File)files.get(idx);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"File Name: "+f.getFileName()+"\nFile Type: "+f.getType()+"\nTags: "+f.getTags());
-        alert.showAndWait();
+        if(!downloadedfiles.getItems().isEmpty()) {
+            int idx = downloadedfiles.getSelectionModel().getSelectedIndex();
+            File f = (File) files.get(idx);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File Name: " + f.getFileName() + "\nFile Type: " + f.getType() + "\nTags: " + f.getTags());
+            alert.showAndWait();
+        }
     }
 
     public void onfilesclicked(MouseEvent mouseEvent)
     {
-        int idx=sharedfiles.getSelectionModel().getSelectedIndex();
-        File f=(File)files.get(idx);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"File Name: "+f.getFileName()+"\nFile Type: "+f.getType()+"\nTags: "+f.getTags());
-        alert.showAndWait();
+        if(!sharedfiles.getItems().isEmpty()) {
+            int idx = sharedfiles.getSelectionModel().getSelectedIndex();
+            File f = (File) files.get(idx);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File Name: " + f.getFileName() + "\nFile Type: " + f.getType() + "\nTags: " + f.getTags());
+            alert.showAndWait();
+        }
     }
 }
