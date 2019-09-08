@@ -8,16 +8,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class Controller_DownloadTracker {
-    public JFXProgressBar progressbar;
+    
     public JFXTextField pieces;
     public JFXTextField peers;
     public JFXButton back;
     public JFXTextField file;
+    public ProgressBar progressbar;
 
     public void initialize(){
 //        progressbar.setProgress(0);
