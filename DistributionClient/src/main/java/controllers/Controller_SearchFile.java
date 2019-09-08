@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import constants.FileType;
+import constants.ResponseCode;
 import data.File;
 import data.Peer;
 import data.SearchFile;
@@ -26,19 +27,16 @@ import mainApp.Handler;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import request.FileDownloadRequest;
-import request.PeerListRequest;
-import request.Response;
-import request.SearchRequest;
+import request.*;
 
 import java.io.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Controller_SearchFile {
     public JFXTextField searchbyname;
-    //public JFXTextField searchbytype;
     public JFXTextField searchbytag;
     public JFXListView files;
     public JFXListView tags;
@@ -55,26 +53,33 @@ public class Controller_SearchFile {
     public static volatile FileOutputStream jsonwriter;
     public static volatile int totalPieces,downloadedPieces;
     public static volatile boolean isDownloadComplete;
-    public static String[] getNames(Class<? extends Enum<?>> e) {
+    public static String[] getNames(Class<? extends Enum<?>> e)
+    {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
+
+
     @FXML
-    public void initialize(){
+    public void initialize()
+    {
         currentTags=new ArrayList<String>();
         String[] fileTypes = getNames(FileType.class);
         searchbytype.getItems().addAll(fileTypes);
         currentSelectedFile=null;
 
     }
-    public void ondownloadclicked(ActionEvent actionEvent) {
+
+
+    public void ondownloadclicked(ActionEvent actionEvent)
+    {
         File file = currentSelectedFile;
         PeerListRequest peerListRequest = new PeerListRequest(file);
-        try{
+        try
+        {
             App.oosTracker.writeObject(peerListRequest);
             App.oosTracker.flush();
             Response response = (Response)App.oisTracker.readObject();
             List<Peer> peersList = (ArrayList<Peer>) response.getResponseObject();
-
             String fileUID = currentSelectedFile.getFileUID();
             String home=System.getProperty("user.home");
             String path=fileUID+"downloaded.json";
@@ -82,36 +87,30 @@ public class Controller_SearchFile {
             java.io.File mkFolder = new java.io.File(home+"/Downloads/" + currentSelectedFile.getFileUID());
             mkFolder.mkdir();
             java.io.File tmpfile = new java.io.File(path);
-            if(!tmpfile.exists()){
+            if(!tmpfile.exists())
+            {
                 tmpfile.createNewFile();
-//                create file if file does not exit when writing data to json file.
                 downloadedPieceJSON = new JSONObject();
-            }else{
-
+            }
+            else
+            {
                 downloadedPieceJSON = new JSONObject(new JSONTokener(new FileReader(path)));
                 System.out.println("Reading existing json file");
-
                 downloadedPieceJSON = new JSONObject();
-
-
             }
             jsonwriter = new FileOutputStream(tmpfile,true);
-
             FileDownloadRequest fileDownloadRequest = new FileDownloadRequest(file,App.user.getUserUID());
             App.oosTracker.writeObject(fileDownloadRequest);
             App.oosTracker.flush();
-
             String pathJsonFiles = "./jsonFiles";
             java.io.File jsonFolder = new java.io.File(pathJsonFiles);
             if(!jsonFolder.exists()){
                 jsonFolder.mkdir();
             }
-
             FileReciever fileReciever = new FileReciever();
             fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
             completePieceJSON = new JSONObject(new JSONTokener(new FileReader(pathJsonFiles+"/"+fileUID)));
             totalPieces = completePieceJSON.length();
-
             for(Peer peer : peersList){
                 System.out.println(peer);
                 new Thread(new FileDownloadHandler(peer,file)).start();
@@ -143,6 +142,32 @@ public class Controller_SearchFile {
                     e.printStackTrace();
                 }
             }).start();
+
+            UpdateUserHistoryRequest updateUserHistoryRequest=new UpdateUserHistoryRequest(App.user.getUserUID(),fileUID,"1","0");
+            try
+            {
+                App.sockerTracker = new Socket(App.serverIP,App.portNo);
+                App.oosTracker = new ObjectOutputStream(App.sockerTracker.getOutputStream());
+                App.oisTracker = new ObjectInputStream(App.sockerTracker.getInputStream());
+                App.oosTracker.writeObject(updateUserHistoryRequest);
+                App.oosTracker.flush();
+                Response response1 = (Response)App.oisTracker.readObject();
+                if(response1.getResponseCode()==ResponseCode.SUCCESS)
+                {
+                    System.out.println("User History Updated Successfully");
+                }
+                else
+                {
+                    System.out.println("Error in User History Update");
+                }
+            }
+            catch (IOException | ClassNotFoundException e)
+            {
+
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+                System.out.println("Failed Fetching of Files");
+            }
 
             Platform.runLater(new Runnable() {
                 @Override
