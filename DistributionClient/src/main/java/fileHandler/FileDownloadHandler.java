@@ -7,13 +7,13 @@ import data.Peer;
 import mainApp.App;
 import mainApp.Handler;
 import org.json.JSONObject;
-import request.AvailablePieceRequest;
-import request.PieceDownloadRequest;
-import request.Response;
+import request.*;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Iterator;
 
@@ -34,6 +34,7 @@ public class FileDownloadHandler implements Runnable {
 
     @Override
     public void run() {
+        JSONObject tmp  = new JSONObject();
         try{
 
             peerSocket = new Socket(this.peerIP,6963);
@@ -56,7 +57,7 @@ public class FileDownloadHandler implements Runnable {
                 String jsonString = (String)response.getResponseObject();
                 availablePieces = new JSONObject(jsonString);
                 Iterator<String> keys = availablePieces.keys();
-                JSONObject tmp  = new JSONObject();
+
                 while(keys.hasNext()){
                     String  key = keys.next();
                     if(!Controller_SearchFile.downloadedPieceJSON.has(key)){
@@ -74,14 +75,31 @@ public class FileDownloadHandler implements Runnable {
 
                     }
                 }
-                Controller_SearchFile.jsonwriter.write(tmp.toString().getBytes());
-//                send a request to add entry in peers table.
 
+//                send a request to add entry in peers table.
+                File tmpfile = new File(Controller_SearchFile.currentSelectedFile.getFileUID(),Controller_SearchFile.currentSelectedFile.getFileName(),null,null);
+
+                FileDownloadCompleteRequest fileDownloadCompleteRequest = new FileDownloadCompleteRequest(tmpfile,App.user.getUserUID(), InetAddress.getLocalHost().getHostAddress());
+                App.oosTracker.writeObject(fileDownloadCompleteRequest);
+                App.oosTracker.flush();
+                Response responsepeerlist = (Response)App.oisTracker.readObject();
+                if(responsepeerlist.getResponseCode().equals(ResponseCode.SUCCESS)){
+                    System.out.println("Added User Entry To Peer Table");
+                }else{
+                    System.out.println("User Entry in Peer Table Failed");
+                }
             }
 
 
         }catch (Exception e){
             e.printStackTrace();
+        }finally{
+
+            try {
+                Controller_SearchFile.jsonwriter.write(tmp.toString().getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

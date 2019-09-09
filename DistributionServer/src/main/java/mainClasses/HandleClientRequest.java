@@ -101,10 +101,15 @@ HandleClientRequest implements Runnable{
                     oos.writeObject(sharedFile.getResponse());
                     oos.flush();
                 }
-                else if(request.getRequestCode().equals(RequestCode.UPDATEUSERHISTORY_REQUEST))
-                {
-                    UpdateUserHistory updateUserHistory=new UpdateUserHistory((UpdateUserHistoryRequest) request);
+                else if(request.getRequestCode().equals(RequestCode.UPDATEUSERHISTORY_REQUEST)) {
+                    UpdateUserHistory updateUserHistory = new UpdateUserHistory((UpdateUserHistoryRequest) request);
                     oos.writeObject(updateUserHistory.getResponse());
+                    oos.flush();
+                }else if(request.getRequestCode().equals(RequestCode.FILEDOWNLOADCOMPLETE_REQUEST)){
+                    FileDownloadCompleteRequest fileDownloadCompleteRequest = (FileDownloadCompleteRequest)request;
+                    String cwd=System.getProperty("user.dir");
+                    FileUploadHandler fileUploadHandler = new FileUploadHandler(fileDownloadCompleteRequest,cwd+"/jsonFiles",this.userIP);
+                    oos.writeObject(fileUploadHandler.getResponse());
                     oos.flush();
                 }
             }catch (Exception e){
