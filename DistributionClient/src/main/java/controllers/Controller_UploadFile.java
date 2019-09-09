@@ -3,6 +3,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.sun.tools.javac.Main;
+import constants.FileType;
 import constants.ResponseCode;
 import fileHandler.FileSender;
 import fileHandler.FileSplit;
@@ -106,36 +107,60 @@ public class Controller_UploadFile
                 Response fileCheckResponse = (Response)App.oisTracker.readObject();
                 if(fileCheckResponse.getResponseCode().equals(ResponseCode.FAILED)){
                     status.setText("Upload Successful(Exists)");
-                    return;
-                }
+//                    return;
+                    Files.copy(new File(path+".json").toPath(),tmpfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    if(myfile.getType().equals(FileType.MEDIA)||myfile.getType().equals(FileType.AUDIO)){
+                        Process p =Runtime.getRuntime().exec("ffmpeg -i "+path + " " + path+".ts");
+                        System.out.println("Converting to ts..!!");
+                        while (p.isAlive()){
 
-
-
-                FileUploadRequest fileUploadRequest = new FileUploadRequest(myfile,App.user.getUserUID(),InetAddress.getLocalHost().getHostAddress());
-                App.oosTracker.writeObject(fileUploadRequest);
-                App.oosTracker.flush();
-                FileSender fileSender=new FileSender();
-                fileSender.sendFile(fileSender.createSocketChannel(App.serverIP),path+".json");
-                Response response = (Response)App.oisTracker.readObject();
-                if(response.getResponseCode().equals(ResponseCode.SUCCESS)){
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            status.setText("Upload Successful");
                         }
-                    });
+                        new Thread(new FileSplit(new File(path+".ts"),32*1024,home+"/Downloads/" + myfile.getFileUID())).start();
+                    }else{
+                        new Thread(new FileSplit(new File(path),32*1024,home+"/Downloads/" + myfile.getFileUID())).start();
+                    }
                 }else{
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            status.setText("Error");
+                    FileUploadRequest fileUploadRequest = new FileUploadRequest(myfile,App.user.getUserUID(),InetAddress.getLocalHost().getHostAddress());
+                    App.oosTracker.writeObject(fileUploadRequest);
+                    App.oosTracker.flush();
+                    FileSender fileSender=new FileSender();
+                    fileSender.sendFile(fileSender.createSocketChannel(App.serverIP),path+".json");
+                    Response response = (Response)App.oisTracker.readObject();
+                    if(response.getResponseCode().equals(ResponseCode.SUCCESS)){
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                status.setText("Upload Successful");
+                            }
+                        });
+                    }else{
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                status.setText("Error");
+                            }
+                        });
+                        return;
+                    }
+
+                    Files.copy(new File(path+".json").toPath(),tmpfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    if(myfile.getType().equals(FileType.MEDIA)||myfile.getType().equals(FileType.AUDIO)){
+                        Process p =Runtime.getRuntime().exec("ffmpeg -i "+path + " " + path+".ts");
+                        System.out.println("Converting to ts..!!");
+                        while (p.isAlive()){
+                            System.out.println("...");
+                            System.out.println("...");
                         }
-                    });
-                    return;
+                        new Thread(new FileSplit(new File(path+".ts"),32*1024,home+"/Downloads/" + myfile.getFileUID())).start();
+                    }else{
+                        new Thread(new FileSplit(new File(path),32*1024,home+"/Downloads/" + myfile.getFileUID())).start();
+                    }
+
                 }
 
-                Files.copy(new File(path+".json").toPath(),tmpfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                new Thread(new FileSplit(new File(path),32*1024,home+"/Downloads/" + myfile.getFileUID())).start();
+
+
+
             }
             catch (Exception e)
             {

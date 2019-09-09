@@ -37,6 +37,7 @@ public class FileSplit implements Runnable {
                     out.write(buffer, 0, bytesAmount);
                 }
             }
+
         }catch (IOException e){
             e.printStackTrace();
         }
