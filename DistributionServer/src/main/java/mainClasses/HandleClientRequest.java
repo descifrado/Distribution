@@ -108,8 +108,8 @@ HandleClientRequest implements Runnable{
                 }else if(request.getRequestCode().equals(RequestCode.FILEDOWNLOADCOMPLETE_REQUEST)){
                     FileDownloadCompleteRequest fileDownloadCompleteRequest = (FileDownloadCompleteRequest)request;
                     String cwd=System.getProperty("user.dir");
-                    FileUploadHandler fileUploadHandler = new FileUploadHandler(fileDownloadCompleteRequest,cwd+"/jsonFiles",this.userIP);
-                    oos.writeObject(fileUploadHandler.getResponse());
+                    FileDownloadCompleteHandler filedch = new FileDownloadCompleteHandler(fileDownloadCompleteRequest,cwd+"/jsonFiles",this.userIP);
+                    oos.writeObject(filedch.getResponse());
                     oos.flush();
                 }
             }catch (Exception e){
