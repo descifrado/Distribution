@@ -118,7 +118,7 @@ public class Controller_StreamingMedia {
         for(Peer peer:peersList){
             socketpeers.put(peer.getIp(),new Socket(peer.getIp(),6963));
             Socket socket = (Socket) socketpeers.get(peer.getIp());
-            peerois.put(peer.getIp(),new ObjectOutputStream(socket.getOutputStream()));
+            peeroos.put(peer.getIp(),new ObjectOutputStream(socket.getOutputStream()));
             peerois.put(peer.getIp(),new ObjectInputStream(socket.getInputStream()));
         }
         for (Peer peer: peersList) {
@@ -165,10 +165,15 @@ public class Controller_StreamingMedia {
                     oos.flush();
                     FileReciever fileReciever =  new FileReciever();
                     fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),current,pathFolder);
+                    Process p =Runtime.getRuntime().exec("ffmpeg -i "+current + ".ts " + current+".mp4");
+                    while (p.isAlive()){
+                        System.out.println("...");
+                        System.out.println("...");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                paths.add(pathFolder+"/"+partCounter);
+                paths.add(pathFolder+"/"+partCounter+".mp4");
             }
         }).start();
 
@@ -190,8 +195,9 @@ public class Controller_StreamingMedia {
         Queue<String> paths=new LinkedList<>();
         startPlayer(paths);
 
-
+        while (paths.isEmpty()){}
         String path=paths.peek();
+
         File mediaFile = new File(path);
         while (!mediaFile.exists()){}
         String uri = mediaFile.toURI().toString();
