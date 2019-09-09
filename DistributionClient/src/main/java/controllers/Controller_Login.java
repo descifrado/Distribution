@@ -104,4 +104,8 @@ public class Controller_Login {
         }
 
     }
+
+    public void onexitclicked(ActionEvent actionEvent) {
+        System.exit(0);
+    }
 }

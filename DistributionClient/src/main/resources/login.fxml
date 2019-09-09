@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="826.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_Login">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="826.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller_Login">
    <children>
       <JFXTextField fx:id="email" focusColor="#6880b2" labelFloat="true" layoutX="420.0" layoutY="400.0" prefHeight="33.0" prefWidth="317.0" promptText="Email-Id" style="-fx-prompt-text-fill: WHITE; -fx-text-inner-color: WHITE;" unFocusColor="#5e788a">
          <font>
@@ -66,6 +66,14 @@
             <Image url="@mainApp/images.jpeg" />
          </image>
       </ImageView>
+      <JFXButton fx:id="login1" layoutX="484.0" layoutY="674.0" onAction="#onexitclicked" prefHeight="26.0" prefWidth="121.0" style="-fx-background-color: white;" text="Exit" textFill="#33bfc6">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </JFXButton>
    </children>
    <stylesheets>
       <URL value="@mainApp/backgroundsmall.css" />

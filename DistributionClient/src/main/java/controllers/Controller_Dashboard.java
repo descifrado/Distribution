@@ -92,7 +92,7 @@ public class Controller_Dashboard
             {
                 for(int i=0;i<sfiles.size();i++)
                 {
-                    sharedfiles.getItems().add(sfiles.get(i)+" "+noOfDownloads.get(i));
+                    sharedfiles.getItems().add(sfiles.get(i).getFileName()+"  ("+noOfDownloads.get(i)+")");
                 }
             }
             else
@@ -187,7 +187,7 @@ public class Controller_Dashboard
     {
         if(!sharedfiles.getItems().isEmpty()) {
             int idx = sharedfiles.getSelectionModel().getSelectedIndex();
-            File f = (File) dfiles.get(idx);
+            File f = (File) sfiles.get(idx);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "File Name: " + f.getFileName() + "\nFile Type: " + f.getType() + "\nTags: " + f.getTags());
             alert.showAndWait();
         }
