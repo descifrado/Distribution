@@ -1,9 +1,11 @@
 package tools;
 
 import data.File;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class SharedFileResponse
+public class SharedFileResponse implements Serializable
 {
     private List<File> files;
     private List<Integer> noOfDownloads;

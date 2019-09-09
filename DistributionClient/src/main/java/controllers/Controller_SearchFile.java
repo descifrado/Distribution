@@ -61,6 +61,15 @@ public class Controller_SearchFile {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
 
+    public static SearchFile getCurrentSelectedFile(){
+        try {
+            return (SearchFile) currentSelectedFile.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @FXML
     public void initialize()
