@@ -1,5 +1,6 @@
 package fileHandler;
 
+import constants.FileType;
 import constants.ResponseCode;
 import controllers.Controller_SearchFile;
 import data.File;
@@ -12,7 +13,9 @@ import request.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class FileDownloadHandler implements Runnable {
     String peerIP;
@@ -52,7 +55,9 @@ public class FileDownloadHandler implements Runnable {
 
             }else{
                 //                send a request to add entry in peers table.
-                File tmpfile = new File(Controller_SearchFile.currentSelectedFile.getFileUID(),Controller_SearchFile.currentSelectedFile.getFileName(),null,null);
+                Set set = new HashSet<String>();
+                set.add("All");
+                File tmpfile = new File(Controller_SearchFile.currentSelectedFile.getFileUID(),Controller_SearchFile.currentSelectedFile.getFileName(), FileType.ALL,set);
 
                 FileDownloadCompleteRequest fileDownloadCompleteRequest = new FileDownloadCompleteRequest(tmpfile,App.user.getUserUID(), InetAddress.getLocalHost().getHostAddress());
                 App.oosTracker.writeObject(fileDownloadCompleteRequest);
