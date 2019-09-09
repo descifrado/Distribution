@@ -50,11 +50,12 @@ public class Controller_SearchFile {
 
     public static volatile JSONObject downloadedPieceJSON ;
     public static volatile JSONObject completePieceJSON;
-    public static volatile FileOutputStream jsonwriter;
+
     public static volatile int totalPieces,downloadedPieces;
     public static int totalPeers;
     public static volatile boolean isDownloadComplete;
     public static String currentFile;
+    public static java.io.File downloadedpiecesFile;
     public static String[] getNames(Class<? extends Enum<?>> e)
     {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
@@ -101,7 +102,7 @@ public class Controller_SearchFile {
                 System.out.println("Reading existing json file");
                 downloadedPieceJSON = new JSONObject();
             }
-            jsonwriter = new FileOutputStream(tmpfile,true);
+
             FileDownloadRequest fileDownloadRequest = new FileDownloadRequest(file,App.user.getUserUID());
             App.oosTracker.writeObject(fileDownloadRequest);
             App.oosTracker.flush();
