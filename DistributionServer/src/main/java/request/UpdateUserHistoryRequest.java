@@ -32,7 +32,8 @@ public class UpdateUserHistoryRequest extends Request implements Serializable
         this.userUID = userUID;
     }
 
-    public String getDownloaded() {
+    public String getDownloaded()
+    {
         return downloaded;
     }
 

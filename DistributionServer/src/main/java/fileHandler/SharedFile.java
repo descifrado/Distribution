@@ -6,6 +6,7 @@ import mainClasses.Main;
 import request.Response;
 import request.SharedFileRequest;
 import searchHandler.FileGetter;
+import tools.SharedFileResponse;
 import tools.UIDGenerator;
 
 import java.sql.PreparedStatement;
@@ -17,6 +18,8 @@ public class SharedFile
 {
     private SharedFileRequest sharedFileRequest;
     private String userUID;
+    List<File> files;
+    List<Integer> noOfDownloads;
     public SharedFile(SharedFileRequest sharedFileRequest)
     {
         this.sharedFileRequest=sharedFileRequest;
@@ -30,12 +33,14 @@ public class SharedFile
         {
             PreparedStatement preparedStatement= Main.connection.prepareStatement(query);
             ResultSet rs=preparedStatement.executeQuery();
-            List<File> files=new ArrayList<File>();
+            files=new ArrayList<File>();
             while (rs.next())
             {
                 files.add(FileGetter.getFileByUID(rs.getString("fileUID")));
             }
-            return new Response(UIDGenerator.generateuid(), files, ResponseCode.SUCCESS);
+            SharedFileResponse sharedFileResponse=new SharedFileResponse(files,noOfDownloads);
+            sharedFileResponse.setValues();
+            return new Response(UIDGenerator.generateuid(), sharedFileResponse, ResponseCode.SUCCESS);
         }
         catch (Exception e)
         {

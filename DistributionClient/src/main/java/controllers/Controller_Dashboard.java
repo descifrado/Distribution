@@ -35,7 +35,7 @@ public class Controller_Dashboard
     public JFXListView downloadedfiles,sharedfiles;
     public JFXTextField firstname,lastname,email,phone;
     public JFXButton sharefile,download,logout;
-    private List<File> files;
+    private List<File> sfiles,dfiles;
     public void initialize(){
         firstname.setText(App.user.getFirstName());
         lastname.setText(App.user.getLastName());
@@ -52,10 +52,10 @@ public class Controller_Dashboard
             App.oosTracker.flush();Response response;
             response = (Response)App.oisTracker.readObject();
 
-            List<File> files=(List<File>) response.getResponseObject();
+            dfiles=(List<File>) response.getResponseObject();
             if(response.getResponseCode().equals(ResponseCode.SUCCESS))
             {
-                for(File file: files)
+                for(File file: dfiles)
                 {
                     downloadedfiles.getItems().add(file.getFileName());
                 }
@@ -84,10 +84,10 @@ public class Controller_Dashboard
             App.oosTracker.flush();Response response;
             response = (Response)App.oisTracker.readObject();
 
-            files=(List<File>) response.getResponseObject();
+            sfiles=(List<File>) response.getResponseObject();
             if(response.getResponseCode().equals(ResponseCode.SUCCESS))
             {
-                for(File file: files)
+                for(File file: sfiles)
                 {
                     sharedfiles.getItems().add(file.getFileName());
                 }
@@ -174,7 +174,7 @@ public class Controller_Dashboard
     {
         if(!downloadedfiles.getItems().isEmpty()) {
             int idx = downloadedfiles.getSelectionModel().getSelectedIndex();
-            File f = (File) files.get(idx);
+            File f = (File) dfiles.get(idx);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "File Name: " + f.getFileName() + "\nFile Type: " + f.getType() + "\nTags: " + f.getTags());
             alert.showAndWait();
         }
@@ -184,7 +184,7 @@ public class Controller_Dashboard
     {
         if(!sharedfiles.getItems().isEmpty()) {
             int idx = sharedfiles.getSelectionModel().getSelectedIndex();
-            File f = (File) files.get(idx);
+            File f = (File) dfiles.get(idx);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "File Name: " + f.getFileName() + "\nFile Type: " + f.getType() + "\nTags: " + f.getTags());
             alert.showAndWait();
         }
