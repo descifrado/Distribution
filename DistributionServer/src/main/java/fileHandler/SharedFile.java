@@ -24,6 +24,7 @@ public class SharedFile
     {
         this.sharedFileRequest=sharedFileRequest;
         this.userUID=sharedFileRequest.getUserUID();
+        noOfDownloads=new ArrayList<Integer>();
     }
     public Response getResponse()
     {
@@ -41,7 +42,7 @@ public class SharedFile
             for(File file: files)
             {
                 String fileUID=file.getFileUID();
-                String query1="Select count(*) from UserHistroy where fileUID=? and downloaded=?;";
+                String query1="Select count(*) from UserHistory where fileUID=? and downloaded=?;";
                 try
                 {
                     PreparedStatement preparedStatement1= Main.connection.prepareStatement(query1);
