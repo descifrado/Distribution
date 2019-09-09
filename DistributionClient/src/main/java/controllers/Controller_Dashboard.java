@@ -19,6 +19,7 @@ import mainApp.App;
 import request.DownloadedFileRequest;
 import request.Response;
 import request.SharedFileRequest;
+import tools.SharedFileResponse;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -84,12 +85,14 @@ public class Controller_Dashboard
             App.oosTracker.flush();Response response;
             response = (Response)App.oisTracker.readObject();
 
-            sfiles=(List<File>) response.getResponseObject();
+            SharedFileResponse sharedFileResponse=(SharedFileResponse)response.getResponseObject();
+            sfiles=sharedFileResponse.getFiles();
+            List<Integer>  noOfDownloads= sharedFileResponse.getNoOfDownloads();
             if(response.getResponseCode().equals(ResponseCode.SUCCESS))
             {
-                for(File file: sfiles)
+                for(int i=0;i<sfiles.size();i++)
                 {
-                    sharedfiles.getItems().add(file.getFileName());
+                    sharedfiles.getItems().add(sfiles.get(i)+" "+noOfDownloads.get(i));
                 }
             }
             else

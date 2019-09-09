@@ -1,6 +1,8 @@
 package tools;
 
 import data.File;
+import request.Response;
+
 import java.util.List;
 
 public class SharedFileResponse

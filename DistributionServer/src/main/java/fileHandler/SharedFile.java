@@ -38,8 +38,26 @@ public class SharedFile
             {
                 files.add(FileGetter.getFileByUID(rs.getString("fileUID")));
             }
+            for(File file: files)
+            {
+                String fileUID=file.getFileUID();
+                String query1="Select count(*) from UserHistroy where fileUID=? and downloaded=?;";
+                try
+                {
+                    PreparedStatement preparedStatement1= Main.connection.prepareStatement(query1);
+                    preparedStatement1.setString(1,fileUID);
+                    preparedStatement1.setString(2,"1");
+                    ResultSet rs1=preparedStatement1.executeQuery();
+                    rs1.next();
+                    noOfDownloads.add(rs1.getInt(1));
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                }
+            }
             SharedFileResponse sharedFileResponse=new SharedFileResponse(files,noOfDownloads);
-            sharedFileResponse.setValues();
             return new Response(UIDGenerator.generateuid(), sharedFileResponse, ResponseCode.SUCCESS);
         }
         catch (Exception e)
