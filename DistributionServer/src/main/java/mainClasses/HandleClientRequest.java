@@ -68,6 +68,7 @@ HandleClientRequest implements Runnable{
                     String cwd=System.getProperty("user.dir");
                     fileReciever.readFile(fileReciever.createSocketChannel(Main.getServerSocketChannel()),((FileUploadRequest)request).getFile().getFileUID(),cwd+"/jsonFiles");
                     FileUploadHandler fileUploadHandler = new FileUploadHandler((FileUploadRequest)request,cwd+"/jsonFiles",this.userIP);
+                    System.out.println(fileUploadHandler.getResponse().getResponseCode());
                     oos.writeObject(fileUploadHandler.getResponse());
                     oos.flush();
                 }else  if(request.getRequestCode().equals(RequestCode.FILECHECK_REQUEST)){

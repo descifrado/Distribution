@@ -27,10 +27,7 @@ import mainApp.App;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import request.AvailablePieceRequest;
-import request.FileDownloadRequest;
-import request.PeerListRequest;
-import request.Response;
+import request.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -46,11 +43,13 @@ public class Controller_StreamingMedia {
     private MediaPlayer mediaPlayer;
     private boolean atEndOfMedia=false;
     private SearchFile currentSelectedFile;
+    private Map peersPiece;
 
     private void playNext(Queue<String> queue){
         if (queue.isEmpty())return;
         File mediaFile = new File(queue.peek());
         String uri = mediaFile.toURI().toString();
+        while (!mediaFile.exists()){}
         Media media = new Media(uri);
         mediaPlayer=new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
@@ -111,7 +110,7 @@ public class Controller_StreamingMedia {
         int totalPieces = completePieceJSON.length();
         int totalPeers = peersList.size();
 
-        Map peersPiece=new HashMap<Integer,Socket>();
+        peersPiece=new HashMap<Integer,Socket>();
         for (Peer peer: peersList) {
             Socket socket = null;
             try {
@@ -138,18 +137,52 @@ public class Controller_StreamingMedia {
         }
     }
 
+    public void startPlayer(Queue<String> paths){
+
+        String home=System.getProperty("user.home");
+        String pathFolder = home+"/Downloads/" + currentSelectedFile.getFileUID();
+
+        new Thread(() -> {
+            int partCounter=1;
+            while(true){
+                String current=String.format("%05d",partCounter++);
+                Socket s = (Socket) peersPiece.get(current);
+                PieceDownloadRequest pieceDownloadRequest=new PieceDownloadRequest(currentSelectedFile,current);
+                try {
+                    ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());
+                    oos.writeObject(pieceDownloadRequest);
+                    oos.flush();
+                    FileReciever fileReciever =  new FileReciever();
+                    fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),current,pathFolder);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                paths.add(pathFolder+"/"+partCounter);
+            }
+        }).start();
+
+    }
     public void initialize(){
 
         try {
+            System.out.println("Chal Jaa ehle!!!");
             preProcessStreaming();
+            System.out.println("Chal Jaa!!!");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        String path="/home/moonknight/Desktop/teet/split.1.ts.mp4";
+        String home=System.getProperty("user.home");
+        String pathFolder = home+"/Downloads/" + currentSelectedFile.getFileUID();
+        Queue<String> paths=new LinkedList<>();
+        startPlayer(paths);
+
+
+        String path=paths.peek();
         File mediaFile = new File(path);
+        while (!mediaFile.exists()){}
         String uri = mediaFile.toURI().toString();
         Media media = new Media(uri);
         mediaPlayer = new MediaPlayer(media);
@@ -157,17 +190,11 @@ public class Controller_StreamingMedia {
         mediaPlayer.play();
         timeSlider.setValue(0.0);
 
-        Queue<String> paths=new LinkedList<>();
-
-        for (int i = 2; i < 20; i++) {
-            paths.add("/home/moonknight/Desktop/teet/split."+i+".ts.mp4");
-        }
-
-
         mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration duration, Duration t1) {
-                
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
+                timeSlider.setValue(newValue.toSeconds());
+                timeSlider.setMax(mediaPlayer.getTotalDuration().toSeconds());
             }
         });
 //        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Integer>() {
@@ -214,7 +241,6 @@ public class Controller_StreamingMedia {
                 Stage primaryStage = (Stage) back.getScene().getWindow();
                 Parent root = null;
                 try {
-
                     root = FXMLLoader.load(getClass().getResource("/searchFile.fxml"));
                 }catch(IOException e){
                     e.printStackTrace();
