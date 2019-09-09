@@ -88,6 +88,7 @@ public class Controller_SearchFile {
             String home=System.getProperty("user.home");
             String path=fileUID+"downloaded.json";
             path=home+"/Downloads/"+path;
+            downloadedpiecesFile = new java.io.File(path);
             java.io.File mkFolder = new java.io.File(home+"/Downloads/" + currentSelectedFile.getFileUID());
             mkFolder.mkdir();
             java.io.File tmpfile = new java.io.File(path);
