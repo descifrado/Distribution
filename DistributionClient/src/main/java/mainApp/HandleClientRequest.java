@@ -41,6 +41,10 @@ public class HandleClientRequest implements Runnable {
                     Object object=ois.readObject();
                     System.out.println(object.getClass());
                     request = (Request)object;
+                    System.out.println(request);
+                }catch (StreamCorruptedException e){
+                    e.printStackTrace();
+                    return;
                 }
                 catch (EOFException e)
                 {

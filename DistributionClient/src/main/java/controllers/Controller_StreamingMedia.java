@@ -44,6 +44,7 @@ public class Controller_StreamingMedia {
     private boolean atEndOfMedia=false;
     private SearchFile currentSelectedFile;
     private Map peersPiece;
+    private Map peeroos,peerois,socketpeers;
 
     private void playNext(Queue<String> queue){
         if (queue.isEmpty())return;
@@ -110,14 +111,23 @@ public class Controller_StreamingMedia {
         int totalPieces = completePieceJSON.length();
         int totalPeers = peersList.size();
 
-        peersPiece=new HashMap<Integer,Socket>();
+        peersPiece=new HashMap<String,String>();
+        peeroos = new HashMap<String,ObjectOutputStream>();
+        peerois = new HashMap<String,ObjectInputStream>();
+        socketpeers = new HashMap<String,Socket>();
+        for(Peer peer:peersList){
+            socketpeers.put(peer.getIp(),new Socket(peer.getIp(),6963));
+            Socket socket = (Socket) socketpeers.get(peer.getIp());
+            peerois.put(peer.getIp(),new ObjectOutputStream(socket.getOutputStream()));
+            peerois.put(peer.getIp(),new ObjectInputStream(socket.getInputStream()));
+        }
         for (Peer peer: peersList) {
-            Socket socket = null;
+
             try {
-                socket=new Socket(peer.getIp(),6963);
+
                 AvailablePieceRequest availablePieceRequest=new AvailablePieceRequest(fileUID);
-                ObjectInputStream ois=new ObjectInputStream(socket.getInputStream());
-                ObjectOutputStream oos=new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream ois=(ObjectInputStream) peerois.get(peer.getIp());
+                ObjectOutputStream oos=(ObjectOutputStream)peeroos.get(peer.getIp());
                 oos.writeObject(availablePieceRequest);
                 oos.flush();
                 Response response= (Response) ois.readObject();
@@ -125,7 +135,7 @@ public class Controller_StreamingMedia {
                 JSONObject pieceList = new JSONObject(pieces);
                 for (Iterator it = pieceList.keys(); it.hasNext(); ) {
                     String piece = (String) it.next();
-                    peersPiece.put(piece,socket);
+                    peersPiece.put(piece,peer.getIp());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -146,10 +156,11 @@ public class Controller_StreamingMedia {
             int partCounter=1;
             while(true){
                 String current=String.format("%05d",partCounter++);
-                Socket s = (Socket) peersPiece.get(current);
+                String peerIp = (String) peersPiece.get(current);
+                Socket s = (Socket)socketpeers.get(peerIp);
                 PieceDownloadRequest pieceDownloadRequest=new PieceDownloadRequest(currentSelectedFile,current);
                 try {
-                    ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());
+                    ObjectOutputStream oos= (ObjectOutputStream) peeroos.get(peerIp);
                     oos.writeObject(pieceDownloadRequest);
                     oos.flush();
                     FileReciever fileReciever =  new FileReciever();

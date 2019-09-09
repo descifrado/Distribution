@@ -29,6 +29,7 @@ public class App extends Application {
     public static ServerSocketChannel serverClientSocketChannel;
     public static Socket socketp2p;
     public static ServerSocket serverSocket;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/login.fxml"));
@@ -39,14 +40,14 @@ public class App extends Application {
         System.out.println("Hello I am Suraj");
         try {
             serverClientSocketChannel = ServerSocketChannel.open();
-            serverClientSocketChannel.socket().bind(new InetSocketAddress(9003));
+            serverClientSocketChannel.socket().bind(new InetSocketAddress(9000));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
         try{
-            App.serverSocket = new ServerSocket(6964);
+            App.serverSocket = new ServerSocket(6963);
             System.out.println("Client Started..!!");
         }catch (IOException e){
             e.printStackTrace();
