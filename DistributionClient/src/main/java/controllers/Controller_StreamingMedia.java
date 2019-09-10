@@ -45,24 +45,43 @@ public class Controller_StreamingMedia {
     private SearchFile currentSelectedFile;
     private Map peersPiece;
     private Map peeroos,peerois,socketpeers;
+    private volatile Queue<String> paths;
+    private int totalPieces;
+    private int currentPieceIndex;
+    private volatile int partCounter;
+    private Thread pieceDownloadThread;
+    private volatile Thread blinker;
+    private Double currentSliderValue;
 
-    private void playNext(Queue<String> queue){
-        if (queue.isEmpty())return;
-        File mediaFile = new File(queue.peek());
+    private void playNext(){
+        if (paths.isEmpty())return;
+        File mediaFile = new File(paths.peek());
         String uri = mediaFile.toURI().toString();
         while (!mediaFile.exists()){}
         Media media = new Media(uri);
         mediaPlayer=new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
+        seekPlayer();
         mediaPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                String currentPiece=queue.poll();
+                String currentPiece=paths.poll();
                 String home=System.getProperty("user.home");
                 File file=new File(home+"/Downloads/"+currentSelectedFile.getFileUID()+"/"+currentPiece);
                 file.delete();
-                playNext(queue);
+                timeSlider.setValue(++currentPieceIndex);
+                playNext();
+            }
+        });
+    }
+
+    private void seekPlayer() {
+        Double totalDuration=mediaPlayer.getTotalDuration().toSeconds();
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
+                timeSlider.setValue(totalPieces+(newValue.toSeconds()/totalDuration));
             }
         });
     }
@@ -108,7 +127,7 @@ public class Controller_StreamingMedia {
         FileReciever fileReciever = new FileReciever();
         fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
         JSONObject completePieceJSON = new JSONObject(new JSONTokener(new FileReader(pathJsonFiles + "/" + fileUID)));
-        int totalPieces = completePieceJSON.length();
+        totalPieces = completePieceJSON.length();
         int totalPeers = peersList.size();
 
         peersPiece=new HashMap<String,String>();
@@ -147,14 +166,15 @@ public class Controller_StreamingMedia {
         }
     }
 
-    public void startPlayer(Queue<String> paths){
+    public void startPlayer(){
 
         String home=System.getProperty("user.home");
         String pathFolder = home+"/Downloads/" + currentSelectedFile.getFileUID();
 
-        new Thread(() -> {
-            int partCounter=1;
-            while(true){
+        pieceDownloadThread = new Thread(() -> {
+            partCounter=1;
+            Thread thisThread=Thread.currentThread();
+            while(blinker==thisThread){
                 String current=String.format("%05d",partCounter++);
                 String peerIp = (String) peersPiece.get(current);
                 Socket s = (Socket)socketpeers.get(peerIp);
@@ -175,7 +195,8 @@ public class Controller_StreamingMedia {
                 }
                 paths.add(pathFolder+"/"+partCounter+".mp4");
             }
-        }).start();
+        });
+        pieceDownloadThread.start();
 
     }
     public void initialize(){
@@ -192,11 +213,11 @@ public class Controller_StreamingMedia {
 
         String home=System.getProperty("user.home");
         String pathFolder = home+"/Downloads/" + currentSelectedFile.getFileUID();
-        Queue<String> paths=new LinkedList<>();
-        startPlayer(paths);
+        paths=new LinkedList<>();
+        startPlayer();
 
         while (paths.isEmpty()){}
-        String path=paths.peek();
+        String path=paths.poll();
 
         File mediaFile = new File(path);
         while (!mediaFile.exists()){}
@@ -205,40 +226,28 @@ public class Controller_StreamingMedia {
         mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
+        currentPieceIndex=0;
         timeSlider.setValue(0.0);
+        timeSlider.setMax(totalPieces);
+        seekPlayer();
 
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
-                timeSlider.setValue(newValue.toSeconds());
-                timeSlider.setMax(mediaPlayer.getTotalDuration().toSeconds());
-            }
-        });
-//        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Integer>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Integer> observableValue, Integer oldValue, Integer t1) {
-//                Integer i=t1;
-//                timeSlider.setValue(i);
-//                timeSlider.setMax(mediaPlayer.getTotalDuration().toSeconds());
-//            }
-//        });
         timeSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
+                onSeekVideo(event);
             }
         });
 
         timeSlider.setOnMouseDragEntered(new EventHandler<MouseDragEvent>() {
             @Override
             public void handle(MouseDragEvent event) {
-                mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
+                onSeekVideo(event);
             }
         });
         mediaPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                playNext(paths);
+                playNext();
             }
         });
         volumeSlider.setValue(mediaPlayer.getVolume() * 100);
@@ -251,7 +260,7 @@ public class Controller_StreamingMedia {
 
     }
     public void onbackclicked(ActionEvent actionEvent) {
-        mediaPlayer.stop();
+        stopPlayer();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -268,6 +277,19 @@ public class Controller_StreamingMedia {
         });
     }
 
+    public void stopPlayer(){
+        blinker=null;
+        mediaPlayer.stop();
+        String home=System.getProperty("user.home");
+        File file=new File(home+"/Downloads/"+currentSelectedFile.getFileUID());
+        String[] pieces=file.list();
+        for (String piece : pieces) {
+            File currentFile=new File(file.getPath(),piece);
+            currentFile.delete();
+        }
+        file.delete();
+    }
+
     public void PLAY(ActionEvent actionEvent) {
         mediaPlayer.play();
     }
@@ -279,9 +301,17 @@ public class Controller_StreamingMedia {
     public void PAUSE(ActionEvent actionEvent) {
         mediaPlayer.pause();
     }
-    public void onSeekVideo(MouseEvent mouseEvent) {
-        Duration duration=mediaPlayer.getTotalDuration();
-    //    mediaPlayer.seek(duration.multiply(timeSlider.getValue()/100.0));
-    }
 
+    public void onSeekVideo(MouseEvent mouseEvent) {
+        currentSliderValue=timeSlider.getValue();
+        if(currentSliderValue.intValue()==currentPieceIndex)
+            mediaPlayer.seek(Duration.seconds(currentSliderValue));
+        else {
+            paths.clear();
+            int piece=currentSliderValue.intValue();
+            Double progress=currentSliderValue.doubleValue();
+            mediaPlayer.seek(new Duration(piece+progress));
+            partCounter=piece;
+        }
+    }
 }

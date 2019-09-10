@@ -38,9 +38,6 @@
             <artifactId>javafx-media</artifactId>
             <version>11-ea+25</version>
         </dependency>
-
-
-
     </dependencies>
     <build>
         <plugins>
