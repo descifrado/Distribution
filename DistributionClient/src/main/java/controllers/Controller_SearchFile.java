@@ -318,19 +318,127 @@ public class Controller_SearchFile {
     }
 
     public void onstreamclicked(ActionEvent actionEvent) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Stage primaryStage = (Stage) back.getScene().getWindow();
-                Parent root = null;
-                try {
 
-                    root = FXMLLoader.load(getClass().getResource("/streamingMedia.fxml"));
-                }catch(IOException e){
+        File file = currentSelectedFile;
+        PeerListRequest peerListRequest = new PeerListRequest(file);
+        try
+        {
+            App.oosTracker.writeObject(peerListRequest);
+            App.oosTracker.flush();
+            Response response = (Response)App.oisTracker.readObject();
+            List<Peer> peersList = (ArrayList<Peer>) response.getResponseObject();
+            String fileUID = currentSelectedFile.getFileUID();
+            String home=System.getProperty("user.home");
+            String path=fileUID+"downloaded.json";
+            path=home+"/Downloads/"+path;
+            downloadedpiecesFile = new java.io.File(path);
+            java.io.File mkFolder = new java.io.File(home+"/Downloads/" + currentSelectedFile.getFileUID());
+            mkFolder.mkdir();
+            java.io.File tmpfile = new java.io.File(path);
+            if(!tmpfile.exists())
+            {
+                tmpfile.createNewFile();
+                downloadedPieceJSON = new JSONObject();
+            }
+            else
+            {
+                downloadedPieceJSON = new JSONObject(new JSONTokener(new FileReader(path)));
+                System.out.println("Reading existing json file");
+                downloadedPieceJSON = new JSONObject();
+            }
+
+            FileDownloadRequest fileDownloadRequest = new FileDownloadRequest(file,App.user.getUserUID());
+            App.oosTracker.writeObject(fileDownloadRequest);
+            App.oosTracker.flush();
+            String pathJsonFiles = "./jsonFiles";
+            java.io.File jsonFolder = new java.io.File(pathJsonFiles);
+            if(!jsonFolder.exists()){
+                jsonFolder.mkdir();
+            }
+            FileReciever fileReciever = new FileReciever();
+            fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
+            completePieceJSON = new JSONObject(new JSONTokener(new FileReader(pathJsonFiles+"/"+fileUID)));
+            totalPieces = completePieceJSON.length();
+            totalPeers=peersList.size();
+            for(Peer peer : peersList){
+                System.out.println(peer);
+                new Thread(new FileDownloadHandler(peer,file)).start();
+            }
+            new Thread(() -> {
+                while(downloadedPieces<totalPieces){
+                    downloadedPieces = downloadedPieceJSON.length();
+                    System.out.println("Pieces Downloaded : "+downloadedPieces );
+                    System.out.println("Total Pieces : "+totalPieces);
+                    System.out.println();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                isDownloadComplete = true;
+                System.out.println("Download Complete");
+                System.out.println("Now Merging Files .. !!");
+                FileMerger fileMerger = new FileMerger();
+                java.io.File mergedfile = new java.io.File(home+"/Downloads/"+currentSelectedFile.getFileName());
+                try {
+                    if (!mergedfile.exists()) {
+                        mergedfile.createNewFile();
+                    }
+                    fileMerger.mergeFiles(home + "/Downloads/" + currentSelectedFile.getFileUID(), mergedfile);
+                }catch (IOException e){
                     e.printStackTrace();
                 }
-                primaryStage.setScene(new Scene(root, 1303, 961));
+            }).start();
+            currentFile = currentSelectedFile.getFileName();
+            UpdateUserHistoryRequest updateUserHistoryRequest=new UpdateUserHistoryRequest(App.user.getUserUID(),fileUID,"1","0");
+            try
+            {
+                App.sockerTracker = new Socket(App.serverIP,App.portNo);
+                App.oosTracker = new ObjectOutputStream(App.sockerTracker.getOutputStream());
+                App.oisTracker = new ObjectInputStream(App.sockerTracker.getInputStream());
+                App.oosTracker.writeObject(updateUserHistoryRequest);
+                App.oosTracker.flush();
+                Response response1 = (Response)App.oisTracker.readObject();
+                if(response1.getResponseCode()==ResponseCode.SUCCESS)
+                {
+                    System.out.println("User History Updated Successfully");
+                }
+                else
+                {
+                    System.out.println("Error in User History Update");
+                }
             }
-        });
+            catch (IOException | ClassNotFoundException e)
+            {
+
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+                System.out.println("Failed Fetching of Files");
+            }
+
+            System.out.println("Hello");
+            while(!isDownloadComplete){}
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Stage primaryStage = (Stage) searchbyname.getScene().getWindow();
+                    Parent root = null;
+                    try {
+
+                        root = FXMLLoader.load(getClass().getResource("/streamingMedia.fxml"));
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                    primaryStage.setScene(new Scene(root, 1081, 826));
+
+                }
+            });
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
