@@ -1,5 +1,7 @@
 package controllers;
-
+/**
+ *  Sign up Service for a new Customer
+ */
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;

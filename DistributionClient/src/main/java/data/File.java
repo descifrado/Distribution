@@ -1,5 +1,7 @@
 package data;
-
+/**
+ *  Serializable Class for Object Sharing
+ */
 
 import constants.FileType;
 
@@ -34,7 +36,7 @@ public class File implements Serializable, Cloneable {
 
     /**
      *
-     * @return
+     * @return File UID the unique identifier for a File
      */
     public String getFileUID() {
         return fileUID;
@@ -42,7 +44,7 @@ public class File implements Serializable, Cloneable {
 
     /**
      *
-     * @param fileUID
+     * @param File UID the unique identifier for a File
      */
     public void setFileUID(String fileUID) {
         this.fileUID = fileUID;
@@ -50,7 +52,7 @@ public class File implements Serializable, Cloneable {
 
     /**
      *
-     * @return
+     * @return File Name
      */
     public String getFileName() {
         return fileName;
@@ -66,7 +68,7 @@ public class File implements Serializable, Cloneable {
 
     /**
      *
-     * @return
+     * @return File Type Constant
      */
     public FileType getType() {
         return type;
@@ -82,7 +84,7 @@ public class File implements Serializable, Cloneable {
 
     /**
      *
-     * @return
+     * @return Set of Tags for user
      */
     public Set getTags() {
         return tags;

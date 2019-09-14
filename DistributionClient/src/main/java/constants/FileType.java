@@ -1,5 +1,8 @@
 package constants;
 
+/**
+ *  Enum for defining constants for the file type
+ */
 public enum FileType {
 
     MEDIA,
@@ -12,6 +15,10 @@ public enum FileType {
     ALL
     ;
 
+    /**
+     * @param not required
+     *
+     */
     FileType(){
         this.toString();
     }

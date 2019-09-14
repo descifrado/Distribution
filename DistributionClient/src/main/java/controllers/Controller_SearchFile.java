@@ -1,4 +1,7 @@
 package controllers;
+/**
+ *  Here Comes the real Distribution
+ */
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -13,17 +16,14 @@ import fileHandler.FileDownloadHandler;
 import fileHandler.FileMerger;
 import fileHandler.FileReciever;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mainApp.App;
-import mainApp.Handler;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -35,7 +35,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Controller_SearchFile {
+public class Controller_SearchFile
+{
+    // UI components
+    @FXML
     public JFXTextField searchbyname;
     public JFXTextField searchbytag;
     public JFXListView files;
@@ -46,8 +49,9 @@ public class Controller_SearchFile {
 
     public static SearchFile currentSelectedFile;
     private List<String> currentTags;
-
-
+    /**
+     *  Using JSON for making a piece wise distribution of the file being shared
+     */
     public static volatile JSONObject downloadedPieceJSON ;
     public static volatile JSONObject completePieceJSON;
 
@@ -208,6 +212,12 @@ public class Controller_SearchFile {
 
     }
 
+    /**
+     *  Searrch based on Name, Type and Tags of the file...
+     *  A file can have multiple Tags but a unique type that too the ones defined in Constants
+     * @param actionEvent
+     */
+
     public void onsearchclicked(ActionEvent actionEvent) {
         currentSelectedFile=null;
         String nameString=searchbyname.getText();
@@ -266,6 +276,10 @@ public class Controller_SearchFile {
 
     }
 
+    /**
+     *  Search can be done on muultiple tags
+     * @param actionEvent
+     */
     public void onaddtagclicked(ActionEvent actionEvent) {
         String currentTag=searchbytag.getText();
         currentTags.add(currentTag);
@@ -317,6 +331,10 @@ public class Controller_SearchFile {
 
     }
 
+    /**
+     *  Starting Streaming Service
+     * @param actionEvent
+     */
     public void onstreamclicked(ActionEvent actionEvent) {
 
         File file = currentSelectedFile;

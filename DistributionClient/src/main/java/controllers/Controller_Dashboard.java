@@ -28,6 +28,9 @@ import java.net.Socket;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ *  Dashboard for the user after login where he/she can see his/her profile and All the files he/she has downloaded or shared on Distribution
+ */
 public class Controller_Dashboard
 {
 
@@ -37,6 +40,10 @@ public class Controller_Dashboard
     public JFXTextField firstname,lastname,email,phone;
     public JFXButton sharefile,download,logout;
     private List<File> sfiles,dfiles;
+
+    /**
+     *  This will set the details of a user as soon as the scene is rendered
+     */
     public void initialize(){
         firstname.setText(App.user.getFirstName());
         lastname.setText(App.user.getLastName());
@@ -111,6 +118,10 @@ public class Controller_Dashboard
         }
     }
 
+    /**
+     * Let the user to share any file in his file system and become a seeder
+     * @param actionEvent Clicking of Button with mouse
+     */
 
     public void onshareclicked(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
@@ -130,6 +141,10 @@ public class Controller_Dashboard
         });
     }
 
+    /**
+     * Let the user download any file from multiple peers available in chunks i.e Distributed System
+     * @param actionEvent
+     */
     public void ondownloadclicked(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
             @Override
@@ -148,6 +163,10 @@ public class Controller_Dashboard
         });
     }
 
+    /**
+     *  Let the user Log out of the server system but can still make peer to peer connections until in the network
+     * @param actionEvent
+     */
     public void onlogoutclicked(ActionEvent actionEvent) {
         try{
             App.sockerTracker.close();
@@ -173,6 +192,10 @@ public class Controller_Dashboard
 
     }
 
+    /**
+     *  Showing Message Box for the details of file shown on the dashboard
+     * @param mouseEvent
+     */
     public void onfiledclicked(MouseEvent mouseEvent)
     {
         if(!downloadedfiles.getItems().isEmpty()) {
@@ -183,6 +206,10 @@ public class Controller_Dashboard
         }
     }
 
+    /**
+     * Showing Message Box for the details of file shown on the dashboard
+     * @param mouseEvent
+     */
     public void onfilesclicked(MouseEvent mouseEvent)
     {
         if(!sharedfiles.getItems().isEmpty()) {

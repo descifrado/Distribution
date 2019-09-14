@@ -30,7 +30,7 @@ import org.json.JSONTokener;
 import request.*;
 
 import java.io.*;
-import java.net.*;
+import java.net.Socket;
 import java.util.*;
 
 public class Controller_StreamingMedia {
@@ -45,7 +45,7 @@ public class Controller_StreamingMedia {
     private SearchFile currentSelectedFile;
     private Map peersPiece;
     private Map peeroos,peerois,socketpeers;
-    private  static volatile Queue<String> paths;
+    private volatile Queue<String> paths;
     private int totalPieces;
     private int currentPieceIndex;
     private volatile int partCounter;
@@ -103,77 +103,67 @@ public class Controller_StreamingMedia {
     }
 
     public void preProcessStreaming() throws IOException, JSONException {
-        System.out.println("Preprocessing");
+
         List<Peer> peersList=getPeers();
         currentSelectedFile=Controller_SearchFile.getCurrentSelectedFile();
-        System.out.println("selectedfile");
+
         String fileUID = currentSelectedFile.getFileUID();
         String home=System.getProperty("user.home");
         String path=fileUID+"downloaded.json";
         path=home+"/Downloads/"+path;
+
         java.io.File mkFolder = new java.io.File(home+"/Downloads/" + currentSelectedFile.getFileUID());
         mkFolder.mkdir();
         java.io.File tmpfile = new java.io.File(path);
-        System.out.println("Foledr MAde");
+
         FileDownloadRequest fileDownloadRequest = new FileDownloadRequest(currentSelectedFile,App.user.getUserUID());
         App.oosTracker.writeObject(fileDownloadRequest);
-        System.out.println("object sent");
         App.oosTracker.flush();
         String pathJsonFiles = "./jsonFiles";
         java.io.File jsonFolder = new java.io.File(pathJsonFiles);
-        System.out.println("hi");
         if(!jsonFolder.exists()){
             jsonFolder.mkdir();
         }
-        System.out.println("dire Made");
         FileReciever fileReciever = new FileReciever();
         fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),fileUID,pathJsonFiles);
         JSONObject completePieceJSON = new JSONObject(new JSONTokener(new FileReader(pathJsonFiles + "/" + fileUID)));
         totalPieces = completePieceJSON.length();
-        System.out.println(totalPieces);
         int totalPeers = peersList.size();
-        System.out.println(totalPeers);
+
         peersPiece=new HashMap<String,String>();
         peeroos = new HashMap<String,ObjectOutputStream>();
         peerois = new HashMap<String,ObjectInputStream>();
         socketpeers = new HashMap<String,Socket>();
-
-
         for(Peer peer:peersList){
-            System.out.println(InetAddress.getLocalHost().getHostAddress()+" "+peer.getIp());
-            if (!peer.getIp().equals(InetAddress.getLocalHost().getHostAddress())) {
-                socketpeers.put(peer.getIp(), new Socket(peer.getIp(), 6963));
-                Socket socket = (Socket) socketpeers.get(peer.getIp());
-                peeroos.put(peer.getIp(), new ObjectOutputStream(socket.getOutputStream()));
-                peerois.put(peer.getIp(), new ObjectInputStream(socket.getInputStream()));
-            }
+            socketpeers.put(peer.getIp(),new Socket(peer.getIp(),6963));
+            Socket socket = (Socket) socketpeers.get(peer.getIp());
+            peeroos.put(peer.getIp(),new ObjectOutputStream(socket.getOutputStream()));
+            peerois.put(peer.getIp(),new ObjectInputStream(socket.getInputStream()));
         }
         for (Peer peer: peersList) {
 
-            if (!peer.getIp().equals(InetAddress.getLocalHost().getHostAddress())) {
-                try {
-                    AvailablePieceRequest availablePieceRequest = new AvailablePieceRequest(fileUID);
-                    ObjectInputStream ois = (ObjectInputStream) peerois.get(peer.getIp());
-                    ObjectOutputStream oos = (ObjectOutputStream) peeroos.get(peer.getIp());
-                    oos.writeObject(availablePieceRequest);
-                    oos.flush();
-                    Response response = (Response) ois.readObject();
-                    String pieces = (String) response.getResponseObject();
-                    JSONObject pieceList = new JSONObject(pieces);
-                    for (Iterator it = pieceList.keys(); it.hasNext(); ) {
-                        String piece = (String) it.next();
-                        peersPiece.put(piece, peer.getIp());
-                    }
-                } catch(IOException e){
-                    e.printStackTrace();
-                } catch(ClassNotFoundException e){
-                    e.printStackTrace();
-                } catch(JSONException e){
-                    e.printStackTrace();
+            try {
+
+                AvailablePieceRequest availablePieceRequest=new AvailablePieceRequest(fileUID);
+                ObjectInputStream ois=(ObjectInputStream) peerois.get(peer.getIp());
+                ObjectOutputStream oos=(ObjectOutputStream)peeroos.get(peer.getIp());
+                oos.writeObject(availablePieceRequest);
+                oos.flush();
+                Response response= (Response) ois.readObject();
+                String pieces= (String) response.getResponseObject();
+                JSONObject pieceList = new JSONObject(pieces);
+                for (Iterator it = pieceList.keys(); it.hasNext(); ) {
+                    String piece = (String) it.next();
+                    peersPiece.put(piece,peer.getIp());
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
-        System.out.println("Preprocessing Done..!!");
     }
 
     public void startPlayer(){
@@ -181,14 +171,10 @@ public class Controller_StreamingMedia {
         String home=System.getProperty("user.home");
         String pathFolder = home+"/Downloads/" + currentSelectedFile.getFileUID();
 
-      //  pieceDownloadThread = new Thread(() -> {
+        pieceDownloadThread = new Thread(() -> {
             partCounter=1;
-            //Thread thisThread=Thread.currentThread();
-            //blinker=thisThread;
-
-            for(int i=0;i<=16;i++){
-
-                System.out.println("downloading piece");
+            Thread thisThread=Thread.currentThread();
+            while(blinker==thisThread){
                 String current=String.format("%05d",partCounter++);
                 String peerIp = (String) peersPiece.get(current);
                 Socket s = (Socket)socketpeers.get(peerIp);
@@ -201,68 +187,49 @@ public class Controller_StreamingMedia {
                     fileReciever.readFile(fileReciever.createSocketChannel(App.getServerSocketChannel()),current,pathFolder);
                     Process p =Runtime.getRuntime().exec("ffmpeg -i "+current + ".ts " + current+".mp4");
                     while (p.isAlive()){
-
+                        System.out.println("...");
+                        System.out.println("...");
                     }
-                    System.out.println(i);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 paths.add(pathFolder+"/"+partCounter+".mp4");
-//                System.out.println(paths);
             }
-            System.out.println("Kuch print nhi hoga");
-        //});
-        //pieceDownloadThread.start();
-
-        System.out.println("dsiucbidusabciubsaddiucbsdiubciusnacsnc;sdcbasdbcbascobdacobodbcaobcoabocb");
+        });
+        pieceDownloadThread.start();
 
     }
-    public void initialize() throws MalformedURLException, URISyntaxException {
+    public void initialize(){
 
-//        try {
-//            System.out.println("Chal Jaa ehle!!!");
-//      //      preProcessStreaming();
-//            System.out.println("Chal Jaa!!!");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            System.out.println("Chal Jaa ehle!!!");
+            preProcessStreaming();
+            System.out.println("Chal Jaa!!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         String home=System.getProperty("user.home");
         String pathFolder = home+"/Downloads/" + currentSelectedFile.getFileUID();
         paths=new LinkedList<>();
-        System.out.println("path entered");
         startPlayer();
-        System.out.println(paths);
+
         while (paths.isEmpty()){}
-        System.out.println("paths abc");
-        //String path=paths.poll();
-        String path=pathFolder;
+        String path=paths.poll();
+
         File mediaFile = new File(path);
         while (!mediaFile.exists()){}
-
-
-
-        System.out.println("mediaFile....");
-        //String mediaFile=;
-
-
-        String url=mediaFile.toURL().toURI().toString();
-        String uri = url.toString();
-      //  String mediaPath=System.getProperty("user.home")+"/Downloads/"+uri;
+        String uri = mediaFile.toURI().toString();
         Media media = new Media(uri);
         mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
-
-
-
         currentPieceIndex=0;
         timeSlider.setValue(0.0);
         timeSlider.setMax(totalPieces);
         seekPlayer();
-
 
         timeSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

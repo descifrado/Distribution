@@ -1,4 +1,7 @@
 package controllers;
+/**
+ *  Server Client Login Service
+ */
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -32,7 +35,10 @@ public class Controller_Login {
     @FXML
     JFXButton login,signup;
 
-
+    /**
+     *  New Customer Signup
+     * @param actionEvent
+     */
     public void onsignupclicked(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
             @Override
@@ -51,23 +57,28 @@ public class Controller_Login {
         });
     }
 
-    public void onloginclicked(ActionEvent actionEvent) {
+    /**
+     * Sending LoginRequest to Server and Recieving the Response
+     * @param actionEvent
+     */
+    public void onloginclicked(ActionEvent actionEvent)
+    {
         String emailid = this.email.getText();
         String password = this.password.getText();
         if(password==null){
             status.setText("Password : Null");
-        }else{
+        }
+        else{
             LoginRequest loginRequest = new LoginRequest(emailid, HashGenerator.hash(password));
-            new Thread(new Runnable() {
+            new Thread(new Runnable(){
                 @Override
-                public void run() {
+                public void run(){
                     try{
                         App.sockerTracker = new Socket(App.serverIP,App.portNo);
                         App.oosTracker = new ObjectOutputStream(App.sockerTracker.getOutputStream());
                         App.oisTracker = new ObjectInputStream(App.sockerTracker.getInputStream());
                         App.oosTracker.writeObject(loginRequest);
                         App.oosTracker.flush();
-//                        System.out.println(App.sockerTracker.getInetAddress().getCanonicalHostName());
                         Response response;
                         response = (Response)App.oisTracker.readObject();
                         App.user = (User)response.getResponseObject();
@@ -80,14 +91,16 @@ public class Controller_Login {
                                     try {
 
                                         root = FXMLLoader.load(getClass().getResource("/dashboard.fxml"));
-                                    }catch(IOException e){
+                                    }
+                                    catch(IOException e){
                                         e.printStackTrace();
                                     }
                                     primaryStage.setScene(new Scene(root, 1303, 961));
 
                                 }
                             });
-                        }else{
+                        }
+                        else{
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
@@ -96,7 +109,8 @@ public class Controller_Login {
                             });
                         }
 
-                    }catch (IOException | ClassNotFoundException e){
+                    }
+                    catch (IOException | ClassNotFoundException e){
 
                     }
                 }

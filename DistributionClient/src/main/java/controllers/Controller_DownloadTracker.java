@@ -1,4 +1,10 @@
 package controllers;
+/**
+ *  Ui based class for showing the file being downloaded
+ *  Total number of chunks and the number of chunks downloaded
+ *  Total number of peers from which parallel downloading is going on
+ *  Progress bar for showing the progress of the file downloading
+ */
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
@@ -22,7 +28,6 @@ public class Controller_DownloadTracker {
     public ProgressBar progressbar;
 
     public void initialize(){
-//        progressbar.setProgress(0);
         file.setText(Controller_SearchFile.currentFile);
         peers.setText(String.valueOf(Controller_SearchFile.totalPeers));
         new Thread(() -> {
