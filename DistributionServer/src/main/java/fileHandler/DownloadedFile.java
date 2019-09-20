@@ -25,7 +25,7 @@ public class DownloadedFile
     public Response getResponse()
     {
         userUID=downloadedFileRequest.getUserUID();
-        String query="SELECT fileUID from UserHistory WHERE userUID=\""+userUID+"\" and downloaded=\"1\";";
+        String query="SELECT distinct fileUID from UserHistory WHERE userUID=\""+userUID+"\" and downloaded=\"1\";";
         try
         {
             PreparedStatement preparedStatement= Main.connection.prepareStatement(query);

@@ -216,7 +216,14 @@ public class Controller_StreamingMedia {
         paths=new LinkedList<>();
         startPlayer();
 
-        while (paths.isEmpty()){}
+        while (paths.isEmpty()){
+            try {
+                Thread.sleep(5000);
+                break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         String path=paths.poll();
 
         File mediaFile = new File(path);
