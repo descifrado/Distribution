@@ -1,7 +1,7 @@
 # Distribution
 A Distributed System for Sharing files similar to Bittorent with some added functionalities.
 ## Basic Features:
-1. A user account to which each user can log into and create his profile and can share content with others.
+1. A user account to which each user can log into and create his profile and can share content with others..
 2. A dashboard for the user showing the files he has downloaded or shared, the number of people who have downloaded the files he/she has shared.
 3. While sharing a file the user should be able to define what kind of fileit is. 
 4. A file shared by any user should be stored on multiple nodes either as a complete copy or in the form partial chunks. (i.e. in a Distributed Manner)
